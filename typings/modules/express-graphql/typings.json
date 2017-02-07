@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/e9a0d98125e8128da2084a7d5f42597b04a87cb1/express-graphql/index.d.ts",
+    "raw": "registry:dt/express-graphql#0.0.0+20160727004517",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/e9a0d98125e8128da2084a7d5f42597b04a87cb1/express-graphql/index.d.ts"
+  }
+}

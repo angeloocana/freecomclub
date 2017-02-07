@@ -1,0 +1,17 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/cantide5ga/typed-flux/06abf0b632f7d595f4034ce7924d63424df3506f/typings.json",
+    "raw": "registry:npm/flux#2.1.1+20160601175240",
+    "main": "flux.d.ts",
+    "dependencies": {
+      "react": {
+        "src": "https://raw.githubusercontent.com/cantide5ga/typed-react/da79b0020eb59310a9dc9c0eedcf6ebf7aca972e/typings.json",
+        "raw": "github:cantide5ga/typed-react#da79b0020eb59310a9dc9c0eedcf6ebf7aca972e",
+        "main": "react.d.ts",
+        "name": "react"
+      }
+    },
+    "name": "flux"
+  }
+}

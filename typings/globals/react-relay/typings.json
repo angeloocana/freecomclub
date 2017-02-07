@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/df386cb566348bd50b9fa57ef04c808297e74386/react-relay/index.d.ts",
+    "raw": "registry:dt/react-relay#0.9.2+20161227235148",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/df386cb566348bd50b9fa57ef04c808297e74386/react-relay/index.d.ts"
+  }
+}

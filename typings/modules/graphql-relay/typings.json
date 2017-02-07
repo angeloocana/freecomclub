@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/89ce0ccb70a60e46069955c808ef742e0f5c6b93/graphql-relay/index.d.ts",
+    "raw": "registry:dt/graphql-relay#0.4.0+20161127092905",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/89ce0ccb70a60e46069955c808ef742e0f5c6b93/graphql-relay/index.d.ts"
+  }
+}
