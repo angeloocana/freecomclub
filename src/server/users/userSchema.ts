@@ -1,9 +1,9 @@
 import UserRepository from './userRepository';
+import {id, createdBy, dtChanged} from '../data/entityBaseSchema';
 
 import {
     GraphQLObjectType,
     GraphQLNonNull,
-    GraphQLID,
     GraphQLBoolean,
     GraphQLString
 } from 'graphql';
@@ -24,15 +24,14 @@ function UserSchema(db){
     var userType = new GraphQLObjectType({
         name: 'User',
         fields: () => ({
-            id:{
-                type: new GraphQLNonNull(GraphQLID),
-                resolve: (obj) => obj._id
-            },
+            id,
             userName: {type: GraphQLString},
             email: {type: GraphQLString},
             emailConfirmed: {type: GraphQLBoolean},
             displayName: {type: GraphQLString},
-            imgUrl: {type: GraphQLString}
+            imgUrl: {type: GraphQLString},
+            createdBy,
+            dtChanged
         })
     });
 
