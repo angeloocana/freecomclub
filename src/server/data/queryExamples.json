@@ -1,0 +1,52 @@
+mutation CreateUserMutation($input: CreateUserInput!){
+    createUser(input: $input){
+        clientMutationId,    
+        userEdge{
+            node{
+                id,
+                userName,
+                email,
+                displayName
+            }
+        }
+    }  
+}
+
+//Variables
+{
+    "input": {
+        "userName": "angeloocana",
+        "email": "angeloocana@gmail.com",
+        "displayName": "Ângelo Ocanã"
+    }
+}
+
+//--------------------------------------------------------------
+
+
+
+CreateLinkMutation($input: CreateLinkInput!){
+    createLink(input: $input){
+        clientMutationId,
+        linkEdge{
+            node{
+                id,
+                title,
+                url
+            }
+        }
+    } 
+}
+//Variables
+{
+    "input": {
+        "clientMutationId": "42",
+        "title": "Teste",
+        "url": "linkTeste.com"
+    }
+}
+
+//-----------------------------------------------------------
+
+
+

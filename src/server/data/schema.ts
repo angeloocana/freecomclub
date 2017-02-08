@@ -1,3 +1,5 @@
+import UserSchema from '../users/userSchema';
+
 import {
     GraphQLSchema,
     GraphQLObjectType,
@@ -17,6 +19,8 @@ import{
 } from 'graphql-relay';
 
 function Schema(db){
+
+    var userSchema = UserSchema(db);
 
     var counter = 42;
     var data = [42, 43, 44];
@@ -57,33 +61,37 @@ function Schema(db){
                 resolve: (_, args) =>{ 
                     console.log('limit', args.first);
                     return connectionFromPromisedArray( 
-                    db.collection('links').find({}).limit(args.first).toArray(),
-                    args
-                );
+                                                       db.collection('links').find({}).limit(args.first).toArray(),
+                                                       args
+                                                      );
                 }
-            }
+            },
+            userConnection: userSchema.getUserConnection()
         })
     });
 
+    var outputStore = {
+        type: storeType,
+        resolve: () => store
+    };
+
+
     var createLinkMutation = mutationWithClientMutationId({
         name: 'CreateLink',
-        
+
         inputFields: {
             title: {type: new GraphQLNonNull(GraphQLString)},
             url:  {type: new GraphQLNonNull(GraphQLString)}            
         },
-        
+
         outputFields:{
             linkEdge: {
                 type: linkConnection.edgeType,
                 resolve: (obj) => ({node: obj.ops[0], cursor: obj.insertedId})
             },
-            store:{
-                type: storeType,
-                resolve: () => store
-            }
+            store: outputStore
         },
-        
+
         mutateAndGetPayload: ({title, url}) => {
             return db.collection('links').insertOne({title, url});
         }
@@ -123,12 +131,8 @@ function Schema(db){
         mutation: new GraphQLObjectType({
             name: 'Mutation',
             fields: () => ({
-                /*Breaks the createLink
-                 * incrementCounter: {
-                    type: GraphQLInt,
-                    resolve: () => ++counter
-                },*/
-                createLink: createLinkMutation
+                createLink: createLinkMutation,
+                createUser: userSchema.getCreateUserMutation(outputStore)
             })
         })    
     });
