@@ -1,5 +1,5 @@
-import CommunityRepository from './communityRepository';
-import { id, createdBy, dtChanged } from '../data/entityBaseSchema';
+import CommunityApp from '../app/communityApp';
+import { id, createdBy, dtChanged } from '../../core/api/entityBaseGraphQL';
 
 import {
  GraphQLObjectType,
@@ -13,7 +13,7 @@ import {
 
 function CommunitySchema(db){
 
-    var communityRepository = CommunityRepository(db);
+    var communityApp = CommunityApp(db);
 
     var communityType = new GraphQLObjectType({
         name: 'Community',

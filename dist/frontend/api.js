@@ -1,20 +1,26 @@
-import { post } from 'jquery';
-import ServerActions from './actions/ServerActions';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _jquery = require('jquery');
+
+var _ServerActions = require('./actions/ServerActions');
+
+var _ServerActions2 = _interopRequireDefault(_ServerActions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var API = {
-    fetchLinks() {
+    fetchLinks: function fetchLinks() {
         console.log('1. In API');
-        post('/graphql', {
-            query: `{
-                links {
-                    _id,
-                    title,
-                    url
-                }
-            }`
-        }).done(resp => {
+        (0, _jquery.post)('/graphql', {
+            query: '{\n                links {\n                    _id,\n                    title,\n                    url\n                }\n            }'
+        }).done(function (resp) {
             console.log(resp);
-            ServerActions.receiveLinks(resp.data.links);
+            _ServerActions2.default.receiveLinks(resp.data.links);
         });
     }
 };
-export default API;
+exports.default = API;
