@@ -1,5 +1,5 @@
-import UserRepository from './userRepository';
-import {id, createdBy, dtChanged} from '../data/entityBaseSchema';
+import UserRepository from '../repository/userRepository';
+import { id, createdBy, dtChanged } from '../../core/api/entityBaseGraphQL';
 
 import {
     GraphQLObjectType,
@@ -16,7 +16,7 @@ import {
 } from 'graphql-relay';
 
 
-function UserSchema(db){
+function UserSchema(db) {
 
     var userRepository = UserRepository(db);
 
@@ -25,11 +25,11 @@ function UserSchema(db){
         name: 'User',
         fields: () => ({
             id,
-            userName: {type: GraphQLString},
-            email: {type: GraphQLString},
-            emailConfirmed: {type: GraphQLBoolean},
-            displayName: {type: GraphQLString},
-            imgUrl: {type: GraphQLString},
+            userName: { type: GraphQLString },
+            email: { type: GraphQLString },
+            emailConfirmed: { type: GraphQLBoolean },
+            displayName: { type: GraphQLString },
+            imgUrl: { type: GraphQLString },
             createdBy,
             dtChanged
         })
@@ -40,36 +40,36 @@ function UserSchema(db){
         nodeType: userType
     });
 
-    function getUserConnection(){
+    function getUserConnection() {
         return {
             type: userConnection.connectionType,
             args: connectionArgs,
-            resolve: (_, args) =>{
+            resolve: (_, args) => {
                 console.log('getting users');
                 return connectionFromPromisedArray(
-                    userRepository.find({limit: args.first}),
+                    userRepository.find({ limit: args.first }),
                     args
                 );
             }
         }
     }
 
-    function getCreateUserMutation(outputStore){
+    function getCreateUserMutation(outputStore) {
 
         return mutationWithClientMutationId({
             name: 'CreateUser',
 
             inputFields: {
-                userName: {type: new GraphQLNonNull(GraphQLString)},
-                email: {type: new GraphQLNonNull(GraphQLString)},
-                displayName: {type: new GraphQLNonNull(GraphQLString)},
-                password: {type: new GraphQLNonNull(GraphQLString)}
+                userName: { type: new GraphQLNonNull(GraphQLString) },
+                email: { type: new GraphQLNonNull(GraphQLString) },
+                displayName: { type: new GraphQLNonNull(GraphQLString) },
+                password: { type: new GraphQLNonNull(GraphQLString) }
             },
 
-            outputFields:{
-                userEdge:{
+            outputFields: {
+                userEdge: {
                     type: userConnection.edgeType,
-                    resolve: (obj) => ({node: obj.ops[0], cursor: obj.insertedId})
+                    resolve: (obj) => ({ node: obj.ops[0], cursor: obj.insertedId })
                 },
                 store: outputStore
             },
@@ -80,7 +80,7 @@ function UserSchema(db){
 
     return {
         getCreateUserMutation,
-        getUserConnection     
+        getUserConnection
     }
 }
 

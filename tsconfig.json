@@ -12,8 +12,9 @@
   },
   "include": [
     "typings/**/*.d.ts",
-    "src/**/*.d.ts*",
-    "src/**/*.ts*"
+    "src/**/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.test.ts"
   ],
   "exclude": [
     "node_modules"

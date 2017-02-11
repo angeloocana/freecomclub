@@ -13,38 +13,35 @@ gulp.task("js", function () {
     //  that `dest()` doesnt map folders correctly after rename
     return tsProject.src()
         .pipe(tsProject())
-        //.pipe(babel())
+        .pipe(babel())
         // .pipe(rename(function (path) {
         //     path.extname = ".js";
         // }))
         .pipe(gulp.dest("dist/"));
 });
 
-gulp.task("webpack", function(){
+gulp.task("webpack", function () {
     var conf = {
-        output:{
+        output: {
             filename: "bundle.js"
         },
-        module:{
-            loaders: [
-            { 
-                test: /\.js$/, 
+        module: {
+            loaders: [{
+                test: /\.js$/,
                 loader: 'babel-loader',
                 query: {
-                    presets:['react','es2015'],
+                    presets: ['react', 'es2015'],
                     plugins: ['./babelRelayPlugin'].map(require.resolve)
                 }
-            }
-            ]
+            }]
         }
-
     };
 
     return gulp.src('dist/frontend/app.js')
-        .pipe(webpack(conf, null, function(err, stats){
+        .pipe(webpack(conf, null, function (err, stats) {
             //upload the generated file to http://webpack.github.io/analyse/
-            fs.writeFile('dist/webpack-stats.json', stats, function(err){
-                if(err) console.log('Error writing webpack stats',err);
+            fs.writeFile('dist/webpack-stats.json', stats, function (err) {
+                if (err) console.log('Error writing webpack stats', err);
             })
         }))
         .pipe(gulp.dest('dist/public/'));

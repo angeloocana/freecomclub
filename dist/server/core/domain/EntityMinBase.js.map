@@ -1,1 +1,0 @@
-{"version":3,"file":"EntityMinBase.js","sourceRoot":"","sources":["../../../../src/server/core/domain/EntityMinBase.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO;IAKV,YAAY,MAAqB;QAC7B,IAAI,CAAC,EAAE,GAAG,MAAM,CAAC,EAAE,IAAI,MAAM,CAAC,GAAG,CAAC;QAClC,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC,MAAM,CAAC;IAChC,CAAC;CACJ"}
