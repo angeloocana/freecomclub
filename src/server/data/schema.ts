@@ -58,7 +58,7 @@ function Schema(db){
             linkConnection: {
                 type: linkConnection.connectionType,
                 args: connectionArgs,
-                resolve: (_, args) =>{ 
+                resolve: (_, args:{first:number}) =>{ 
                     console.log('limit', args.first);
                     return connectionFromPromisedArray( 
                                                        db.collection('links').find({}).limit(args.first).toArray(),

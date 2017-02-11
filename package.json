@@ -4,10 +4,10 @@
   "description": "Free Community Club (freecom.club) is an opensouce project to create free democracy, where every citizen can vote and keep track to every proposal.",
   "main": "server.js",
   "scripts": {
-    "start22": "nodemon --exec babel-node --presets react,es2015 server.js",
     "start": "gulp js && gulp webpack && babel-node --presets react,es2015 dist/server/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack"
+    "front": "gulp js && gulp webpack",
+    "server": "gulp js && babel-node --presets react,es2015 dist/server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "graphql": "^0.8.2",
     "graphql-relay": "^0.4.4",
     "jquery": "^3.1.1",
+    "jsonwebtoken": "^7.2.1",
     "kerberos": "0.0.22",
     "mongodb": "^2.2.21",
     "react": "^15.4.2",
@@ -43,7 +44,7 @@
     "gulp-babel": "^6.1.2",
     "gulp-typescript": "^3.1.4",
     "gulp-webpack": "^1.5.0",
-    "typescript": "^2.1.4",
+    "typescript": "^2.1.6",
     "typings": "^2.1.0"
   }
 }

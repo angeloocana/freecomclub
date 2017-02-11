@@ -1,6 +1,6 @@
 Hash: 709b0fe0e052e45804d1
 Version: webpack 1.14.0
-Time: 12316ms
+Time: 11963ms
     Asset     Size  Chunks             Chunk Names
 bundle.js  1.62 MB       0  [emitted]  main
 chunk    {0} bundle.js (main) 1.55 MB [rendered]

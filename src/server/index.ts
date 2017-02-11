@@ -4,7 +4,7 @@ import GraphQlHttp from 'express-graphql';
 import {MongoClient} from 'mongodb';
 import {graphql} from 'graphql';
 import {introspectionQuery} from 'graphql/utilities';
-import fs from 'fs';
+import * as fs from 'fs';
 
 var app = express();
 

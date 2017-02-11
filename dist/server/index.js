@@ -12,7 +12,7 @@ import GraphQlHttp from 'express-graphql';
 import { MongoClient } from 'mongodb';
 import { graphql } from 'graphql';
 import { introspectionQuery } from 'graphql/utilities';
-import fs from 'fs';
+import * as fs from 'fs';
 var app = express();
 console.log('starting server');
 app.use(express.static('dist/public'));

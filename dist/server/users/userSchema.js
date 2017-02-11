@@ -1,20 +1,20 @@
 import UserRepository from './userRepository';
-import { GraphQLObjectType, GraphQLNonNull, GraphQLID, GraphQLBoolean, GraphQLString } from 'graphql';
+import { id, createdBy, dtChanged } from '../data/entityBaseSchema';
+import { GraphQLObjectType, GraphQLNonNull, GraphQLBoolean, GraphQLString } from 'graphql';
 import { connectionDefinitions, mutationWithClientMutationId, connectionArgs, connectionFromPromisedArray } from 'graphql-relay';
 function UserSchema(db) {
     var userRepository = UserRepository(db);
     var userType = new GraphQLObjectType({
         name: 'User',
         fields: () => ({
-            id: {
-                type: new GraphQLNonNull(GraphQLID),
-                resolve: (obj) => obj._id
-            },
+            id,
             userName: { type: GraphQLString },
             email: { type: GraphQLString },
             emailConfirmed: { type: GraphQLBoolean },
             displayName: { type: GraphQLString },
-            imgUrl: { type: GraphQLString }
+            imgUrl: { type: GraphQLString },
+            createdBy,
+            dtChanged
         })
     });
     var userConnection = connectionDefinitions({
@@ -37,7 +37,8 @@ function UserSchema(db) {
             inputFields: {
                 userName: { type: new GraphQLNonNull(GraphQLString) },
                 email: { type: new GraphQLNonNull(GraphQLString) },
-                displayName: { type: new GraphQLNonNull(GraphQLString) }
+                displayName: { type: new GraphQLNonNull(GraphQLString) },
+                password: { type: new GraphQLNonNull(GraphQLString) }
             },
             outputFields: {
                 userEdge: {
