@@ -13,17 +13,19 @@ Free Community Club (freecom.club) is an opensouce project to create free democr
     npm install ts-node -g
     npm install typescript-node -g
     npm install babel-cli -g
-
+```
 
 ## Steps to Run
+```
     npm install   
     npm start
-
+```
 ##Typings 
+```
     typings install dt~mocha --global --save
-
+```
 ## Dependencies
-
+```
     TypeScript
     Gulp
     ExpressJS
@@ -34,3 +36,4 @@ Free Community Club (freecom.club) is an opensouce project to create free democr
     Mongoose
     JSON Web Token
     Morgan
+```
