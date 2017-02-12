@@ -1,6 +1,6 @@
 Hash: 396f0bfb9d565b6f60f0
 Version: webpack 1.14.0
-Time: 1485ms
+Time: 1097ms
 
 ERROR in ./dist/frontend/app.js
 Module build failed: Error: Cannot find module './dist/server/data/schema.json'
