@@ -1,33 +1,33 @@
-import UserRepository from './userRepository';
+import UserRepository from '../repository/userRepository';
 
-interface IUserApp{
-    add(user:IUser, callback:(err, user:IUser) => void);
-    find(query:any, options:{limit:number}, callback:(err, user:IUser[]) => void);
- 
+interface IUserApp {
+    add(user: IUser, callback: (err, user: IUser) => void);
+    find(query: any, options: { limit: number }, callback: (err, user: IUser[]) => void);
+
     getAuthToken(userNameOrEmail, password);
     verifyAuthToken(token);
 }
 
-function UserApp(db):IUserApp{
+function UserApp(db): IUserApp {
 
     var userRepository = UserRepository(db);
 
 
-    function add(user:IUser, 
-                 callback:(err, user:IUser)=>void){
+    function add(user: IUser,
+        callback: (err, user: IUser) => void) {
         userRepository.add(user, callback);
     }
 
-    function find(query, {limit}, callback){
-        userRepository.find(query, {limit}, callback);
-    } 
-
-    function getAuthToken(userNameOrEmail, password){
-    
+    function find(query, {limit}, callback) {
+        userRepository.find(query, { limit }, callback);
     }
 
-    function verifyAuthToken(token){
-    
+    function getAuthToken(userNameOrEmail, password) {
+
+    }
+
+    function verifyAuthToken(token) {
+
     }
 
     return {

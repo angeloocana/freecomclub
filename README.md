@@ -25,15 +25,14 @@ Free Community Club (freecom.club) is an opensouce project to create free democr
     typings install dt~mocha --global --save
 ```
 ## Dependencies
-```
-    TypeScript
-    Gulp
-    ExpressJS
-    NodeJS
-    Nodemon
-    TsLint
-    MongoDB
-    Mongoose
-    JSON Web Token
-    Morgan
-```
+
+TypeScript
+Gulp
+ExpressJS
+NodeJS
+Nodemon
+TsLint
+MongoDB
+Mongoose
+JSON Web Token
+Morgan

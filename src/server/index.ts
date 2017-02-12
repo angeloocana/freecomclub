@@ -1,5 +1,5 @@
 import express from 'express';
-import Schema from './data/schema';
+import Schema from './core/api/schema';
 import GraphQlHttp from 'express-graphql';
 import {MongoClient} from 'mongodb';
 import {graphql} from 'graphql';
@@ -31,7 +31,7 @@ const MONGO_URL = 'mongodb://localhost:27017/relay',
 
         //Generate schema.json
         var json = await graphql(schema, introspectionQuery);
-        fs.writeFile('./dist/server/data/schema.json', JSON.stringify(json, null, 2), err => {
+        fs.writeFile('./dist/server/core/api/schema.json', JSON.stringify(json, null, 2), err => {
             if(err) throw err;
 
             console.log('Json schema created!');

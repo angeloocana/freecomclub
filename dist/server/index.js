@@ -4,7 +4,7 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _schema = require('./data/schema');
+var _schema = require('./core/api/schema');
 
 var _schema2 = _interopRequireDefault(_schema);
 
@@ -84,7 +84,7 @@ var MONGO_URL = 'mongodb://localhost:27017/relay',
                     case 9:
                         json = _context.sent;
 
-                        fs.writeFile('./dist/server/data/schema.json', JSON.stringify(json, null, 2), function (err) {
+                        fs.writeFile('./dist/server/core/api/schema.json', JSON.stringify(json, null, 2), function (err) {
                             if (err) throw err;
                             console.log('Json schema created!');
                         });

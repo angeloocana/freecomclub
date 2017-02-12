@@ -1,4 +1,4 @@
-import UserSchema from '../users/userSchema';
+import UserSchema from '../../users/api/userGraphQL';
 
 import {
     GraphQLSchema,

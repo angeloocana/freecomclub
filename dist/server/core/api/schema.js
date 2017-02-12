@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _userSchema = require('../users/userSchema');
+var _userGraphQL = require('../../users/api/userGraphQL');
 
-var _userSchema2 = _interopRequireDefault(_userSchema);
+var _userGraphQL2 = _interopRequireDefault(_userGraphQL);
 
 var _graphql = require('graphql');
 
@@ -15,7 +15,7 @@ var _graphqlRelay = require('graphql-relay');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Schema(db) {
-    var userSchema = (0, _userSchema2.default)(db);
+    var userSchema = (0, _userGraphQL2.default)(db);
     var counter = 42;
     var data = [42, 43, 44];
     var counters = [{ counter: 42 }, { counter: 43 }];
