@@ -1,8 +1,9 @@
 import UserRepository from '../repository/userRepository';
+import User from '../domain/User';
 
 interface IUserApp {
-    add(user: IUser, callback: (err, user: IUser) => void);
-    find(query: any, options: { limit: number }, callback: (err, user: IUser[]) => void);
+    add(user: IUser):Promise<IUser>;
+    find(query: any, options: { limit: number }):Promise<IUser[]>;
 
     getAuthToken(userNameOrEmail, password);
     verifyAuthToken(token);
@@ -13,13 +14,14 @@ function UserApp(db): IUserApp {
     var userRepository = UserRepository(db);
 
 
-    function add(user: IUser,
-        callback: (err, user: IUser) => void) {
-        userRepository.add(user, callback);
+    function add(user: IUser):Promise<IUser>{
+        user = new User(user);
+        user.throwErrorIfIsInvalid();
+        return userRepository.add(user);
     }
 
-    function find(query, {limit}, callback) {
-        userRepository.find(query, { limit }, callback);
+    function find(query, {limit}) {
+        return userRepository.find(query, { limit });
     }
 
     function getAuthToken(userNameOrEmail, password) {

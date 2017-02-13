@@ -1,8 +1,8 @@
 interface IUserRepository{
-    add(user:IUser, callback:(err, user:IUser) => void);
-    find(query:any, options:{limit:number}, callback:(err, user:IUser[]) => void);
-    getByUserName(userName:string, callback:(err, user:IUser) => void);
-    getByEmail(email:string, callback:(err, user:IUser) => void);
+    add(user:IUser): Promise<IUser>;
+    find(query:any, options:{limit:number}): Promise<IUser[]>;
+    getByUserName(userName:string): Promise<IUser>;
+    getByEmail(email:string): Promise<IUser>;
 }
 
 function UserRepository(db):IUserRepository{
@@ -11,29 +11,27 @@ function UserRepository(db):IUserRepository{
         return db.collection('users');
     }
 
-    function add({userName, email, displayName}:IUser, 
-                 callback:(err, user:IUser)=>void){
-        getUserDbCollection()
-            .insertOne({userName, email, displayName},
-                      callback);
+    function add({userName, email, displayName}:IUser):Promise<IUser>{
+        return getUserDbCollection()
+            .insertOne({userName, email, displayName});
     }
 
-    function find(query:any, options:{limit:number}, 
-                  callback:(err, users:IUser[])=>void){
-        getUserDbCollection()
-            .find(query,{},options,callback);
+    function find(query:any, options:{limit:number}):Promise<IUser[]>{
+        var result = getUserDbCollection()
+            .find(query,{},options)
+            .toArray();
+
+        return result;
     } 
 
-    function getByUserName(userName:string, 
-                           callback:(err, user:IUser)=>void){
-        getUserDbCollection()
-            .findOne({userName}, callback);
+    function getByUserName(userName:string):Promise<IUser>{
+        return getUserDbCollection()
+            .findOne({userName});
     }
 
-    function getByEmail(email:string, 
-                        callback:(err, user:IUser)=>void){
-        getUserDbCollection()
-            .findOne({email}, callback);
+    function getByEmail(email:string):Promise<IUser>{
+        return getUserDbCollection()
+            .findOne({email});
     }
 
     return {

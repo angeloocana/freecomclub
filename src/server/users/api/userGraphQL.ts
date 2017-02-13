@@ -1,4 +1,4 @@
-import UserRepository from '../repository/userRepository';
+import UserApp from '../app/userApp';
 import { id, createdBy, dtChanged } from '../../core/api/entityBaseGraphQL';
 
 import {
@@ -18,7 +18,7 @@ import {
 
 function UserSchema(db) {
 
-    var userRepository = UserRepository(db);
+    var userApp = UserApp(db);
 
 
     var userType = new GraphQLObjectType({
@@ -47,7 +47,7 @@ function UserSchema(db) {
             resolve: (_, args) => {
                 console.log('getting users');
                 return connectionFromPromisedArray(
-                    userRepository.find({ limit: args.first }),
+                    userApp.find({},{ limit: args.first }),
                     args
                 );
             }
@@ -74,7 +74,7 @@ function UserSchema(db) {
                 store: outputStore
             },
 
-            mutateAndGetPayload: userRepository.add
+            mutateAndGetPayload: userApp.add
         });
     }
 

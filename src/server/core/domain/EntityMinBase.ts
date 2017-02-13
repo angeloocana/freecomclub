@@ -18,4 +18,9 @@ export default class EntityMinBase implements IEntityMinBase{
     isValid(){
         return !this.errors || this.errors.length == 0;
     }
+
+    throwErrorIfIsInvalid(){
+        if(this.errors && this.errors.length > 0)
+            throw 'ERROR_INVALID_ENTITY';
+    }
 }

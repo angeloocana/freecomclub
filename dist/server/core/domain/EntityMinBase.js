@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -17,15 +17,20 @@ var EntityMinBase = function () {
     }
 
     _createClass(EntityMinBase, [{
-        key: "addError",
+        key: 'addError',
         value: function addError(error) {
             if (!this.errors) this.errors = [];
             this.errors.push(error);
         }
     }, {
-        key: "isValid",
+        key: 'isValid',
         value: function isValid() {
             return !this.errors || this.errors.length == 0;
+        }
+    }, {
+        key: 'throwErrorIfIsInvalid',
+        value: function throwErrorIfIsInvalid() {
+            if (this.errors && this.errors.length > 0) throw 'ERROR_INVALID_ENTITY';
         }
     }]);
 

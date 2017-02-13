@@ -7,21 +7,22 @@ function UserRepository(db) {
     function getUserDbCollection() {
         return db.collection('users');
     }
-    function add(_ref, callback) {
+    function add(_ref) {
         var userName = _ref.userName,
             email = _ref.email,
             displayName = _ref.displayName;
 
-        getUserDbCollection().insertOne({ userName: userName, email: email, displayName: displayName }, callback);
+        return getUserDbCollection().insertOne({ userName: userName, email: email, displayName: displayName });
     }
-    function find(query, options, callback) {
-        getUserDbCollection().find(query, {}, options, callback);
+    function find(query, options) {
+        var result = getUserDbCollection().find(query, {}, options).toArray();
+        return result;
     }
-    function getByUserName(userName, callback) {
-        getUserDbCollection().findOne({ userName: userName }, callback);
+    function getByUserName(userName) {
+        return getUserDbCollection().findOne({ userName: userName });
     }
-    function getByEmail(email, callback) {
-        getUserDbCollection().findOne({ email: email }, callback);
+    function getByEmail(email) {
+        return getUserDbCollection().findOne({ email: email });
     }
     return {
         add: add,

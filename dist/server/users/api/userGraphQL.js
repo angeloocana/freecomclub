@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _userRepository = require('../repository/userRepository');
+var _userApp = require('../app/userApp');
 
-var _userRepository2 = _interopRequireDefault(_userRepository);
+var _userApp2 = _interopRequireDefault(_userApp);
 
 var _entityBaseGraphQL = require('../../core/api/entityBaseGraphQL');
 
@@ -17,7 +17,7 @@ var _graphqlRelay = require('graphql-relay');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function UserSchema(db) {
-    var userRepository = (0, _userRepository2.default)(db);
+    var userApp = (0, _userApp2.default)(db);
     var userType = new _graphql.GraphQLObjectType({
         name: 'User',
         fields: function fields() {
@@ -43,7 +43,7 @@ function UserSchema(db) {
             args: _graphqlRelay.connectionArgs,
             resolve: function resolve(_, args) {
                 console.log('getting users');
-                return (0, _graphqlRelay.connectionFromPromisedArray)(userRepository.find({ limit: args.first }), args);
+                return (0, _graphqlRelay.connectionFromPromisedArray)(userApp.find({}, { limit: args.first }), args);
             }
         };
     }
@@ -65,7 +65,7 @@ function UserSchema(db) {
                 },
                 store: outputStore
             },
-            mutateAndGetPayload: userRepository.add
+            mutateAndGetPayload: userApp.add
         });
     }
     return {
