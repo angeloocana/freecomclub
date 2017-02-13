@@ -1,7 +1,7 @@
 interface IUser extends IEntityBase{
     userName:string;
     email:string;
-    emailConfirmed:boolean;
+    emailConfirmed?:boolean;
     displayName:string;
     imgUrl?:string;
     password?:string;

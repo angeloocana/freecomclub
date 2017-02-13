@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -8,9 +8,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _EntityBase2 = require("../../core/domain/EntityBase");
+var _EntityBase2 = require('../../core/domain/EntityBase');
 
 var _EntityBase3 = _interopRequireDefault(_EntityBase2);
+
+var _Email = require('../../core/domain/Email');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,6 +28,8 @@ var User = function (_EntityBase) {
     function User(user) {
         _classCallCheck(this, User);
 
+        if (!user) throw "ERROR_EMPTY_USER";
+
         var _this = _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).call(this, user));
 
         _this.userName = user.userName;
@@ -35,25 +39,27 @@ var User = function (_EntityBase) {
         _this.imgUrl = user.imgUrl;
         _this.password = user.password;
         _this.passwordHash = user.passwordHash;
+        _this.isValid();
         return _this;
     }
 
     _createClass(User, [{
-        key: "validateUserName",
+        key: 'validateUserName',
         value: function validateUserName() {
-            if (!this.userName || this.userName.length < 3) this.addError("ERROR_USER_USER_NAME_REQUIRED");
+            if (!this.userName || this.userName.length < 3) this.addError('ERROR_USER_USERNAME_REQUIRED');
         }
     }, {
-        key: "validateEmail",
+        key: 'validateEmail',
         value: function validateEmail() {
-            if (!this.email) this.addError("ERROR_USER_EMAIL_REQUIRED");
+            if (!this.email) this.addError('ERROR_USER_EMAIL_REQUIRED');
+            if (!(0, _Email.validateEmail)(this.email)) this.addError('ERROR_USER_EMAIL_INVALID');
         }
     }, {
-        key: "isValid",
+        key: 'isValid',
         value: function isValid() {
             this.validateUserName();
             this.validateEmail();
-            return _get(User.prototype.__proto__ || Object.getPrototypeOf(User.prototype), "isValid", this).call(this);
+            return _get(User.prototype.__proto__ || Object.getPrototypeOf(User.prototype), 'isValid', this).call(this);
         }
     }]);
 

@@ -7,7 +7,7 @@
     "start": "gulp js && webpack && babel-node --presets react,es2015 dist/server/index.js",
     "front": "gulp js && webpack",
     "server": "gulp js && babel-node --presets react,es2015 dist/server/index.js",
-    "mocha": "mocha ./dist/**/*.test.js",
+    "mocha": "mocha ./dist/server/**/*.js --compilers js:babel-core/register --require babel-polyfill",
     "pretest": "gulp js",
     "test": "nyc npm run mocha && nyc report --reporter=text-lcov > coverage.lcov && codecov --token=64cfc7d6-dd7a-4a52-ac74-8704b1cbe750"
   },
@@ -35,13 +35,14 @@
     "jsonwebtoken": "^7.2.1",
     "kerberos": "0.0.22",
     "mongodb": "^2.2.21",
-    "ptz-assert": "^1.1.0",
+    "ptz-assert": "^1.2.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-relay": "^0.10.0"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
+    "babel-polyfill": "^6.22.0",
     "babel-preset-es2015": "^6.18.0",
     "codecov": "^1.0.1",
     "gulp": "^3.9.1",
@@ -56,6 +57,8 @@
     "typings": "^2.1.0"
   },
   "babel": {
-    "presets": ["es2015"]
+    "presets": [
+      "es2015"
+    ]
   }
 }
