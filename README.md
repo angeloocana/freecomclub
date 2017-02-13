@@ -4,7 +4,6 @@
 [pt-br]Free Community Club (freecom.club) é um projeto de código aberto para criar livre democracia, onde cada cidadão pode votar e acompanhar cada proposta de sua comunidade.
 
 [![Build Status](https://travis-ci.org/angeloocana/freecomclub.svg)](https://travis-ci.org/angeloocana/freecomclub)
-[![NPM](https://img.shields.io/npm/v/freecomclub.svg)](https://www.npmjs.com/package/freecomclub)
 [![codecov.io](http://codecov.io/github/angeloocana/freecomclub/coverage.svg)](http://codecov.io/github/angeloocana/freecomclub)
 [![Dependency Status](https://gemnasium.com/angeloocana/freecomclub.svg)](https://gemnasium.com/angeloocana/freecomclub)
 [![bitHound Score](https://www.bithound.io/github/gotwarlost/istanbul/badges/score.svg)](https://www.bithound.io/github/angeloocana/freecomclub)
