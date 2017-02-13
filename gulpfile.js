@@ -19,30 +19,3 @@ gulp.task("js", function () {
         // }))
         .pipe(gulp.dest("dist/"));
 });
-
-gulp.task("webpack", function () {
-    var conf = {
-        output: {
-            filename: "bundle.js"
-        },
-        module: {
-            loaders: [{
-                test: /\.js$/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'es2015'],
-                    plugins: ['./babelRelayPlugin'].map(require.resolve)
-                }
-            }]
-        }
-    };
-
-    return gulp.src('dist/frontend/app.js')
-        .pipe(webpack(conf, null, function (err, stats) {
-            //upload the generated file to http://webpack.github.io/analyse/
-            fs.writeFile('dist/webpack-stats.json', stats, function (err) {
-                if (err) console.log('Error writing webpack stats', err);
-            })
-        }))
-        .pipe(gulp.dest('dist/public/'));
-});

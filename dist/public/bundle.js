@@ -46,6 +46,11 @@
 
 	'use strict';
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _templateObject = _taggedTemplateLiteral(['\n            query MainQuery{\n                store {\n                    ', '\n                }\n            }\n        '], ['\n            query MainQuery{\n                store {\n                    ', '\n                }\n            }\n        ']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n        query Test{\n            links{\n                title\n            }\n        }\n    '], ['\n        query Test{\n            links{\n                title\n            }\n        }\n    ']);
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -62,13 +67,31 @@
 
 	var _main2 = _interopRequireDefault(_main);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _taggedTemplateLiteral(strings, raw) {
+	    return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } }));
+	}
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === 'undefined' ? 'undefined' : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
 
 	console.log('Hello js 3');
 
@@ -87,36 +110,11 @@
 	HomeRoute.routeName = 'Home';
 	HomeRoute.queries = {
 	    store: function store(Component) {
-	        return function (RQL_0) {
-	            return {
-	                children: [].concat.apply([], [_reactRelay2.default.QL.__frag(RQL_0)]),
-	                fieldName: 'store',
-	                kind: 'Query',
-	                metadata: {},
-	                name: 'MainQuery',
-	                type: 'Store'
-	            };
-	        }(Component.getFragment('store'));
+	        return _reactRelay2.default.QL(_templateObject, Component.getFragment('store'));
 	    }
 	};
 	_reactDom2.default.render(_react2.default.createElement(_reactRelay2.default.RootContainer, { Component: _main2.default, route: new HomeRoute() }), document.getElementById('react'));
-	console.log(function () {
-	    return {
-	        children: [{
-	            fieldName: 'title',
-	            kind: 'Field',
-	            metadata: {},
-	            type: 'String'
-	        }],
-	        fieldName: 'links',
-	        kind: 'Query',
-	        metadata: {
-	            isPlural: true
-	        },
-	        name: 'Test',
-	        type: 'Link'
-	    };
-	}());
+	console.log(_reactRelay2.default.QL(_templateObject2));
 
 /***/ },
 /* 1 */
@@ -46470,11 +46468,23 @@
 
 	'use strict';
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _templateObject = _taggedTemplateLiteral(['\n        fragment on Store{\n            id,\n            linkConnection(first: $limit){\n                edges{\n                    node{\n                        id,\n                        ', '                \n                    }\n                }\n            }\n        }\n       '], ['\n        fragment on Store{\n            id,\n            linkConnection(first: $limit){\n                edges{\n                    node{\n                        id,\n                        ', '                \n                    }\n                }\n            }\n        }\n       ']);
 
 	var _react = __webpack_require__(1);
 
@@ -46492,13 +46502,31 @@
 
 	var _CreateLinkMutation2 = _interopRequireDefault(_CreateLinkMutation);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _taggedTemplateLiteral(strings, raw) {
+	    return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } }));
+	}
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
 
 	var Main = function (_React$Component) {
 	    _inherits(Main, _React$Component);
@@ -46546,100 +46574,7 @@
 	    },
 	    fragments: {
 	        store: function store() {
-	            return function (RQL_0) {
-	                return {
-	                    children: [{
-	                        fieldName: 'id',
-	                        kind: 'Field',
-	                        metadata: {
-	                            isRequisite: true
-	                        },
-	                        type: 'ID'
-	                    }, {
-	                        calls: [{
-	                            kind: 'Call',
-	                            metadata: {},
-	                            name: 'first',
-	                            value: {
-	                                kind: 'CallVariable',
-	                                callVariableName: 'limit'
-	                            }
-	                        }],
-	                        children: [{
-	                            children: [{
-	                                children: [].concat.apply([], [{
-	                                    fieldName: 'id',
-	                                    kind: 'Field',
-	                                    metadata: {
-	                                        isRequisite: true
-	                                    },
-	                                    type: 'ID'
-	                                }, _reactRelay2.default.QL.__frag(RQL_0)]),
-	                                fieldName: 'node',
-	                                kind: 'Field',
-	                                metadata: {
-	                                    canHaveSubselections: true,
-	                                    isRequisite: true
-	                                },
-	                                type: 'Link'
-	                            }, {
-	                                fieldName: 'cursor',
-	                                kind: 'Field',
-	                                metadata: {
-	                                    isGenerated: true,
-	                                    isRequisite: true
-	                                },
-	                                type: 'String'
-	                            }],
-	                            fieldName: 'edges',
-	                            kind: 'Field',
-	                            metadata: {
-	                                canHaveSubselections: true,
-	                                isPlural: true
-	                            },
-	                            type: 'LinkEdge'
-	                        }, {
-	                            children: [{
-	                                fieldName: 'hasNextPage',
-	                                kind: 'Field',
-	                                metadata: {
-	                                    isGenerated: true,
-	                                    isRequisite: true
-	                                },
-	                                type: 'Boolean'
-	                            }, {
-	                                fieldName: 'hasPreviousPage',
-	                                kind: 'Field',
-	                                metadata: {
-	                                    isGenerated: true,
-	                                    isRequisite: true
-	                                },
-	                                type: 'Boolean'
-	                            }],
-	                            fieldName: 'pageInfo',
-	                            kind: 'Field',
-	                            metadata: {
-	                                canHaveSubselections: true,
-	                                isGenerated: true,
-	                                isRequisite: true
-	                            },
-	                            type: 'PageInfo'
-	                        }],
-	                        fieldName: 'linkConnection',
-	                        kind: 'Field',
-	                        metadata: {
-	                            canHaveSubselections: true,
-	                            isConnection: true
-	                        },
-	                        type: 'LinkConnection'
-	                    }],
-	                    id: _reactRelay2.default.QL.__id(),
-	                    kind: 'Fragment',
-	                    metadata: {},
-	                    name: 'Main_StoreRelayQL',
-	                    type: 'Store'
-	                };
-	            }(_Link2.default.getFragment('link'));
+	            return _reactRelay2.default.QL(_templateObject, _Link2.default.getFragment('link'));
 	        }
 	    }
 	});
@@ -46651,11 +46586,23 @@
 
 	'use strict';
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _templateObject = _taggedTemplateLiteral(['\n            fragment on Link {\n                url,\n                title\n            }\n        '], ['\n            fragment on Link {\n                url,\n                title\n            }\n        ']);
 
 	var _react = __webpack_require__(1);
 
@@ -46665,13 +46612,31 @@
 
 	var _reactRelay2 = _interopRequireDefault(_reactRelay);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _taggedTemplateLiteral(strings, raw) {
+	    return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } }));
+	}
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
 
 	var Link = function (_React$Component) {
 	    _inherits(Link, _React$Component);
@@ -46697,34 +46662,7 @@
 	Link = _reactRelay2.default.createContainer(Link, {
 	    fragments: {
 	        link: function link() {
-	            return function () {
-	                return {
-	                    children: [{
-	                        fieldName: 'url',
-	                        kind: 'Field',
-	                        metadata: {},
-	                        type: 'String'
-	                    }, {
-	                        fieldName: 'title',
-	                        kind: 'Field',
-	                        metadata: {},
-	                        type: 'String'
-	                    }, {
-	                        fieldName: 'id',
-	                        kind: 'Field',
-	                        metadata: {
-	                            isGenerated: true,
-	                            isRequisite: true
-	                        },
-	                        type: 'ID'
-	                    }],
-	                    id: _reactRelay2.default.QL.__id(),
-	                    kind: 'Fragment',
-	                    metadata: {},
-	                    name: 'Link_LinkRelayQL',
-	                    type: 'Link'
-	                };
-	            }();
+	            return _reactRelay2.default.QL(_templateObject);
 	        }
 	    }
 	});
@@ -46736,23 +46674,54 @@
 
 	'use strict';
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _templateObject = _taggedTemplateLiteral(['\n            mutation {createLink}\n        '], ['\n            mutation {createLink}\n        ']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n            fragment on CreateLinkPayload{\n                linkEdge,\n                store { linkConnection }\n            }\n        '], ['\n            fragment on CreateLinkPayload{\n                linkEdge,\n                store { linkConnection }\n            }\n        ']);
 
 	var _reactRelay = __webpack_require__(178);
 
 	var _reactRelay2 = _interopRequireDefault(_reactRelay);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _taggedTemplateLiteral(strings, raw) {
+	    return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } }));
+	}
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
 
 	var CreateLinkMutation = function (_Relay$Mutation) {
 	    _inherits(CreateLinkMutation, _Relay$Mutation);
@@ -46766,34 +46735,7 @@
 	    _createClass(CreateLinkMutation, [{
 	        key: 'getMutation',
 	        value: function getMutation() {
-	            return function () {
-	                return {
-	                    calls: [{
-	                        kind: 'Call',
-	                        metadata: {},
-	                        name: 'createLink',
-	                        value: {
-	                            kind: 'CallVariable',
-	                            callVariableName: 'input'
-	                        }
-	                    }],
-	                    children: [{
-	                        fieldName: 'clientMutationId',
-	                        kind: 'Field',
-	                        metadata: {
-	                            isGenerated: true,
-	                            isRequisite: true
-	                        },
-	                        type: 'String'
-	                    }],
-	                    kind: 'Mutation',
-	                    metadata: {
-	                        inputType: 'CreateLinkInput!'
-	                    },
-	                    name: 'CreateLinkMutation',
-	                    responseType: 'CreateLinkPayload'
-	                };
-	            }();
+	            return _reactRelay2.default.QL(_templateObject);
 	        }
 	    }, {
 	        key: 'getVariables',
@@ -46806,74 +46748,7 @@
 	    }, {
 	        key: 'getFatQuery',
 	        value: function getFatQuery() {
-	            return function () {
-	                return {
-	                    children: [{
-	                        children: [{
-	                            fieldName: 'cursor',
-	                            kind: 'Field',
-	                            metadata: {
-	                                isGenerated: true,
-	                                isRequisite: true
-	                            },
-	                            type: 'String'
-	                        }, {
-	                            children: [{
-	                                fieldName: 'id',
-	                                kind: 'Field',
-	                                metadata: {
-	                                    isGenerated: true,
-	                                    isRequisite: true
-	                                },
-	                                type: 'ID'
-	                            }],
-	                            fieldName: 'node',
-	                            kind: 'Field',
-	                            metadata: {
-	                                canHaveSubselections: true,
-	                                isGenerated: true,
-	                                isRequisite: true
-	                            },
-	                            type: 'Link'
-	                        }],
-	                        fieldName: 'linkEdge',
-	                        kind: 'Field',
-	                        metadata: {
-	                            canHaveSubselections: true
-	                        },
-	                        type: 'LinkEdge'
-	                    }, {
-	                        children: [{
-	                            fieldName: 'linkConnection',
-	                            kind: 'Field',
-	                            metadata: {
-	                                canHaveSubselections: true,
-	                                isConnection: true
-	                            },
-	                            type: 'LinkConnection'
-	                        }, {
-	                            fieldName: 'id',
-	                            kind: 'Field',
-	                            metadata: {
-	                                isGenerated: true,
-	                                isRequisite: true
-	                            },
-	                            type: 'ID'
-	                        }],
-	                        fieldName: 'store',
-	                        kind: 'Field',
-	                        metadata: {
-	                            canHaveSubselections: true
-	                        },
-	                        type: 'Store'
-	                    }],
-	                    id: _reactRelay2.default.QL.__id(),
-	                    kind: 'Fragment',
-	                    metadata: {},
-	                    name: 'CreateLinkMutation_ValueRelayQL',
-	                    type: 'CreateLinkPayload'
-	                };
-	            }();
+	            return _reactRelay2.default.QL(_templateObject2);
 	        }
 	    }, {
 	        key: 'getConfigs',

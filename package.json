@@ -4,8 +4,8 @@
   "description": "Free Community Club (freecom.club) is an opensouce project to create free democracy, where every citizen can vote and keep track to every proposal.",
   "main": "server.js",
   "scripts": {
-    "start": "gulp js && gulp webpack && babel-node --presets react,es2015 dist/server/index.js",
-    "front": "gulp js && gulp webpack",
+    "start": "gulp js && webpack && babel-node --presets react,es2015 dist/server/index.js",
+    "front": "gulp js && webpack",
     "server": "gulp js && babel-node --presets react,es2015 dist/server/index.js",
     "mocha": "mocha ./dist/**/*.test.js",
     "pretest": "gulp js",
