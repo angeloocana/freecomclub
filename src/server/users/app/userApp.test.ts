@@ -1,25 +1,31 @@
 import UserApp from './userApp';
 import UserRepository from '../repository/userRepository';
-import { ok, throws } from 'ptz-assert';
+import { ok, notOk, throws } from 'ptz-assert';
 import { stub } from 'sinon';
 
-var userRepository = UserRepository(null);
-var userApp = UserApp(userRepository);
-
-stub(userRepository, 'save').returns({});
+var userRepository:IUserRepository, 
+userApp:IUserApp;
 
 describe('UserApp', ()=>{
     describe('save', ()=>{
-        it('throw error if user is invalid', ()=>{
-           throws(()=>{
-                var user = {userName:'', email:'', displayName:''};
-                userApp.save(user);            
-            });
+        beforeEach(()=>{
+            userRepository = UserRepository(null);
+            userApp = UserApp(userRepository);
+
+            stub(userRepository, 'save').returns({});
         });
 
-        it('call repository if User is valid', ()=>{
+        it('do not call repository if user is invalid', async ()=>{
+            var user = {userName:'', email:'', displayName:''};
+            await userApp.save(user);            
+            notOk(userRepository.save['called']);
+        });
+
+        it('call repository if User is valid', async ()=>{
+            stub(userRepository, 'getOtherUsersWithSameUserNameOrEmail').returns([]);
+
             var user:IUser = {userName:'angeloocana', email:'angeloocana@gmail.com', displayName: ''};
-            userApp.save(user);
+            var userReturned = await userApp.save(user);
             ok(userRepository.save['called']);
         });
     });
