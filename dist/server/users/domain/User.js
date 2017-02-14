@@ -61,6 +61,19 @@ var User = function (_EntityBase) {
             this.validateEmail();
             return _get(User.prototype.__proto__ || Object.getPrototypeOf(User.prototype), 'isValid', this).call(this);
         }
+    }, {
+        key: 'validateOtherUsersWithSameUserNameOrEmail',
+        value: function validateOtherUsersWithSameUserNameOrEmail(otherUsers) {
+            var _this2 = this;
+
+            if (!otherUsers) return;
+            if (otherUsers.filter(function (user) {
+                return user.userName == _this2.userName;
+            }).length > 0) this.addError('ERROR_USER_USERNAME_IN_USE');
+            if (otherUsers.filter(function (user) {
+                return user.email == _this2.email;
+            }).length > 0) this.addError('ERROR_USER_EMAIL_IN_USE');
+        }
     }]);
 
     return User;

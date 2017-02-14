@@ -53,6 +53,7 @@
     "mocha": "^3.2.0",
     "mocha-lcov-reporter": "^1.2.0",
     "nyc": "^10.1.2",
+    "sinon": "^1.17.7",
     "typescript": "^2.1.6",
     "typings": "^2.1.0"
   },

@@ -1,11 +1,13 @@
 import UserApp from '../app/userApp';
+import UserRepository from '../repository/userRepository';
 import { id, createdBy, dtChanged } from '../../core/api/entityBaseGraphQL';
 
 import {
     GraphQLObjectType,
     GraphQLNonNull,
     GraphQLBoolean,
-    GraphQLString
+    GraphQLString,
+    GraphQLList
 } from 'graphql';
 
 import {
@@ -18,20 +20,21 @@ import {
 
 function UserSchema(db) {
 
-    var userApp = UserApp(db);
+    var userApp = UserApp(UserRepository(db));
 
 
     var userType = new GraphQLObjectType({
         name: 'User',
         fields: () => ({
-            id,
+            id: { type: GraphQLString },
             userName: { type: GraphQLString },
             email: { type: GraphQLString },
             emailConfirmed: { type: GraphQLBoolean },
             displayName: { type: GraphQLString },
             imgUrl: { type: GraphQLString },
-            createdBy,
-            dtChanged
+            //createdBy,
+            //dtChanged,
+            errors: {type: new GraphQLList(GraphQLString)}
         })
     });
 
@@ -54,12 +57,13 @@ function UserSchema(db) {
         }
     }
 
-    function getCreateUserMutation(outputStore) {
+    function getSaveUserMutation(outputStore) {
 
         return mutationWithClientMutationId({
-            name: 'CreateUser',
+            name: 'SaveUser',
 
             inputFields: {
+                id: {type: GraphQLString},
                 userName: { type: new GraphQLNonNull(GraphQLString) },
                 email: { type: new GraphQLNonNull(GraphQLString) },
                 displayName: { type: new GraphQLNonNull(GraphQLString) },
@@ -69,17 +73,20 @@ function UserSchema(db) {
             outputFields: {
                 userEdge: {
                     type: userConnection.edgeType,
-                    resolve: (obj) => ({ node: obj.ops[0], cursor: obj.insertedId })
+                    resolve: (user) => {
+                        console.log('ql user', user);
+                        return { node: user, cursor: user.id }
+                    }
                 },
                 store: outputStore
             },
 
-            mutateAndGetPayload: userApp.add
+            mutateAndGetPayload: userApp.save
         });
     }
 
     return {
-        getCreateUserMutation,
+        getSaveUserMutation,
         getUserConnection
     }
 }

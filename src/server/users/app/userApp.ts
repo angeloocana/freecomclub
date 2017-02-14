@@ -1,23 +1,36 @@
-import UserRepository from '../repository/userRepository';
 import User from '../domain/User';
 
 interface IUserApp {
-    add(user: IUser):Promise<IUser>;
+    save(user: IUser):Promise<IUser>;
     find(query: any, options: { limit: number }):Promise<IUser[]>;
 
     getAuthToken(userNameOrEmail, password);
     verifyAuthToken(token);
 }
 
-function UserApp(db): IUserApp {
+function UserApp(userRepository:IUserRepository): IUserApp {
 
-    var userRepository = UserRepository(db);
+    async function save(user: IUser):Promise<IUser>{
+        try{
+            user = new User(user);
+            user.throwErrorIfIsInvalid();
 
+            var otherUsers = await userRepository.getOtherUsersWithSameUserNameOrEmail(user);
 
-    function add(user: IUser):Promise<IUser>{
-        user = new User(user);
-        user.throwErrorIfIsInvalid();
-        return userRepository.add(user);
+            console.log('otherUsers', otherUsers);
+
+            user.validateOtherUsersWithSameUserNameOrEmail(otherUsers);
+            console.log('user after other users validation', user);
+            user.throwErrorIfIsInvalid();
+            console.log('before save');
+            user = await userRepository.save(user);
+        }
+        catch(err){
+            console.log('catch err', err);
+        }
+        finally{
+            return Promise.resolve(user);       
+        }
     }
 
     function find(query, {limit}) {
@@ -33,7 +46,7 @@ function UserApp(db): IUserApp {
     }
 
     return {
-        add,
+        save,
         find,
         getAuthToken,
         verifyAuthToken

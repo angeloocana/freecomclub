@@ -1,15 +1,18 @@
-mutation CreateUserMutation($input: CreateUserInput!){
-    createUser(input: $input){
-        clientMutationId,    
-        userEdge{
-            node{
+
+SaveUserMutation($input: SaveUserInput!) {
+    saveUser(input: $input) {
+        userEdge {
+            node {
+                errors,
                 id,
                 userName,
                 email,
-                displayName
+                emailConfirmed,
+                displayName,
+                imgUrl
             }
         }
-    }  
+    }
 }
 
 //Variables
@@ -17,7 +20,8 @@ mutation CreateUserMutation($input: CreateUserInput!){
     "input": {
         "userName": "angeloocana",
         "email": "angeloocana@gmail.com",
-        "displayName": "Ângelo Ocanã"
+        "displayName": "Ângelo Ocanã",
+        "password": "teste"
     }
 }
 

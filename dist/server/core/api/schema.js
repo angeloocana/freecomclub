@@ -141,7 +141,7 @@ function Schema(db) {
             fields: function fields() {
                 return {
                     createLink: createLinkMutation,
-                    createUser: userSchema.getCreateUserMutation(outputStore)
+                    saveUser: userSchema.getSaveUserMutation(outputStore)
                 };
             }
         })

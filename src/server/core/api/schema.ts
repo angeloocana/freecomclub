@@ -132,7 +132,7 @@ function Schema(db){
             name: 'Mutation',
             fields: () => ({
                 createLink: createLinkMutation,
-                createUser: userSchema.getCreateUserMutation(outputStore)
+                saveUser: userSchema.getSaveUserMutation(outputStore)
             })
         })    
     });

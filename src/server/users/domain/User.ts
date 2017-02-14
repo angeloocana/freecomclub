@@ -47,4 +47,15 @@ export default class User extends EntityBase implements IUser{
 
         return super.isValid();
     }
+
+    validateOtherUsersWithSameUserNameOrEmail(otherUsers:IUser[]){
+        if(!otherUsers)          
+            return;
+
+        if(otherUsers.filter(user => user.userName == this.userName).length > 0)
+            this.addError('ERROR_USER_USERNAME_IN_USE');           
+
+        if(otherUsers.filter(user => user.email == this.email).length > 0)
+            this.addError('ERROR_USER_EMAIL_IN_USE');
+    }
 }
