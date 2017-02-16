@@ -31,14 +31,17 @@ export default class User extends EntityBase implements IUser{
     private validateUserName(){
          if(!this.userName || this.userName.length < 3)
             this.addError('ERROR_USER_USERNAME_REQUIRED');
+        else
+            this.userName = this.userName.toLowerCase();
     }
 
     private validateEmail(){
         if(!this.email)
             this.addError('ERROR_USER_EMAIL_REQUIRED');
-
-        if(!validateEmail(this.email))
+        else if(!validateEmail(this.email))
             this.addError('ERROR_USER_EMAIL_INVALID');
+        else
+            this.email = this.email.toLowerCase();
     }
 
     isValid():boolean{

@@ -18,6 +18,10 @@ describe('User', function () {
             var user = new _User2.default({ userName: 'angeloocana', email: '', displayName: '' });
             (0, _ptzAssert.notContains)(user.errors, 'ERROR_USER_USERNAME_REQUIRED');
         });
+        it('Should be lowercase', function () {
+            var user = new _User2.default({ userName: 'AnGeLoOcAnA', email: '', displayName: '' });
+            (0, _ptzAssert.equal)(user.userName, 'angeloocana');
+        });
     });
     describe('Email', function () {
         it('Add error when empty email', function () {
@@ -32,6 +36,10 @@ describe('User', function () {
             var user = new _User2.default({ userName: 'angeloocana', email: 'angeloocana@gmail.com', displayName: '' });
             (0, _ptzAssert.notContains)(user.errors, 'ERROR_USER_EMAIL_REQUIRED');
             (0, _ptzAssert.notContains)(user.errors, 'ERROR_USER_EMAIL_INVALID');
+        });
+        it('Should be lowercase', function () {
+            var user = new _User2.default({ userName: 'AnGeLoOcAnA', email: 'AnGeLoOcAnA@gMaIl.CoM', displayName: '' });
+            (0, _ptzAssert.equal)(user.email, 'angeloocana@gmail.com');
         });
     });
 });

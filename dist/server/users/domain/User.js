@@ -46,13 +46,12 @@ var User = function (_EntityBase) {
     _createClass(User, [{
         key: 'validateUserName',
         value: function validateUserName() {
-            if (!this.userName || this.userName.length < 3) this.addError('ERROR_USER_USERNAME_REQUIRED');
+            if (!this.userName || this.userName.length < 3) this.addError('ERROR_USER_USERNAME_REQUIRED');else this.userName = this.userName.toLowerCase();
         }
     }, {
         key: 'validateEmail',
         value: function validateEmail() {
-            if (!this.email) this.addError('ERROR_USER_EMAIL_REQUIRED');
-            if (!(0, _Email.validateEmail)(this.email)) this.addError('ERROR_USER_EMAIL_INVALID');
+            if (!this.email) this.addError('ERROR_USER_EMAIL_REQUIRED');else if (!(0, _Email.validateEmail)(this.email)) this.addError('ERROR_USER_EMAIL_INVALID');else this.email = this.email.toLowerCase();
         }
     }, {
         key: 'isValid',

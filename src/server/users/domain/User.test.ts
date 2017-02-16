@@ -1,5 +1,5 @@
 import User from './User';
-import { contains, notContains } from 'ptz-assert';
+import { contains, notContains, equal } from 'ptz-assert';
 
 describe('User', () => {
     describe('UserName', ()=>{
@@ -12,6 +12,11 @@ describe('User', () => {
             var user = new User({userName:'angeloocana', email:'', displayName:''});
 
             notContains(user.errors, 'ERROR_USER_USERNAME_REQUIRED');
+        });
+
+        it('Should be lowercase',()=>{
+            var user = new User({userName:'AnGeLoOcAnA', email:'', displayName:''});
+            equal(user.userName, 'angeloocana');
         });
     });
 
@@ -33,6 +38,12 @@ describe('User', () => {
             notContains(user.errors, 'ERROR_USER_EMAIL_REQUIRED');
             notContains(user.errors, 'ERROR_USER_EMAIL_INVALID');
         });
+
+        it('Should be lowercase',()=>{
+            var user = new User({userName:'AnGeLoOcAnA', email:'AnGeLoOcAnA@gMaIl.CoM', displayName:''});
+            equal(user.email, 'angeloocana@gmail.com');
+        });
+
     });
 
 });
