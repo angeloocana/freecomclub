@@ -5,7 +5,7 @@ export default class EntityBase extends EntityMinBase implements IEntityBase{
     createdBy:ICreatedBy;
     dtChanged:Date;
 
-    constructor(entity:IEntityBase){        
+    constructor(entity:IEntityBaseArgs){        
         if(!entity)
             entity = {};
 
@@ -13,7 +13,6 @@ export default class EntityBase extends EntityMinBase implements IEntityBase{
 
         this.createdBy = entity.createdBy;
         this.dtChanged = entity.dtChanged;
-
     }
 }
 

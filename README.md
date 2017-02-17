@@ -26,10 +26,20 @@
     typings install dt~mocha --global --save
 ```
 
-## Steps to Run
+## Setup
 ```
     npm install   
+    node gensalt.js
+```
+
+## Run
+```
     npm start
+```
+
+## Test
+```
+    npm test
 ```
 
 ## Dependencies

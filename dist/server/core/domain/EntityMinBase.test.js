@@ -12,7 +12,6 @@ describe('EntityMinBase', function () {
     describe('Id', function () {
         it('Generate Id', function () {
             var entity = new _EntityMinBase2.default({});
-            console.log('entity', entity);
             (0, _ptzAssert.notEmptyString)(entity.id);
         });
         it('Set _id to id', function () {

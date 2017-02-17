@@ -16,9 +16,6 @@ describe('User', function () {
         });
         it('Do not add error when valid username', function () {
             var user = new _User2.default({ userName: 'angeloocana', email: '', displayName: '' });
-            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-            console.log(user);
-            console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
             (0, _ptzAssert.notContains)(user.errors, 'ERROR_USER_USERNAME_REQUIRED');
         });
         it('Should be lowercase', function () {

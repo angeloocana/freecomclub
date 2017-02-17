@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/ba2209ad582d7ef81c2d47a8c8d02a725107c32f/dotenv/index.d.ts",
+    "raw": "registry:dt/dotenv#2.0.0+20170113195346",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/ba2209ad582d7ef81c2d47a8c8d02a725107c32f/dotenv/index.d.ts"
+  }
+}

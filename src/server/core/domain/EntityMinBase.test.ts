@@ -6,7 +6,6 @@ describe('EntityMinBase', ()=>{
     describe('Id', ()=>{
         it('Generate Id',()=>{
             var entity = new EntityMinBase({}); 
-            console.log('entity', entity)
             notEmptyString(entity.id);
         });
 

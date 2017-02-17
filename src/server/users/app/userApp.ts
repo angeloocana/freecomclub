@@ -1,4 +1,5 @@
 import User from '../domain/User';
+import {hash} from 'bcrypt';
 
 interface IUserApp {
     save(user: IUser):Promise<IUser>;
@@ -10,8 +11,24 @@ interface IUserApp {
 
 function UserApp(userRepository:IUserRepository): IUserApp {
 
+    async function hashPassword(user:IUser):Promise<IUser>{
+        if(!user.password)
+            return Promise.resolve(user);
+        
+        var salt = process.env.PASSWORD_SALT;
+        if(!salt)
+            throw 'passwordSalt not added to process.env.';
+
+        user.passwordHash = await hash(user.password, salt);
+        user.password = undefined;
+
+        return Promise.resolve(user);
+    }
+
     async function save(user: IUser):Promise<IUser>{
         user = new User(user);
+
+        user = await hashPassword(user);
 
         if(!user.isValid())
             return Promise.resolve(user);       
@@ -22,6 +39,8 @@ function UserApp(userRepository:IUserRepository): IUserApp {
             return Promise.resolve(user);       
 
         user = await userRepository.save(user);
+        
+        return Promise.resolve(user);       
     }
 
     function find(query, {limit}) {

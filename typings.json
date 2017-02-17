@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "bcrypt": "registry:npm/bcrypt#1.0.0+20161205015554",
+    "dotenv": "registry:dt/dotenv#2.0.0+20170113195346",
     "express": "registry:npm/express#4.14.0+20160925001530",
     "express-graphql": "registry:dt/express-graphql#0.0.0+20160727004517",
     "flux": "registry:npm/flux#2.1.1+20160601175240",

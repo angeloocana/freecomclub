@@ -11,7 +11,7 @@ export default class User extends EntityBase implements IUser{
     password:string;
     passwordHash:string;
 
-    constructor(user:IUser){
+    constructor(user:IUserArgs){
         if(!user)
             throw "ERROR_EMPTY_USER";
 
@@ -45,12 +45,9 @@ export default class User extends EntityBase implements IUser{
     }
 
     isValid():boolean{
-        console.log('user isValid()');
-
         this.validateUserName();
         this.validateEmail();
 
-        console.log('user errors:', this.errors);
         return super.isValid();
     }
 

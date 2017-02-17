@@ -56,10 +56,8 @@ var User = function (_EntityBase) {
     }, {
         key: 'isValid',
         value: function isValid() {
-            console.log('user isValid()');
             this.validateUserName();
             this.validateEmail();
-            console.log('user errors:', this.errors);
             return _get(User.prototype.__proto__ || Object.getPrototypeOf(User.prototype), 'isValid', this).call(this);
         }
     }, {
