@@ -29,7 +29,7 @@ export default class User extends EntityBase implements IUser{
     }
 
     private validateUserName(){
-         if(!this.userName || this.userName.length < 3)
+        if(!this.userName || this.userName.length < 3)
             this.addError('ERROR_USER_USERNAME_REQUIRED');
         else
             this.userName = this.userName.toLowerCase();
@@ -45,20 +45,30 @@ export default class User extends EntityBase implements IUser{
     }
 
     isValid():boolean{
+        console.log('user isValid()');
+
         this.validateUserName();
         this.validateEmail();
 
+        console.log('user errors:', this.errors);
         return super.isValid();
     }
 
-    validateOtherUsersWithSameUserNameOrEmail(otherUsers:IUser[]){
+    otherUsersWithSameUserNameOrEmail(otherUsers:IUser[]):boolean{
         if(!otherUsers)          
             return;
 
-        if(otherUsers.filter(user => user.userName == this.userName).length > 0)
-            this.addError('ERROR_USER_USERNAME_IN_USE');           
+        var error = false;
 
-        if(otherUsers.filter(user => user.email == this.email).length > 0)
+        if(otherUsers.filter(user => user.userName == this.userName).length > 0){
+            this.addError('ERROR_USER_USERNAME_IN_USE');           error = true;
+        }
+
+        if(otherUsers.filter(user => user.email == this.email).length > 0){
             this.addError('ERROR_USER_EMAIL_IN_USE');
+            error = true;
+        }
+
+        return error;
     }
 }

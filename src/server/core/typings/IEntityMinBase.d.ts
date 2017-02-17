@@ -5,3 +5,9 @@ interface IEntityMinBase {
     isValid():boolean;
     throwErrorIfIsInvalid():void;
 }
+
+interface IEntityMinBaseArgs {
+    id?:string;
+    _id?:string;
+    errors?:string[];
+}

@@ -1,10 +1,15 @@
+import uuid from 'uuid/v4';
+
 export default class EntityMinBase implements IEntityMinBase{
 
     id:string;
     errors:string[];
 
-    constructor(entity:IEntityMinBase){
-        this.id = entity.id || entity._id;
+    constructor(entity?:IEntityMinBaseArgs){
+        if(!entity)
+            entity = {};
+
+        this.setId(entity);
         this.errors = entity.errors;
     }
 
@@ -15,7 +20,14 @@ export default class EntityMinBase implements IEntityMinBase{
         this.errors.push(error);
     }
 
-    isValid(){
+    private setId(entity){
+        this.id = entity.id || entity._id;
+        
+        if(!this.id)
+            this.id = uuid();
+    }
+
+    isValid():boolean{
         return !this.errors || this.errors.length == 0;
     }
 

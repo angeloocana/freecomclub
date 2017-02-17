@@ -6,4 +6,6 @@ interface IUser extends IEntityBase{
     imgUrl?:string;
     password?:string;
     passwordHash?:string;
+
+    otherUsersWithSameUserNameOrEmail(users:IUser[]):boolean;
 }

@@ -11,26 +11,17 @@ interface IUserApp {
 function UserApp(userRepository:IUserRepository): IUserApp {
 
     async function save(user: IUser):Promise<IUser>{
-        try{
-            user = new User(user);
-            user.throwErrorIfIsInvalid();
+        user = new User(user);
 
-            var otherUsers = await userRepository.getOtherUsersWithSameUserNameOrEmail(user);
-
-            console.log('otherUsers', otherUsers);
-
-            user.validateOtherUsersWithSameUserNameOrEmail(otherUsers);
-            console.log('user after other users validation', user);
-            user.throwErrorIfIsInvalid();
-            console.log('before save');
-            user = await userRepository.save(user);
-        }
-        catch(err){
-            console.log('catch err', err);
-        }
-        finally{
+        if(!user.isValid())
             return Promise.resolve(user);       
-        }
+
+        var otherUsers = await userRepository.getOtherUsersWithSameUserNameOrEmail(user);
+
+        if(user.otherUsersWithSameUserNameOrEmail(otherUsers))
+            return Promise.resolve(user);       
+
+        user = await userRepository.save(user);
     }
 
     function find(query, {limit}) {

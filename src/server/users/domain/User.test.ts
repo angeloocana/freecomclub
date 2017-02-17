@@ -11,6 +11,9 @@ describe('User', () => {
         it('Do not add error when valid username',()=>{
             var user = new User({userName:'angeloocana', email:'', displayName:''});
 
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+            console.log(user);
+            console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
             notContains(user.errors, 'ERROR_USER_USERNAME_REQUIRED');
         });
 

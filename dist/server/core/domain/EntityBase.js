@@ -22,6 +22,8 @@ var EntityBase = function (_EntityMinBase) {
     function EntityBase(entity) {
         _classCallCheck(this, EntityBase);
 
+        if (!entity) entity = {};
+
         var _this = _possibleConstructorReturn(this, (EntityBase.__proto__ || Object.getPrototypeOf(EntityBase)).call(this, entity));
 
         _this.createdBy = entity.createdBy;

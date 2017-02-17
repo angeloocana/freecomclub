@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _User = require('../domain/User');
+var _User = require("../domain/User");
 
 var _User2 = _interopRequireDefault(_User);
 
@@ -43,45 +43,42 @@ function UserApp(userRepository) {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
-                            _context.prev = 0;
-
                             user = new _User2.default(user);
-                            user.throwErrorIfIsInvalid();
+
+                            if (user.isValid()) {
+                                _context.next = 3;
+                                break;
+                            }
+
+                            return _context.abrupt("return", Promise.resolve(user));
+
+                        case 3:
                             _context.next = 5;
                             return userRepository.getOtherUsersWithSameUserNameOrEmail(user);
 
                         case 5:
                             otherUsers = _context.sent;
 
-                            console.log('otherUsers', otherUsers);
-                            user.validateOtherUsersWithSameUserNameOrEmail(otherUsers);
-                            console.log('user after other users validation', user);
-                            user.throwErrorIfIsInvalid();
-                            console.log('before save');
-                            _context.next = 13;
+                            if (!user.otherUsersWithSameUserNameOrEmail(otherUsers)) {
+                                _context.next = 8;
+                                break;
+                            }
+
+                            return _context.abrupt("return", Promise.resolve(user));
+
+                        case 8:
+                            _context.next = 10;
                             return userRepository.save(user);
 
-                        case 13:
+                        case 10:
                             user = _context.sent;
-                            _context.next = 19;
-                            break;
 
-                        case 16:
-                            _context.prev = 16;
-                            _context.t0 = _context['catch'](0);
-
-                            console.log('catch err', _context.t0);
-
-                        case 19:
-                            _context.prev = 19;
-                            return _context.abrupt('return', Promise.resolve(user));
-
-                        case 22:
-                        case 'end':
+                        case 11:
+                        case "end":
                             return _context.stop();
                     }
                 }
-            }, _callee, this, [[0, 16, 19, 22]]);
+            }, _callee, this);
         }));
     }
     function find(query, _ref) {
