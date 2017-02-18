@@ -8,7 +8,7 @@
     "front": "gulp js && webpack",
     "server": "gulp js && babel-node --presets react,es2015 dist/server/index.js",
     "mocha": "mocha ./dist/server/**/*.js --compilers js:babel-core/register --require babel-polyfill",
-    "pretest": "gulp js",
+    "pretest": "gulp js && node gensalt.js",
     "test": "nyc npm run mocha && nyc report --reporter=text-lcov > coverage.lcov && codecov --token=64cfc7d6-dd7a-4a52-ac74-8704b1cbe750"
   },
   "repository": {
