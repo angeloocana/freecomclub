@@ -63,22 +63,22 @@ function UserRepository(db) {
         return result;
     }
     function getOtherUsersWithSameUserNameOrEmail(user) {
-        var query = { _id: { $ne: user.id },
+        var query = {
+            _id: { $ne: user.id },
             $or: [{ email: user.email }, { userName: user.userName }]
         };
         return getUserDbCollection().find(query, { userName: 1, email: 1 }).toArray();
     }
-    function getByUserName(userName) {
-        return getUserDbCollection().findOne({ userName: userName });
-    }
-    function getByEmail(email) {
-        return getUserDbCollection().findOne({ email: email });
+    function getByUserNameOrEmail(userNameOrEmail) {
+        var query = {
+            $or: [{ email: userNameOrEmail }, { userName: userNameOrEmail }]
+        };
+        return getUserDbCollection().findOne(query);
     }
     return {
         save: save,
         find: find,
-        getByUserName: getByUserName,
-        getByEmail: getByEmail,
+        getByUserNameOrEmail: getByUserNameOrEmail,
         getOtherUsersWithSameUserNameOrEmail: getOtherUsersWithSameUserNameOrEmail
     };
 }

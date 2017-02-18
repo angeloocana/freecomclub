@@ -6,19 +6,14 @@ var envFile = './.env';
 
 function envFileDoNotExists(next){
     fs.readFile(envFile, 'utf8', function(err, data){
-        if(err)
-        {
-            console.log(err);
-            throw err;
-        }
 
         if(!data)
-            next();
+            return next();
 
         if(data.indexOf('PASSWORD_SALT') >= 0)
             return;
         else
-            next();
+           return next();
     });
 }
 

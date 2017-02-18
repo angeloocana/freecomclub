@@ -136,13 +136,64 @@ function UserApp(userRepository) {
 
         return userRepository.find(query, { limit: limit });
     }
-    function getAuthToken(userNameOrEmail, password) {}
+    function getAuthToken(userNameOrEmail, password) {
+        return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee3() {
+            var user, userError, res;
+            return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            _context3.next = 2;
+                            return userRepository.getByUserNameOrEmail(userNameOrEmail);
+
+                        case 2:
+                            user = _context3.sent;
+                            userError = new _User2.default({
+                                userName: userNameOrEmail,
+                                email: '',
+                                displayName: '',
+                                errors: ['ERROR_USER_INVALID_USERNAME_OR_PASSWORD']
+                            });
+
+                            if (user) {
+                                _context3.next = 6;
+                                break;
+                            }
+
+                            return _context3.abrupt('return', Promise.resolve(userError));
+
+                        case 6:
+                            _context3.next = 8;
+                            return (0, _bcrypt.compare)(password, user.passwordHash);
+
+                        case 8:
+                            res = _context3.sent;
+
+                            if (!res) {
+                                _context3.next = 13;
+                                break;
+                            }
+
+                            return _context3.abrupt('return', Promise.resolve(user));
+
+                        case 13:
+                            return _context3.abrupt('return', Promise.resolve(userError));
+
+                        case 14:
+                        case 'end':
+                            return _context3.stop();
+                    }
+                }
+            }, _callee3, this);
+        }));
+    }
     function verifyAuthToken(token) {}
     return {
         save: save,
         find: find,
         getAuthToken: getAuthToken,
-        verifyAuthToken: verifyAuthToken
+        verifyAuthToken: verifyAuthToken,
+        hashPassword: hashPassword
     };
 }
 exports.default = UserApp;
