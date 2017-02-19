@@ -248,10 +248,9 @@ describe('UserApp', function () {
                                 user = _context7.sent;
 
                                 (0, _ptzAssert.ok)(user);
-                                console.log('-------------------------', user);
                                 (0, _ptzAssert.emptyArray)(user.errors);
 
-                            case 12:
+                            case 11:
                             case 'end':
                                 return _context7.stop();
                         }
