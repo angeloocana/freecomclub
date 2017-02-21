@@ -95,11 +95,10 @@ describe('UserApp', function () {
                             case 3:
                                 user = _context2.sent;
 
-                                console.log('user.passwordHash-----', user.passwordHash);
                                 (0, _ptzAssert.ok)(user.passwordHash, 'passwordHash not set');
                                 (0, _ptzAssert.notOk)(user.password, 'password not empty');
 
-                            case 7:
+                            case 6:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -114,7 +113,11 @@ describe('UserApp', function () {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
                             case 0:
-                                user = { userName: '', email: '', displayName: '' };
+                                user = {
+                                    userName: '',
+                                    email: '',
+                                    displayName: ''
+                                };
                                 _context3.next = 3;
                                 return userApp.save(user);
 
@@ -136,7 +139,11 @@ describe('UserApp', function () {
                     while (1) {
                         switch (_context4.prev = _context4.next) {
                             case 0:
-                                user = { userName: 'angeloocana', email: 'angeloocana@gmail.com', displayName: '' };
+                                user = {
+                                    userName: 'angeloocana',
+                                    email: 'angeloocana@gmail.com',
+                                    displayName: ''
+                                };
                                 _context4.next = 3;
                                 return userApp.save(user);
 
@@ -191,12 +198,7 @@ describe('UserApp', function () {
                         switch (_context6.prev = _context6.next) {
                             case 0:
                                 password = 'testeteste';
-                                user = new _User2.default({
-                                    userName: 'angeloocana',
-                                    email: '',
-                                    displayName: '',
-                                    password: password
-                                });
+                                user = new _User2.default({ userName: 'angeloocana', email: '', displayName: '', password: password });
                                 _context6.next = 4;
                                 return userApp.hashPassword(user);
 
@@ -228,12 +230,7 @@ describe('UserApp', function () {
                         switch (_context7.prev = _context7.next) {
                             case 0:
                                 password = 'testeteste';
-                                user = new _User2.default({
-                                    userName: 'angeloocana',
-                                    email: 'alanmarcell@live.com',
-                                    displayName: '',
-                                    password: password
-                                });
+                                user = new _User2.default({ userName: 'angeloocana', email: 'alanmarcell@live.com', displayName: '', password: password });
                                 _context7.next = 4;
                                 return userApp.hashPassword(user);
 

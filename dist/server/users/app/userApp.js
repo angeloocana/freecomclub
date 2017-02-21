@@ -8,7 +8,7 @@ var _User = require('../domain/User');
 
 var _User2 = _interopRequireDefault(_User);
 
-var _bcrypt = require('bcrypt');
+var _bcryptjs = require('bcryptjs');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -64,7 +64,7 @@ function UserApp(userRepository) {
 
                         case 5:
                             _context.next = 7;
-                            return (0, _bcrypt.hash)(user.password, salt);
+                            return (0, _bcryptjs.hash)(user.password, salt);
 
                         case 7:
                             user.passwordHash = _context.sent;
@@ -164,7 +164,7 @@ function UserApp(userRepository) {
 
                         case 6:
                             _context3.next = 8;
-                            return (0, _bcrypt.compare)(password, user.passwordHash);
+                            return (0, _bcryptjs.compare)(password, user.passwordHash);
 
                         case 8:
                             res = _context3.sent;

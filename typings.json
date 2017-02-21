@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "bcrypt": "registry:npm/bcrypt#1.0.0+20161205015554",
+    "bcryptjs": "registry:dt/bcryptjs#2.4.0+20170109141314",
     "dotenv": "registry:dt/dotenv#2.0.0+20170113195346",
     "express": "registry:npm/express#4.14.0+20160925001530",
     "express-graphql": "registry:dt/express-graphql#0.0.0+20160727004517",

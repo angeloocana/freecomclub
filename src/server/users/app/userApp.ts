@@ -1,5 +1,5 @@
 import User from '../domain/User';
-import { hash, compare } from 'bcrypt';
+import { hash, compare } from 'bcryptjs';
 
 interface IUserApp {
     save(user: IUser): Promise<IUser>;

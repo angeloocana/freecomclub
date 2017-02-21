@@ -25,7 +25,7 @@
     "babel-loader": "^6.2.10",
     "babel-preset-react": "^6.16.0",
     "babel-relay-plugin": "^0.10.0",
-    "bcrypt": "^1.0.2",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^4.0.0",
     "events": "^1.1.1",
     "express": "^4.14.0",

@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/63322c7d435f6ce215134954920d2509cb8ccfdb/bcryptjs/index.d.ts",
+    "raw": "registry:dt/bcryptjs#2.4.0+20170109141314",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/63322c7d435f6ce215134954920d2509cb8ccfdb/bcryptjs/index.d.ts"
+  }
+}
