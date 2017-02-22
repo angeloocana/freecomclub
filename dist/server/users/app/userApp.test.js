@@ -159,7 +159,7 @@ describe('UserApp', function () {
             }));
         });
     });
-    describe('getAuthToken', function () {
+    describe('authenticateUser', function () {
         beforeEach(function () {
             userRepository = (0, _userRepository2.default)(null);
             userApp = (0, _userApp2.default)(userRepository);
@@ -175,7 +175,7 @@ describe('UserApp', function () {
 
                                 (0, _sinon.stub)(userRepository, 'getByUserNameOrEmail').returns(null);
                                 _context5.next = 4;
-                                return userApp.getAuthToken(userName, 'teste');
+                                return userApp.authenticateUser(userName, 'teste');
 
                             case 4:
                                 user = _context5.sent;
@@ -207,7 +207,7 @@ describe('UserApp', function () {
 
                                 (0, _sinon.stub)(userRepository, 'getByUserNameOrEmail').returns(user);
                                 _context6.next = 8;
-                                return userApp.getAuthToken(user.userName, 'incorrectPassword');
+                                return userApp.authenticateUser(user.userName, 'incorrectPassword');
 
                             case 8:
                                 user = _context6.sent;
@@ -239,7 +239,7 @@ describe('UserApp', function () {
 
                                 (0, _sinon.stub)(userRepository, 'getByUserNameOrEmail').returns(user);
                                 _context7.next = 8;
-                                return userApp.getAuthToken(user.userName, password);
+                                return userApp.authenticateUser(user.userName, password);
 
                             case 8:
                                 user = _context7.sent;
@@ -253,6 +253,73 @@ describe('UserApp', function () {
                         }
                     }
                 }, _callee7, this);
+            }));
+        });
+    });
+    describe('getAuthToken', function () {
+        beforeEach(function () {
+            userRepository = (0, _userRepository2.default)(null);
+            userApp = (0, _userApp2.default)(userRepository);
+        });
+        it('When user is valid password generate token', function () {
+            return __awaiter(undefined, void 0, void 0, regeneratorRuntime.mark(function _callee8() {
+                var user, userToken;
+                return regeneratorRuntime.wrap(function _callee8$(_context8) {
+                    while (1) {
+                        switch (_context8.prev = _context8.next) {
+                            case 0:
+                                user = new _User2.default({
+                                    userName: 'lnsilva',
+                                    email: 'lucas.neris@globalpoints.com.br', displayName: 'Lucas Neris',
+                                    password: '123456'
+                                });
+                                _context8.next = 3;
+                                return userApp.hashPassword(user);
+
+                            case 3:
+                                user = _context8.sent;
+
+                                (0, _sinon.stub)(userRepository, 'getByUserNameOrEmail').returns(user);
+                                _context8.next = 7;
+                                return userApp.getAuthToken('lnsilva', '123456');
+
+                            case 7:
+                                userToken = _context8.sent;
+
+                                (0, _ptzAssert.ok)(userToken.accessToken, 'Empty Token');
+
+                            case 9:
+                            case 'end':
+                                return _context8.stop();
+                        }
+                    }
+                }, _callee8, this);
+            }));
+        });
+        it('When user is invalid password does not generate token', function () {
+            return __awaiter(undefined, void 0, void 0, regeneratorRuntime.mark(function _callee9() {
+                var user, userToken;
+                return regeneratorRuntime.wrap(function _callee9$(_context9) {
+                    while (1) {
+                        switch (_context9.prev = _context9.next) {
+                            case 0:
+                                user = _User2.default.getUserAthenticationError('');
+
+                                (0, _sinon.stub)(userRepository, 'getByUserNameOrEmail').returns(null);
+                                _context9.next = 4;
+                                return userApp.getAuthToken('lnsilva', '123456');
+
+                            case 4:
+                                userToken = _context9.sent;
+
+                                (0, _ptzAssert.notOk)(userToken.accessToken, 'Not Empty Token');
+
+                            case 6:
+                            case 'end':
+                                return _context9.stop();
+                        }
+                    }
+                }, _callee9, this);
             }));
         });
     });

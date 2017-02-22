@@ -1,11 +1,15 @@
 import User from '../domain/User';
 import { hash, compare } from 'bcryptjs';
+import { encode, decode } from 'jwt-simple';
 
 interface IUserApp {
     save(user: IUser): Promise<IUser>;
     find(query: any, options: { limit: number }): Promise<IUser[]>;
 
-    getAuthToken(userNameOrEmail, password);
+    authenticateUser(userNameOrEmail: string
+        , password: string): Promise<IUser>;
+    getAuthToken(userNameOrEmail: string, password: string)
+        : Promise<IUser>;
     verifyAuthToken(token);
     hashPassword(user: IUser): Promise<IUser>;
 }
@@ -48,24 +52,33 @@ function UserApp(userRepository: IUserRepository): IUserApp {
         return userRepository.find(query, { limit });
     }
 
-    async function getAuthToken(userNameOrEmail, password) {
+    async function authenticateUser(userNameOrEmail: string
+        , password: string): Promise<IUser> {
         var user = await userRepository.getByUserNameOrEmail(userNameOrEmail);
-        var userError = new User({
-            userName: userNameOrEmail,
-            email: '',
-            displayName: '',
-            errors: ['ERROR_USER_INVALID_USERNAME_OR_PASSWORD']
-        });
 
-        if (!user) 
+        var userError = User.getUserAthenticationError(userNameOrEmail);
+
+        if (!user)
             return Promise.resolve(userError);
-        
+
         var res = await compare(password, user.passwordHash);
 
         if (res)
             return Promise.resolve(user);
         else
             return Promise.resolve(userError);
+    }
+
+    async function getAuthToken(userNameOrEmail: string, password: string)
+        : Promise<IUser> {
+        var user = await authenticateUser(userNameOrEmail, password);
+
+        const tokenSecret = process.env.PASSWORD_SALT;
+
+        if (user.isValid())
+            user.accessToken = encode(user, tokenSecret);
+
+        return Promise.resolve(user);
     }
 
     function verifyAuthToken(token) {
@@ -77,7 +90,8 @@ function UserApp(userRepository: IUserRepository): IUserApp {
         find,
         getAuthToken,
         verifyAuthToken,
-        hashPassword
+        hashPassword,
+        authenticateUser
     }
 }
 

@@ -10,6 +10,8 @@ var _User2 = _interopRequireDefault(_User);
 
 var _bcryptjs = require('bcryptjs');
 
+var _jwtSimple = require('jwt-simple');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -136,7 +138,7 @@ function UserApp(userRepository) {
 
         return userRepository.find(query, { limit: limit });
     }
-    function getAuthToken(userNameOrEmail, password) {
+    function authenticateUser(userNameOrEmail, password) {
         return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee3() {
             var user, userError, res;
             return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -148,12 +150,7 @@ function UserApp(userRepository) {
 
                         case 2:
                             user = _context3.sent;
-                            userError = new _User2.default({
-                                userName: userNameOrEmail,
-                                email: '',
-                                displayName: '',
-                                errors: ['ERROR_USER_INVALID_USERNAME_OR_PASSWORD']
-                            });
+                            userError = _User2.default.getUserAthenticationError(userNameOrEmail);
 
                             if (user) {
                                 _context3.next = 6;
@@ -187,13 +184,39 @@ function UserApp(userRepository) {
             }, _callee3, this);
         }));
     }
+    function getAuthToken(userNameOrEmail, password) {
+        return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee4() {
+            var user, tokenSecret;
+            return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                while (1) {
+                    switch (_context4.prev = _context4.next) {
+                        case 0:
+                            _context4.next = 2;
+                            return authenticateUser(userNameOrEmail, password);
+
+                        case 2:
+                            user = _context4.sent;
+                            tokenSecret = process.env.PASSWORD_SALT;
+
+                            if (user.isValid()) user.accessToken = (0, _jwtSimple.encode)(user, tokenSecret);
+                            return _context4.abrupt('return', Promise.resolve(user));
+
+                        case 6:
+                        case 'end':
+                            return _context4.stop();
+                    }
+                }
+            }, _callee4, this);
+        }));
+    }
     function verifyAuthToken(token) {}
     return {
         save: save,
         find: find,
         getAuthToken: getAuthToken,
         verifyAuthToken: verifyAuthToken,
-        hashPassword: hashPassword
+        hashPassword: hashPassword,
+        authenticateUser: authenticateUser
     };
 }
 exports.default = UserApp;

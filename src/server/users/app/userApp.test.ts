@@ -13,10 +13,10 @@ import {
     notContains,
     emptyArray
 } from 'ptz-assert';
-import {stub} from 'sinon';
+import { stub } from 'sinon';
 
-var userRepository : IUserRepository,
-    userApp : IUserApp;
+var userRepository: IUserRepository,
+    userApp: IUserApp;
 var userRepositorySaveCalls = 0;
 
 describe('UserApp', () => {
@@ -34,8 +34,8 @@ describe('UserApp', () => {
             userApp = UserApp(userRepository);
         });
 
-        it('hash password', async() => {
-            var user : IUserArgs = {
+        it('hash password', async () => {
+            var user: IUserArgs = {
                 userName: 'angeloocana',
                 email: 'angeloocana@gmail.com',
                 displayName: 'Ângelo Ocanã',
@@ -48,7 +48,7 @@ describe('UserApp', () => {
             notOk(user.password, 'password not empty');
         });
 
-        it('do not call repository if user is invalid', async() => {
+        it('do not call repository if user is invalid', async () => {
             var user = {
                 userName: '',
                 email: '',
@@ -58,8 +58,8 @@ describe('UserApp', () => {
             equal(userRepositorySaveCalls, 0);
         });
 
-        it('call repository if User is valid', async() => {
-            var user : IUserArgs = {
+        it('call repository if User is valid', async () => {
+            var user: IUserArgs = {
                 userName: 'angeloocana',
                 email: 'angeloocana@gmail.com',
                 displayName: ''
@@ -69,48 +69,81 @@ describe('UserApp', () => {
         });
     });
 
+    describe('authenticateUser', () => {
+        beforeEach(() => {
+            userRepository = UserRepository(null);
+            userApp = UserApp(userRepository);
+        });
+
+        it('User not found should return user with error', async () => {
+            var userName = 'angeloocana';
+            stub(userRepository, 'getByUserNameOrEmail').returns(null);
+
+            var user = await userApp.authenticateUser(userName, 'teste');
+
+            contains(user.errors, 'ERROR_USER_INVALID_USERNAME_OR_PASSWORD');
+        });
+
+        it('User found but incorrect password should return user with error', async () => {
+            var password = 'testeteste';
+
+            var user = new User({ userName: 'angeloocana', email: '', displayName: '', password });
+
+            user = await userApp.hashPassword(user);
+
+            stub(userRepository, 'getByUserNameOrEmail').returns(user);
+
+            user = await userApp.authenticateUser(user.userName, 'incorrectPassword');
+
+            contains(user.errors, 'ERROR_USER_INVALID_USERNAME_OR_PASSWORD');
+
+        });
+        it('User found and correct password should return the user', async () => {
+            var password = 'testeteste';
+
+            var user = new User({ userName: 'angeloocana', email: 'alanmarcell@live.com', displayName: '', password });
+
+            user = await userApp.hashPassword(user);
+
+            stub(userRepository, 'getByUserNameOrEmail').returns(user);
+
+            user = await userApp.authenticateUser(user.userName, password);
+
+            ok(user);
+            emptyArray(user.errors);
+        });
+    });
+
     describe('getAuthToken', () => {
         beforeEach(() => {
             userRepository = UserRepository(null);
             userApp = UserApp(userRepository);
         });
 
-        it('User not found should return user with error', async() => {
-            var userName = 'angeloocana';
+        it('When user is valid password generate token', async () => {
+            var user = new User({
+                userName: 'lnsilva'
+                , email: 'lucas.neris@globalpoints.com.br', displayName: 'Lucas Neris',
+                password: '123456'
+            });
+
+            user = await userApp.hashPassword(user);
+            stub(userRepository, 'getByUserNameOrEmail').returns(user);
+
+            var userToken = await userApp.getAuthToken('lnsilva', '123456');
+
+            ok(userToken.accessToken, 'Empty Token');
+
+        });
+        it('When user is invalid password does not generate token', async () => {
+
+            const user = User.getUserAthenticationError('');
+
             stub(userRepository, 'getByUserNameOrEmail').returns(null);
 
-            var user = await userApp.getAuthToken(userName, 'teste');
+            var userToken = await userApp.getAuthToken('lnsilva', '123456');
 
-            contains(user.errors, 'ERROR_USER_INVALID_USERNAME_OR_PASSWORD');
+            notOk(userToken.accessToken, 'Not Empty Token');
         });
-
-        it('User found but incorrect password should return user with error', async() => {
-            var password = 'testeteste';
-
-            var user = new User({userName: 'angeloocana', email: '', displayName: '', password});
-
-            user = await userApp.hashPassword(user);
-
-            stub(userRepository, 'getByUserNameOrEmail').returns(user);
-
-            user = await userApp.getAuthToken(user.userName, 'incorrectPassword');
-
-            contains(user.errors, 'ERROR_USER_INVALID_USERNAME_OR_PASSWORD');
-
-        });
-        it('User found and correct password should return the user', async() => {
-            var password = 'testeteste';
-
-            var user = new User({userName: 'angeloocana', email: 'alanmarcell@live.com', displayName: '', password});
-
-            user = await userApp.hashPassword(user);
-
-            stub(userRepository, 'getByUserNameOrEmail').returns(user);
-
-            user = await userApp.getAuthToken(user.userName, password);
-
-            ok(user);
-            emptyArray(user.errors);
-        });
-    })
+    });
 });

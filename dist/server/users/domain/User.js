@@ -81,6 +81,16 @@ var User = function (_EntityBase) {
             }
             return error;
         }
+    }], [{
+        key: 'getUserAthenticationError',
+        value: function getUserAthenticationError(userNameOrEmail) {
+            return new User({
+                userName: userNameOrEmail,
+                email: '',
+                displayName: '',
+                errors: ['ERROR_USER_INVALID_USERNAME_OR_PASSWORD']
+            });
+        }
     }]);
 
     return User;
