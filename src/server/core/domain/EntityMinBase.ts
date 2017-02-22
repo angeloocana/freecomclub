@@ -1,4 +1,4 @@
-import uuid from 'uuid/v4';
+import shortid from 'shortid';
 
 export default class EntityMinBase implements IEntityMinBase{
 
@@ -24,7 +24,7 @@ export default class EntityMinBase implements IEntityMinBase{
         this.id = entity.id || entity._id;
         
         if(!this.id)
-            this.id = uuid();
+            this.id = shortid.generate();
     }
 
     isValid():boolean{
