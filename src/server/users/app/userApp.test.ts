@@ -180,8 +180,6 @@ describe('UserApp', () => {
 
             var userByToken = await userApp.verifyAuthToken(userToken.accessToken);
 
-            console.log('---------', userByToken);
-
             equal(userByToken.id, user.id, 'User Id dont match');
 
             equal(userByToken.email, user.email, 'User Id dont match');

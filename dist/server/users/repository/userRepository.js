@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -45,18 +45,24 @@ function UserRepository(db) {
                             result = _context.sent;
 
                             user = result.ops[0];
-                            user.id = result.upsertedId._id;
-                            console.log('result', result);
-                            console.log('saved user', user);
-                            return _context.abrupt('return', Promise.resolve(user));
+                            if (result.upsertedId) user.id = result.upsertedId._id;
+                            return _context.abrupt("return", Promise.resolve(user));
 
-                        case 8:
-                        case 'end':
+                        case 6:
+                        case "end":
                             return _context.stop();
                     }
                 }
             }, _callee, this);
         }));
+    }
+    function getByIds(ids) {
+        var query = {
+            _id: {
+                $in: ids
+            }
+        };
+        return getUserDbCollection().find(query).toArray();
     }
     function find(query, options) {
         var result = getUserDbCollection().find(query, {}, options).toArray();
@@ -79,6 +85,7 @@ function UserRepository(db) {
         save: save,
         find: find,
         getByUserNameOrEmail: getByUserNameOrEmail,
+        getByIds: getByIds,
         getOtherUsersWithSameUserNameOrEmail: getOtherUsersWithSameUserNameOrEmail
     };
 }

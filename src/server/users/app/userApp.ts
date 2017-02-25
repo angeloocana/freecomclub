@@ -32,6 +32,8 @@ function UserApp(userRepository: IUserRepository): IUserApp {
     }
 
     async function save(user: IUser): Promise<IUser> {
+        var isUpdate = !!user.id;
+
         user = new User(user);
 
         user = await hashPassword(user);
@@ -43,6 +45,13 @@ function UserApp(userRepository: IUserRepository): IUserApp {
 
         if (user.otherUsersWithSameUserNameOrEmail(otherUsers))
             return Promise.resolve(user);
+
+        if (isUpdate) {
+            var users = (await userRepository.getByIds([user.id]));
+
+            var userDb = new User(users[0]);
+            user = userDb.update(user);
+        }
 
         user = await userRepository.save(user);
 
@@ -79,11 +88,10 @@ function UserApp(userRepository: IUserRepository): IUserApp {
 
         return Promise.resolve(user);
     }
- 
+
     function verifyAuthToken(token: string): Promise<User> {
         var user = decode(token, passwordSalt);
-
-        return user;
+        return Promise.resolve(user);
     }
 
     return {

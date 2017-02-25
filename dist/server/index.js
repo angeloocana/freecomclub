@@ -1,5 +1,9 @@
 'use strict';
 
+var _dotenv = require('dotenv');
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -50,6 +54,8 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+
+_dotenv2.default.config();
 
 var app = (0, _express2.default)();
 console.log('starting server');

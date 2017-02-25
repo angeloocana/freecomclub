@@ -323,4 +323,90 @@ describe('UserApp', function () {
             }));
         });
     });
+    describe('verifyAuthToken', function () {
+        beforeEach(function () {
+            userRepository = (0, _userRepository2.default)(null);
+            userApp = (0, _userApp2.default)(userRepository);
+        });
+        it('Invalid token throws exception', function () {
+            return __awaiter(undefined, void 0, void 0, regeneratorRuntime.mark(function _callee10() {
+                var hasError, userByToken;
+                return regeneratorRuntime.wrap(function _callee10$(_context10) {
+                    while (1) {
+                        switch (_context10.prev = _context10.next) {
+                            case 0:
+                                hasError = false;
+                                _context10.prev = 1;
+                                _context10.next = 4;
+                                return userApp.verifyAuthToken('Invalid_Token');
+
+                            case 4:
+                                userByToken = _context10.sent;
+                                _context10.next = 10;
+                                break;
+
+                            case 7:
+                                _context10.prev = 7;
+                                _context10.t0 = _context10['catch'](1);
+
+                                hasError = true;
+
+                            case 10:
+                                (0, _ptzAssert.ok)(hasError);
+
+                            case 11:
+                            case 'end':
+                                return _context10.stop();
+                        }
+                    }
+                }, _callee10, this, [[1, 7]]);
+            }));
+        });
+        it('Valid token return user', function () {
+            return __awaiter(undefined, void 0, void 0, regeneratorRuntime.mark(function _callee11() {
+                var user, userToken, userByToken;
+                return regeneratorRuntime.wrap(function _callee11$(_context11) {
+                    while (1) {
+                        switch (_context11.prev = _context11.next) {
+                            case 0:
+                                user = new _User2.default({
+                                    userName: 'lnsilva',
+                                    email: 'lucas.neris@globalpoints.com.br',
+                                    displayName: 'Lucas Neris',
+                                    password: '123456'
+                                });
+                                _context11.next = 3;
+                                return userApp.hashPassword(user);
+
+                            case 3:
+                                user = _context11.sent;
+
+                                (0, _sinon.stub)(userRepository, 'getByUserNameOrEmail').returns(user);
+                                _context11.next = 7;
+                                return userApp.getAuthToken('lnsilva', '123456');
+
+                            case 7:
+                                userToken = _context11.sent;
+
+                                (0, _ptzAssert.ok)(userToken.accessToken, 'Empty Token');
+                                _context11.next = 11;
+                                return userApp.verifyAuthToken(userToken.accessToken);
+
+                            case 11:
+                                userByToken = _context11.sent;
+
+                                (0, _ptzAssert.equal)(userByToken.id, user.id, 'User Id dont match');
+                                (0, _ptzAssert.equal)(userByToken.email, user.email, 'User Id dont match');
+                                (0, _ptzAssert.equal)(userByToken.userName, user.userName, 'User Id dont match');
+                                (0, _ptzAssert.equal)(userByToken.displayName, user.displayName, 'User Id dont match');
+
+                            case 16:
+                            case 'end':
+                                return _context11.stop();
+                        }
+                    }
+                }, _callee11, this);
+            }));
+        });
+    });
 });

@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import Schema from './core/api/schema';
 import GraphQlHttp from 'express-graphql';

@@ -5,11 +5,11 @@ export default class User extends EntityBase implements IUser {
 
     userName: string;
     email: string;
-    emailConfirmed: boolean;
+    emailConfirmed?: boolean;
     displayName: string;
-    imgUrl: string;
-    password: string;
-    passwordHash: string;
+    imgUrl?: string;
+    password?: string;
+    passwordHash?: string;
 
     constructor(user: IUserArgs) {
         if (!user)
@@ -76,5 +76,15 @@ export default class User extends EntityBase implements IUser {
         }
 
         return error;
+    }
+
+    update(newUser:IUser):IUser{
+        this.userName = newUser.userName;
+        this.email = newUser.email;
+        this.passwordHash = newUser.passwordHash;
+        this.displayName = newUser.displayName;
+        this.imgUrl = newUser.imgUrl;
+        this.dtChanged = new Date();
+         return this;
     }
 }

@@ -1,5 +1,5 @@
-
-SaveUserMutation($input: SaveUserInput!) {
+//Save User
+mutation($input: SaveUserInput!) {
     saveUser(input: $input) {
         userEdge {
             node {
@@ -28,7 +28,7 @@ SaveUserMutation($input: SaveUserInput!) {
 //--------------------------------------------------------------
 
 
-
+//Example
 CreateLinkMutation($input: CreateLinkInput!){
     createLink(input: $input){
         clientMutationId,

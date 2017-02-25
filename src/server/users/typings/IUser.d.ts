@@ -8,6 +8,7 @@ interface IUser extends IEntityBase {
     passwordHash?: string;
     accessToken?: string;
 
+    update(user:IUser):IUser;
     otherUsersWithSameUserNameOrEmail(users: IUser[]): boolean;
 }
 

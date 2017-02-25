@@ -81,6 +81,17 @@ var User = function (_EntityBase) {
             }
             return error;
         }
+    }, {
+        key: 'update',
+        value: function update(newUser) {
+            this.userName = newUser.userName;
+            this.email = newUser.email;
+            this.passwordHash = newUser.passwordHash;
+            this.displayName = newUser.displayName;
+            this.imgUrl = newUser.imgUrl;
+            this.dtChanged = new Date();
+            return this;
+        }
     }], [{
         key: 'getUserAthenticationError',
         value: function getUserAthenticationError(userNameOrEmail) {

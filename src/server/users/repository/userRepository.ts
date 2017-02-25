@@ -8,10 +8,21 @@ function UserRepository(db): IUserRepository {
         var result = await getUserDbCollection()
             .replaceOne({ _id: user.id }, user, { upsert: true });
         user = result.ops[0];
-        user.id = result.upsertedId._id;
-        console.log('result', result);
-        console.log('saved user', user);
+        if (result.upsertedId)
+            user.id = result.upsertedId._id;
         return Promise.resolve(user);
+    }
+
+    function getByIds(ids: string[]): Promise<IUser[]> {
+        var query = {
+            _id: {
+                $in: ids
+            }
+        };
+
+        return getUserDbCollection()
+            .find(query)
+            .toArray();
     }
 
     function find(query: any, options: { limit: number }): Promise<IUser[]> {
@@ -49,6 +60,7 @@ function UserRepository(db): IUserRepository {
         save,
         find,
         getByUserNameOrEmail,
+        getByIds,
         getOtherUsersWithSameUserNameOrEmail
     }
 }

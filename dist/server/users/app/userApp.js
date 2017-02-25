@@ -40,9 +40,10 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
 };
 
 function UserApp(userRepository) {
+    var tokenSecret, passwordSalt;
+    passwordSalt = tokenSecret = process.env.PASSWORD_SALT;
     function hashPassword(user) {
         return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-            var salt;
             return regeneratorRuntime.wrap(function _callee$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
@@ -55,26 +56,24 @@ function UserApp(userRepository) {
                             return _context.abrupt('return', Promise.resolve(user));
 
                         case 2:
-                            salt = process.env.PASSWORD_SALT;
-
-                            if (salt) {
-                                _context.next = 5;
+                            if (passwordSalt) {
+                                _context.next = 4;
                                 break;
                             }
 
                             throw 'passwordSalt not added to process.env.';
 
-                        case 5:
-                            _context.next = 7;
-                            return (0, _bcryptjs.hash)(user.password, salt);
+                        case 4:
+                            _context.next = 6;
+                            return (0, _bcryptjs.hash)(user.password, passwordSalt);
 
-                        case 7:
+                        case 6:
                             user.passwordHash = _context.sent;
 
                             user.password = undefined;
                             return _context.abrupt('return', Promise.resolve(user));
 
-                        case 10:
+                        case 9:
                         case 'end':
                             return _context.stop();
                     }
@@ -84,48 +83,65 @@ function UserApp(userRepository) {
     }
     function save(user) {
         return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee2() {
-            var otherUsers;
+            var isUpdate, otherUsers, users, userDb;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
+                            isUpdate = !!user.id;
+
                             user = new _User2.default(user);
-                            _context2.next = 3;
+                            _context2.next = 4;
                             return hashPassword(user);
 
-                        case 3:
+                        case 4:
                             user = _context2.sent;
 
                             if (user.isValid()) {
-                                _context2.next = 6;
+                                _context2.next = 7;
                                 break;
                             }
 
                             return _context2.abrupt('return', Promise.resolve(user));
 
-                        case 6:
-                            _context2.next = 8;
+                        case 7:
+                            _context2.next = 9;
                             return userRepository.getOtherUsersWithSameUserNameOrEmail(user);
 
-                        case 8:
+                        case 9:
                             otherUsers = _context2.sent;
 
                             if (!user.otherUsersWithSameUserNameOrEmail(otherUsers)) {
-                                _context2.next = 11;
+                                _context2.next = 12;
                                 break;
                             }
 
                             return _context2.abrupt('return', Promise.resolve(user));
 
-                        case 11:
-                            _context2.next = 13;
+                        case 12:
+                            if (!isUpdate) {
+                                _context2.next = 18;
+                                break;
+                            }
+
+                            _context2.next = 15;
+                            return userRepository.getByIds([user.id]);
+
+                        case 15:
+                            users = _context2.sent;
+                            userDb = new _User2.default(users[0]);
+
+                            user = userDb.update(user);
+
+                        case 18:
+                            _context2.next = 20;
                             return userRepository.save(user);
 
-                        case 13:
+                        case 20:
                             user = _context2.sent;
                             return _context2.abrupt('return', Promise.resolve(user));
 
-                        case 15:
+                        case 22:
                         case 'end':
                             return _context2.stop();
                     }
@@ -186,7 +202,7 @@ function UserApp(userRepository) {
     }
     function getAuthToken(userNameOrEmail, password) {
         return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee4() {
-            var user, tokenSecret;
+            var user;
             return regeneratorRuntime.wrap(function _callee4$(_context4) {
                 while (1) {
                     switch (_context4.prev = _context4.next) {
@@ -196,12 +212,11 @@ function UserApp(userRepository) {
 
                         case 2:
                             user = _context4.sent;
-                            tokenSecret = process.env.PASSWORD_SALT;
 
                             if (user.isValid()) user.accessToken = (0, _jwtSimple.encode)(user, tokenSecret);
                             return _context4.abrupt('return', Promise.resolve(user));
 
-                        case 6:
+                        case 5:
                         case 'end':
                             return _context4.stop();
                     }
@@ -209,7 +224,10 @@ function UserApp(userRepository) {
             }, _callee4, this);
         }));
     }
-    function verifyAuthToken(token) {}
+    function verifyAuthToken(token) {
+        var user = (0, _jwtSimple.decode)(token, passwordSalt);
+        return Promise.resolve(user);
+    }
     return {
         save: save,
         find: find,
