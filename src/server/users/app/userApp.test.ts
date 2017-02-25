@@ -146,4 +146,49 @@ describe('UserApp', () => {
             notOk(userToken.accessToken, 'Not Empty Token');
         });
     });
+
+    describe('verifyAuthToken', () => {
+        beforeEach(() => {
+            userRepository = UserRepository(null);
+            userApp = UserApp(userRepository);
+        });
+
+        it('Invalid token throws exception', async () => {
+            var hasError = false;
+            try {
+                var userByToken = await userApp.verifyAuthToken('Invalid_Token');
+            } catch (err) {
+                hasError = true;
+            }
+            ok(hasError);
+        });
+
+        it('Valid token return user', async () => {
+            var user = new User({
+                userName: 'lnsilva',
+                email: 'lucas.neris@globalpoints.com.br',
+                displayName: 'Lucas Neris',
+                password: '123456'
+            });
+
+            user = await userApp.hashPassword(user);
+            stub(userRepository, 'getByUserNameOrEmail').returns(user);
+
+            var userToken = await userApp.getAuthToken('lnsilva', '123456');
+
+            ok(userToken.accessToken, 'Empty Token');
+
+            var userByToken = await userApp.verifyAuthToken(userToken.accessToken);
+
+            console.log('---------', userByToken);
+
+            equal(userByToken.id, user.id, 'User Id dont match');
+
+            equal(userByToken.email, user.email, 'User Id dont match');
+
+            equal(userByToken.userName, user.userName, 'User Id dont match');
+
+            equal(userByToken.displayName, user.displayName, 'User Id dont match');
+        });
+    });
 });

@@ -10,21 +10,22 @@ interface IUserApp {
         , password: string): Promise<IUser>;
     getAuthToken(userNameOrEmail: string, password: string)
         : Promise<IUser>;
-    verifyAuthToken(token);
+    verifyAuthToken(token: string): Promise<User>;
     hashPassword(user: IUser): Promise<IUser>;
 }
 
 function UserApp(userRepository: IUserRepository): IUserApp {
+    var tokenSecret, passwordSalt;
+    passwordSalt = tokenSecret = process.env.PASSWORD_SALT;
 
     async function hashPassword(user: IUser): Promise<IUser> {
         if (!user.password)
             return Promise.resolve(user);
 
-        var salt = process.env.PASSWORD_SALT;
-        if (!salt)
+        if (!passwordSalt)
             throw 'passwordSalt not added to process.env.';
 
-        user.passwordHash = await hash(user.password, salt);
+        user.passwordHash = await hash(user.password, passwordSalt);
         user.password = undefined;
 
         return Promise.resolve(user);
@@ -73,16 +74,16 @@ function UserApp(userRepository: IUserRepository): IUserApp {
         : Promise<IUser> {
         var user = await authenticateUser(userNameOrEmail, password);
 
-        const tokenSecret = process.env.PASSWORD_SALT;
-
         if (user.isValid())
             user.accessToken = encode(user, tokenSecret);
 
         return Promise.resolve(user);
     }
 
-    function verifyAuthToken(token) {
+    function verifyAuthToken(token: string): Promise<User> {
+        var user = decode(token, passwordSalt);
 
+        return user;
     }
 
     return {
