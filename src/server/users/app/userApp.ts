@@ -79,7 +79,7 @@ function UserApp(userRepository: IUserRepository): IUserApp {
 
         return Promise.resolve(user);
     }
-
+ 
     function verifyAuthToken(token: string): Promise<User> {
         var user = decode(token, passwordSalt);
 
