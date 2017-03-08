@@ -2,12 +2,15 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
-import Schema from './core/api/schema';
+import Schema from './core/graphql/schema';
 import GraphQlHttp from 'express-graphql';
 import {MongoClient} from 'mongodb';
 import {graphql} from 'graphql';
 import {introspectionQuery} from 'graphql/utilities';
 import * as fs from 'fs';
+
+import {UserApp} from 'ptz-user-app';
+import {UserRepository} from 'ptz-user-repository';
 
 var app = express();
 
@@ -23,7 +26,8 @@ const MONGO_URL = 'mongodb://localhost:27017/relay',
 (async () => {
     try{
         var db = await MongoClient.connect(MONGO_URL);
-        var schema = Schema(db);
+        var userApp = UserApp(UserRepository(db));
+        var schema = Schema(userApp);
 
         app.use('/graphql', GraphQlHttp({
             schema,

@@ -1,6 +1,4 @@
-import UserApp from '../app/userApp';
-import UserRepository from '../repository/userRepository';
-import { id, createdBy, dtChanged } from '../../core/api/entityBaseGraphQL';
+//import { id, createdBy, dtChanged } from '../../core/api/entityBaseGraphQL';
 
 import {
     GraphQLObjectType,
@@ -18,10 +16,7 @@ import {
 } from 'graphql-relay';
 
 
-function UserSchema(db) {
-
-    var userApp = UserApp(UserRepository(db));
-
+function UserSchema(userApp: IUserApp) {
 
     var userType = new GraphQLObjectType({
         name: 'User',
@@ -34,7 +29,7 @@ function UserSchema(db) {
             imgUrl: { type: GraphQLString },
             //createdBy,
             //dtChanged,
-            errors: {type: new GraphQLList(GraphQLString)}
+            errors: { type: new GraphQLList(GraphQLString) }
         })
     });
 
@@ -50,7 +45,7 @@ function UserSchema(db) {
             resolve: (_, args) => {
                 console.log('getting users');
                 return connectionFromPromisedArray(
-                    userApp.find({},{ limit: args.first }),
+                    userApp.find({}, { limit: args.first }),
                     args
                 );
             }
@@ -63,7 +58,7 @@ function UserSchema(db) {
             name: 'SaveUser',
 
             inputFields: {
-                id: {type: GraphQLString},
+                id: { type: GraphQLString },
                 userName: { type: new GraphQLNonNull(GraphQLString) },
                 email: { type: new GraphQLNonNull(GraphQLString) },
                 displayName: { type: new GraphQLNonNull(GraphQLString) },

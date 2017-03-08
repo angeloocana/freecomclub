@@ -1,4 +1,6 @@
-import UserSchema from '../../users/api/userGraphQL';
+//falling to use graphql in other module
+//import {UserSchema} from 'ptz-user-graphql';
+import UserSchema from './userSchema';
 
 import {
     GraphQLSchema,
@@ -18,9 +20,9 @@ import{
     mutationWithClientMutationId
 } from 'graphql-relay';
 
-function Schema(db){
-
-    var userSchema = UserSchema(db);
+function Schema(userApp:IUserApp){
+    
+    var userSchema = UserSchema(userApp);
 
     var counter = 42;
     var data = [42, 43, 44];
@@ -34,38 +36,11 @@ function Schema(db){
     });
 
     var store = {};
-    var linkType = new GraphQLObjectType({
-        name: 'Link',
-        fields: () => ({
-            id: {
-                type: new GraphQLNonNull(GraphQLID),
-                resolve: (obj) => obj._id
-            },
-            title: {type: GraphQLString},
-            url: { type: GraphQLString}
-        })
-    });
-
-    var linkConnection = connectionDefinitions({
-        name: 'Link',
-        nodeType: linkType
-    });
-
+       
     var storeType = new GraphQLObjectType({
         name: 'Store',
         fields: () => ({
             id: globalIdField('Store'),
-            linkConnection: {
-                type: linkConnection.connectionType,
-                args: connectionArgs,
-                resolve: (_, args:{first:number}) =>{ 
-                    console.log('limit', args.first);
-                    return connectionFromPromisedArray( 
-                                                       db.collection('links').find({}).limit(args.first).toArray(),
-                                                       args
-                                                      );
-                }
-            },
             userConnection: userSchema.getUserConnection()
         })
     });
@@ -75,27 +50,8 @@ function Schema(db){
         resolve: () => store
     };
 
-
-    var createLinkMutation = mutationWithClientMutationId({
-        name: 'CreateLink',
-
-        inputFields: {
-            title: {type: new GraphQLNonNull(GraphQLString)},
-            url:  {type: new GraphQLNonNull(GraphQLString)}            
-        },
-
-        outputFields:{
-            linkEdge: {
-                type: linkConnection.edgeType,
-                resolve: (obj) => ({node: obj.ops[0], cursor: obj.insertedId})
-            },
-            store: outputStore
-        },
-
-        mutateAndGetPayload: ({title, url}) => {
-            return db.collection('links').insertOne({title, url});
-        }
-    });
+console.log("userSchema", userSchema);
+    console.log("userSchema.getUserConnection()>>>>>>>>>>", userSchema.getUserConnection());
 
     var schema = new GraphQLSchema({
         query: new GraphQLObjectType({
@@ -120,10 +76,6 @@ function Schema(db){
                 counters: {
                     type: new GraphQLList(counterType),
                     resolve: () => counters
-                },
-                links:{
-                    type: new GraphQLList(linkType),
-                    resolve: () => db.collection('links').find({}).toArray()
                 }
             })
         }),
@@ -131,7 +83,6 @@ function Schema(db){
         mutation: new GraphQLObjectType({
             name: 'Mutation',
             fields: () => ({
-                createLink: createLinkMutation,
                 saveUser: userSchema.getSaveUserMutation(outputStore)
             })
         })    

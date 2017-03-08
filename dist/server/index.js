@@ -8,7 +8,7 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _schema = require('./core/api/schema');
+var _schema = require('./core/graphql/schema');
 
 var _schema2 = _interopRequireDefault(_schema);
 
@@ -25,6 +25,10 @@ var _utilities = require('graphql/utilities');
 var _fs = require('fs');
 
 var fs = _interopRequireWildcard(_fs);
+
+var _ptzUserApp = require('ptz-user-app');
+
+var _ptzUserRepository = require('ptz-user-repository');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -64,7 +68,7 @@ var MONGO_URL = 'mongodb://localhost:27017/relay',
     PORT = 3000;
 (function () {
     return __awaiter(undefined, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-        var db, schema, json;
+        var db, userApp, schema, json;
         return regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
                 switch (_context.prev = _context.next) {
@@ -75,7 +79,8 @@ var MONGO_URL = 'mongodb://localhost:27017/relay',
 
                     case 3:
                         db = _context.sent;
-                        schema = (0, _schema2.default)(db);
+                        userApp = (0, _ptzUserApp.UserApp)((0, _ptzUserRepository.UserRepository)(db));
+                        schema = (0, _schema2.default)(userApp);
 
                         app.use('/graphql', (0, _expressGraphql2.default)({
                             schema: schema,
@@ -84,10 +89,10 @@ var MONGO_URL = 'mongodb://localhost:27017/relay',
                         app.listen(PORT, function () {
                             return console.log('Listening on port ' + PORT);
                         });
-                        _context.next = 9;
+                        _context.next = 10;
                         return (0, _graphql.graphql)(schema, _utilities.introspectionQuery);
 
-                    case 9:
+                    case 10:
                         json = _context.sent;
 
                         fs.writeFile('./dist/server/core/api/schema.json', JSON.stringify(json, null, 2), function (err) {
@@ -100,20 +105,20 @@ var MONGO_URL = 'mongodb://localhost:27017/relay',
                                 res.json(links);
                             });
                         });
-                        _context.next = 17;
+                        _context.next = 18;
                         break;
 
-                    case 14:
-                        _context.prev = 14;
+                    case 15:
+                        _context.prev = 15;
                         _context.t0 = _context['catch'](0);
 
                         console.log(_context.t0);
 
-                    case 17:
+                    case 18:
                     case 'end':
                         return _context.stop();
                 }
             }
-        }, _callee, this, [[0, 14]]);
+        }, _callee, this, [[0, 15]]);
     }));
 })();

@@ -25,7 +25,6 @@
     "babel-loader": "^6.2.10",
     "babel-preset-react": "^6.16.0",
     "babel-relay-plugin": "^0.10.0",
-    "bcryptjs": "^2.4.3",
     "dotenv": "^4.0.0",
     "events": "^1.1.1",
     "express": "^4.14.0",
@@ -34,15 +33,15 @@
     "graphql": "^0.8.2",
     "graphql-relay": "^0.4.4",
     "jquery": "^3.1.1",
-    "jsonwebtoken": "^7.2.1",
-    "jwt-simple": "^0.5.1",
     "kerberos": "0.0.22",
     "mongodb": "^2.2.21",
     "ptz-assert": "^1.2.0",
+    "ptz-user-app": "^1.0.1",
+    "ptz-user-graphql": "^1.0.1",
+    "ptz-user-repository": "^1.0.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-relay": "^0.10.0",
-    "shortid": "^2.2.6"
+    "react-relay": "^0.10.0"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",

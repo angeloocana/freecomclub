@@ -4,15 +4,18 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ptzUserGraphql = require('ptz-user-graphql');
+var _userSchema = require('./userSchema');
+
+var _userSchema2 = _interopRequireDefault(_userSchema);
 
 var _graphql = require('graphql');
 
 var _graphqlRelay = require('graphql-relay');
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function Schema(userApp) {
-    var userSchema = (0, _ptzUserGraphql.UserSchema)(userApp);
-    var testeSchema = (0, _ptzUserGraphql.TesteSchema)();
+    var userSchema = (0, _userSchema2.default)(userApp);
     var counter = 42;
     var data = [42, 43, 44];
     var counters = [{ counter: 42 }, { counter: 43 }];
@@ -30,7 +33,6 @@ function Schema(userApp) {
         fields: function fields() {
             return {
                 id: (0, _graphqlRelay.globalIdField)('Store'),
-                testeConnection: testeSchema.getTesteConnection(),
                 userConnection: userSchema.getUserConnection()
             };
         }
@@ -41,7 +43,8 @@ function Schema(userApp) {
             return store;
         }
     };
-    console.log("userSchema.getSaveUserMutation(outputStore)>>>>>>>>>>", userSchema.getSaveUserMutation(outputStore));
+    console.log("userSchema", userSchema);
+    console.log("userSchema.getUserConnection()>>>>>>>>>>", userSchema.getUserConnection());
     var schema = new _graphql.GraphQLSchema({
         query: new _graphql.GraphQLObjectType({
             name: 'Query',
@@ -84,7 +87,6 @@ function Schema(userApp) {
             name: 'Mutation',
             fields: function fields() {
                 return {
-                    saveTeste: testeSchema.getSaveTesteMutation(outputStore),
                     saveUser: userSchema.getSaveUserMutation(outputStore)
                 };
             }
