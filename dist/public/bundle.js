@@ -46,11 +46,6 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	var _templateObject = _taggedTemplateLiteral(['\n            query MainQuery{\n                store {\n                    ', '\n                }\n            }\n        '], ['\n            query MainQuery{\n                store {\n                    ', '\n                }\n            }\n        ']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n        query Test{\n            links{\n                title\n            }\n        }\n    '], ['\n        query Test{\n            links{\n                title\n            }\n        }\n    ']);
-
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -63,37 +58,19 @@
 
 	var _reactRelay2 = _interopRequireDefault(_reactRelay);
 
-	var _main = __webpack_require__(476);
+	var _UserReport = __webpack_require__(476);
 
-	var _main2 = _interopRequireDefault(_main);
+	var _UserReport2 = _interopRequireDefault(_UserReport);
 
-	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { default: obj };
-	}
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _taggedTemplateLiteral(strings, raw) {
-	    return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } }));
-	}
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _classCallCheck(instance, Constructor) {
-	    if (!(instance instanceof Constructor)) {
-	        throw new TypeError("Cannot call a class as a function");
-	    }
-	}
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _possibleConstructorReturn(self, call) {
-	    if (!self) {
-	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-	    }return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-	}
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	function _inherits(subClass, superClass) {
-	    if (typeof superClass !== "function" && superClass !== null) {
-	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === 'undefined' ? 'undefined' : _typeof(superClass)));
-	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-	}
-
-	console.log('Hello js 3');
+	console.log('Hello app.tsx');
 
 	var HomeRoute = function (_Relay$Route) {
 	    _inherits(HomeRoute, _Relay$Route);
@@ -110,11 +87,19 @@
 	HomeRoute.routeName = 'Home';
 	HomeRoute.queries = {
 	    store: function store(Component) {
-	        return _reactRelay2.default.QL(_templateObject, Component.getFragment('store'));
+	        return function (RQL_0) {
+	            return {
+	                children: [].concat.apply([], [_reactRelay2.default.QL.__frag(RQL_0)]),
+	                fieldName: 'store',
+	                kind: 'Query',
+	                metadata: {},
+	                name: 'MainQuery',
+	                type: 'Store'
+	            };
+	        }(Component.getFragment('store'));
 	    }
 	};
-	_reactDom2.default.render(_react2.default.createElement(_reactRelay2.default.RootContainer, { Component: _main2.default, route: new HomeRoute() }), document.getElementById('react'));
-	console.log(_reactRelay2.default.QL(_templateObject2));
+	_reactDom2.default.render(_react2.default.createElement(_reactRelay2.default.RootContainer, { Component: _UserReport2.default, route: new HomeRoute() }), document.getElementById('react'));
 
 /***/ },
 /* 1 */
@@ -18389,10 +18374,10 @@
 	 */
 
 	function getUnboundedScrollPosition(scrollable) {
-	  if (scrollable === window) {
+	  if (scrollable.Window && scrollable instanceof scrollable.Window) {
 	    return {
-	      x: window.pageXOffset || document.documentElement.scrollLeft,
-	      y: window.pageYOffset || document.documentElement.scrollTop
+	      x: scrollable.pageXOffset || scrollable.document.documentElement.scrollLeft,
+	      y: scrollable.pageYOffset || scrollable.document.documentElement.scrollTop
 	    };
 	  }
 	  return {
@@ -19144,7 +19129,9 @@
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	function isNode(object) {
-	  return !!(object && (typeof Node === 'function' ? object instanceof Node : (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
+	  var doc = object ? object.ownerDocument || object : document;
+	  var defaultView = doc.defaultView || window;
+	  return !!(object && (typeof defaultView.Node === 'function' ? object instanceof defaultView.Node : (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
 	}
 
 	module.exports = isNode;
@@ -19153,7 +19140,7 @@
 /* 152 */
 /***/ function(module, exports) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -19174,20 +19161,25 @@
 	 *
 	 * The activeElement will be null only if the document or document body is not
 	 * yet defined.
+	 *
+	 * @param {?DOMDocument} doc Defaults to current document.
+	 * @return {?DOMElement}
 	 */
 
-	function getActiveElement() /*?DOMElement*/{
-	  if (typeof document === 'undefined') {
+	function getActiveElement(doc) /*?DOMElement*/{
+	  doc = doc || global.document;
+	  if (typeof doc === 'undefined') {
 	    return null;
 	  }
 	  try {
-	    return document.activeElement || document.body;
+	    return doc.activeElement || doc.body;
 	  } catch (e) {
-	    return document.body;
+	    return doc.body;
 	  }
 	}
 
 	module.exports = getActiveElement;
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 153 */
@@ -42583,6 +42575,10 @@
 	      headers.forEach(function (value, name) {
 	        this.append(name, value);
 	      }, this);
+	    } else if (Array.isArray(headers)) {
+	      headers.forEach(function (header) {
+	        this.append(header[0], header[1]);
+	      }, this);
 	    } else if (headers) {
 	      Object.getOwnPropertyNames(headers).forEach(function (name) {
 	        this.append(name, headers[name]);
@@ -46468,23 +46464,11 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	var _createClass = function () {
-	    function defineProperties(target, props) {
-	        for (var i = 0; i < props.length; i++) {
-	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	        }
-	    }return function (Constructor, protoProps, staticProps) {
-	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	    };
-	}();
-
-	var _templateObject = _taggedTemplateLiteral(['\n        fragment on Store{\n            id,\n            linkConnection(first: $limit){\n                edges{\n                    node{\n                        id,\n                        ', '                \n                    }\n                }\n            }\n        }\n       '], ['\n        fragment on Store{\n            id,\n            linkConnection(first: $limit){\n                edges{\n                    node{\n                        id,\n                        ', '                \n                    }\n                }\n            }\n        }\n       ']);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
 
@@ -46494,47 +46478,35 @@
 
 	var _reactRelay2 = _interopRequireDefault(_reactRelay);
 
-	var _Link = __webpack_require__(477);
+	var _ptzUserDomain = __webpack_require__(477);
 
-	var _Link2 = _interopRequireDefault(_Link);
+	var _SaveUserMutation = __webpack_require__(494);
 
-	var _CreateLinkMutation = __webpack_require__(478);
+	var _SaveUserMutation2 = _interopRequireDefault(_SaveUserMutation);
 
-	var _CreateLinkMutation2 = _interopRequireDefault(_CreateLinkMutation);
+	var _User = __webpack_require__(495);
 
-	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { default: obj };
-	}
+	var _User2 = _interopRequireDefault(_User);
 
-	function _taggedTemplateLiteral(strings, raw) {
-	    return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } }));
-	}
+	var _CreateUserForm = __webpack_require__(496);
 
-	function _classCallCheck(instance, Constructor) {
-	    if (!(instance instanceof Constructor)) {
-	        throw new TypeError("Cannot call a class as a function");
-	    }
-	}
+	var _CreateUserForm2 = _interopRequireDefault(_CreateUserForm);
 
-	function _possibleConstructorReturn(self, call) {
-	    if (!self) {
-	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-	}
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _inherits(subClass, superClass) {
-	    if (typeof superClass !== "function" && superClass !== null) {
-	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-	}
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Main = function (_React$Component) {
-	    _inherits(Main, _React$Component);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	    function Main() {
-	        _classCallCheck(this, Main);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	        var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+	var UserReport = function (_React$Component) {
+	    _inherits(UserReport, _React$Component);
+
+	    function UserReport() {
+	        _classCallCheck(this, UserReport);
+
+	        var _this = _possibleConstructorReturn(this, (UserReport.__proto__ || Object.getPrototypeOf(UserReport)).apply(this, arguments));
 
 	        _this.setLimit = function (e) {
 	            var newLimit = Number(e.target.value);
@@ -46542,43 +46514,43 @@
 	            console.log('newLimit', newLimit);
 	            console.log('relay', _this.props.relay);
 	        };
-	        _this.handleSubmit = function (e) {
-	            e.preventDefault();
-	            _reactRelay2.default.Store.update(new _CreateLinkMutation2.default({
-	                title: _this.refs.newTitle.value,
-	                url: _this.refs.newUrl.value,
+	        _this.createUser = function (userArgs) {
+	            var user = new _ptzUserDomain.User(userArgs);
+	            console.log('user', user);
+	            _reactRelay2.default.Store.update(new _SaveUserMutation2.default({
+	                user: user,
 	                store: _this.props.store
 	            }));
-	            _this.refs.newTitle.value = "";
-	            _this.refs.newUrl.value = "";
 	        };
 	        return _this;
 	    }
 
-	    _createClass(Main, [{
+	    _createClass(UserReport, [{
 	        key: 'render',
 	        value: function render() {
-	            var content = this.props.store.linkConnection.edges.map(function (edge) {
-	                return _react2.default.createElement(_Link2.default, { key: edge.node.id, link: edge.node });
+	            var content = this.props.store.userConnection.edges.map(function (edge) {
+	                return _react2.default.createElement(_User2.default, { key: edge.node.id, user: edge.node });
 	            });
-	            return _react2.default.createElement("div", null, _react2.default.createElement("h3", null, "Links"), _react2.default.createElement("form", { onSubmit: this.handleSubmit }, _react2.default.createElement("input", { type: "text", placeholder: "Title", ref: "newTitle" }), _react2.default.createElement("input", { type: "text", placeholder: "Url", ref: "newUrl" }), _react2.default.createElement("button", { type: "submit" }, "Add")), _react2.default.createElement("label", { htmlFor: 'pagination-limit' }, "Showing"), _react2.default.createElement("select", { id: 'pagination-limit', onChange: this.setLimit, defaultValue: this.props.relay.variables.limit }, _react2.default.createElement("option", { value: "10" }, "10"), _react2.default.createElement("option", { value: "20" }, "20")), _react2.default.createElement("ul", null, content));
+	            return _react2.default.createElement("section", null, _react2.default.createElement("h1", null, "Users"), _react2.default.createElement(_CreateUserForm2.default, { createUser: this.createUser }), _react2.default.createElement("label", { htmlFor: 'pagination-limit' }, "Showing"), _react2.default.createElement("select", { id: 'pagination-limit', onChange: this.setLimit, defaultValue: this.props.relay.variables.limit }, _react2.default.createElement("option", { value: "10" }, "10"), _react2.default.createElement("option", { value: "20" }, "20")), _react2.default.createElement("ul", null, content));
 	        }
 	    }]);
 
-	    return Main;
+	    return UserReport;
 	}(_react2.default.Component);
 
-	Main = _reactRelay2.default.createContainer(Main, {
+	UserReport = _reactRelay2.default.createContainer(UserReport, {
 	    initialVariables: {
 	        limit: 20
 	    },
 	    fragments: {
 	        store: function store() {
-	            return _reactRelay2.default.QL(_templateObject, _Link2.default.getFragment('link'));
+	            return function () {
+	                throw new Error('GraphQL validation error ``Cannot query field "userConnection" on type "Store".`` in file `/home/angeloocana/dev/ptz/freecomclub/dist/frontend/users/components/UserReport.js`. Try updating your GraphQL schema if an argument/field/type was recently added.');
+	            }();
 	        }
 	    }
 	});
-	exports.default = Main;
+	exports.default = UserReport;
 
 /***/ },
 /* 477 */
@@ -46586,90 +46558,47 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.User = exports.errors = undefined;
+
+	var _errors = __webpack_require__(478);
+
+	var _errors2 = _interopRequireDefault(_errors);
+
+	var _User = __webpack_require__(479);
+
+	var _User2 = _interopRequireDefault(_User);
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	exports.errors = _errors2.default;
+	exports.User = _User2.default;
+
+/***/ },
+/* 478 */
+/***/ function(module, exports) {
+
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _createClass = function () {
-	    function defineProperties(target, props) {
-	        for (var i = 0; i < props.length; i++) {
-	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	        }
-	    }return function (Constructor, protoProps, staticProps) {
-	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	    };
-	}();
-
-	var _templateObject = _taggedTemplateLiteral(['\n            fragment on Link {\n                url,\n                title\n            }\n        '], ['\n            fragment on Link {\n                url,\n                title\n            }\n        ']);
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRelay = __webpack_require__(178);
-
-	var _reactRelay2 = _interopRequireDefault(_reactRelay);
-
-	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { default: obj };
-	}
-
-	function _taggedTemplateLiteral(strings, raw) {
-	    return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } }));
-	}
-
-	function _classCallCheck(instance, Constructor) {
-	    if (!(instance instanceof Constructor)) {
-	        throw new TypeError("Cannot call a class as a function");
-	    }
-	}
-
-	function _possibleConstructorReturn(self, call) {
-	    if (!self) {
-	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-	}
-
-	function _inherits(subClass, superClass) {
-	    if (typeof superClass !== "function" && superClass !== null) {
-	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-	}
-
-	var Link = function (_React$Component) {
-	    _inherits(Link, _React$Component);
-
-	    function Link() {
-	        _classCallCheck(this, Link);
-
-	        return _possibleConstructorReturn(this, (Link.__proto__ || Object.getPrototypeOf(Link)).apply(this, arguments));
-	    }
-
-	    _createClass(Link, [{
-	        key: 'render',
-	        value: function render() {
-	            var link = this.props.link;
-
-	            return _react2.default.createElement("li", null, _react2.default.createElement("a", { href: link.url }, link.title));
-	        }
-	    }]);
-
-	    return Link;
-	}(_react2.default.Component);
-
-	Link = _reactRelay2.default.createContainer(Link, {
-	    fragments: {
-	        link: function link() {
-	            return _reactRelay2.default.QL(_templateObject);
-	        }
-	    }
-	});
-	exports.default = Link;
+	exports.default = {
+	    ERROR_EMPTY_USER: 'ERROR_EMPTY_USER',
+	    ERROR_USER_USERNAME_IN_USE: 'ERROR_USER_USERNAME_IN_USE',
+	    ERROR_USER_EMAIL_IN_USE: 'ERROR_USER_EMAIL_IN_USE',
+	    ERROR_USER_INVALID_USERNAME_OR_PASSWORD: 'ERROR_USER_INVALID_USERNAME_OR_PASSWORD',
+	    ERROR_USER_USERNAME_REQUIRED: 'ERROR_USER_USERNAME_REQUIRED',
+	    ERROR_USER_EMAIL_REQUIRED: 'ERROR_USER_EMAIL_REQUIRED',
+	    ERROR_USER_EMAIL_INVALID: 'ERROR_USER_EMAIL_INVALID'
+	};
 
 /***/ },
-/* 478 */
+/* 479 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46680,6 +46609,22 @@
 	    value: true
 	});
 
+	var _get = function get(object, property, receiver) {
+	    if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+	        var parent = Object.getPrototypeOf(object);if (parent === null) {
+	            return undefined;
+	        } else {
+	            return get(parent, property, receiver);
+	        }
+	    } else if ("value" in desc) {
+	        return desc.value;
+	    } else {
+	        var getter = desc.get;if (getter === undefined) {
+	            return undefined;
+	        }return getter.call(receiver);
+	    }
+	};
+
 	var _createClass = function () {
 	    function defineProperties(target, props) {
 	        for (var i = 0; i < props.length; i++) {
@@ -46690,19 +46635,14 @@
 	    };
 	}();
 
-	var _templateObject = _taggedTemplateLiteral(['\n            mutation {createLink}\n        '], ['\n            mutation {createLink}\n        ']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n            fragment on CreateLinkPayload{\n                linkEdge,\n                store { linkConnection }\n            }\n        '], ['\n            fragment on CreateLinkPayload{\n                linkEdge,\n                store { linkConnection }\n            }\n        ']);
+	var _ptzCoreDomain = __webpack_require__(480);
 
-	var _reactRelay = __webpack_require__(178);
+	var _errors = __webpack_require__(478);
 
-	var _reactRelay2 = _interopRequireDefault(_reactRelay);
+	var _errors2 = _interopRequireDefault(_errors);
 
 	function _interopRequireDefault(obj) {
 	    return obj && obj.__esModule ? obj : { default: obj };
-	}
-
-	function _taggedTemplateLiteral(strings, raw) {
-	    return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } }));
 	}
 
 	function _classCallCheck(instance, Constructor) {
@@ -46723,32 +46663,686 @@
 	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var CreateLinkMutation = function (_Relay$Mutation) {
-	    _inherits(CreateLinkMutation, _Relay$Mutation);
+	var User = function (_EntityBase) {
+	    _inherits(User, _EntityBase);
 
-	    function CreateLinkMutation() {
-	        _classCallCheck(this, CreateLinkMutation);
+	    _createClass(User, null, [{
+	        key: 'getUserAthenticationError',
+	        value: function getUserAthenticationError(userNameOrEmail) {
+	            return new User({
+	                displayName: '',
+	                email: '',
+	                errors: [_errors2.default.ERROR_USER_INVALID_USERNAME_OR_PASSWORD],
+	                userName: userNameOrEmail
+	            });
+	        }
+	    }]);
 
-	        return _possibleConstructorReturn(this, (CreateLinkMutation.__proto__ || Object.getPrototypeOf(CreateLinkMutation)).apply(this, arguments));
+	    function User(user) {
+	        _classCallCheck(this, User);
+
+	        if (!user) throw _errors2.default.ERROR_EMPTY_USER;
+
+	        var _this = _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).call(this, user));
+
+	        _this.userName = user.userName;
+	        _this.email = user.email;
+	        _this.emailConfirmed = user.emailConfirmed;
+	        _this.displayName = user.displayName;
+	        _this.imgUrl = user.imgUrl;
+	        _this.password = user.password;
+	        _this.passwordHash = user.passwordHash;
+	        _this.isValid();
+	        return _this;
 	    }
 
-	    _createClass(CreateLinkMutation, [{
+	    _createClass(User, [{
+	        key: 'isValid',
+	        value: function isValid() {
+	            this.validateUserName();
+	            this.validateEmail();
+	            return _get(User.prototype.__proto__ || Object.getPrototypeOf(User.prototype), 'isValid', this).call(this);
+	        }
+	    }, {
+	        key: 'otherUsersWithSameUserNameOrEmail',
+	        value: function otherUsersWithSameUserNameOrEmail(otherUsers) {
+	            var _this2 = this;
+
+	            if (!otherUsers) return false;
+	            var error = false;
+	            if (otherUsers.filter(function (user) {
+	                return user.userName === _this2.userName;
+	            }).length > 0) {
+	                this.addError(_errors2.default.ERROR_USER_USERNAME_IN_USE);
+	                error = true;
+	            }
+	            if (otherUsers.filter(function (user) {
+	                return user.email === _this2.email;
+	            }).length > 0) {
+	                this.addError(_errors2.default.ERROR_USER_EMAIL_IN_USE);
+	                error = true;
+	            }
+	            return error;
+	        }
+	    }, {
+	        key: 'update',
+	        value: function update(newUser) {
+	            this.userName = newUser.userName;
+	            this.email = newUser.email;
+	            this.passwordHash = newUser.passwordHash;
+	            this.displayName = newUser.displayName;
+	            this.imgUrl = newUser.imgUrl;
+	            this.dtChanged = new Date();
+	            return this;
+	        }
+	    }, {
+	        key: 'validateUserName',
+	        value: function validateUserName() {
+	            if (!this.userName || this.userName.length < 3) this.addError(_errors2.default.ERROR_USER_USERNAME_REQUIRED);else this.userName = this.userName.toLowerCase();
+	        }
+	    }, {
+	        key: 'validateEmail',
+	        value: function validateEmail() {
+	            if (!this.email) this.addError(_errors2.default.ERROR_USER_EMAIL_REQUIRED);else if (!(0, _ptzCoreDomain.validateEmail)(this.email)) this.addError(_errors2.default.ERROR_USER_EMAIL_INVALID);else this.email = this.email.toLowerCase();
+	        }
+	    }]);
+
+	    return User;
+	}(_ptzCoreDomain.EntityBase);
+
+	exports.default = User;
+
+/***/ },
+/* 480 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.EntityMinBase = exports.EntityBase = exports.validateEmail = undefined;
+
+	var _Email = __webpack_require__(481);
+
+	var _EntityBase = __webpack_require__(482);
+
+	var _EntityBase2 = _interopRequireDefault(_EntityBase);
+
+	var _EntityMinBase = __webpack_require__(483);
+
+	var _EntityMinBase2 = _interopRequireDefault(_EntityMinBase);
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	exports.validateEmail = _Email.validateEmail;
+	exports.EntityBase = _EntityBase2.default;
+	exports.EntityMinBase = _EntityMinBase2.default;
+
+/***/ },
+/* 481 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.validateEmail = validateEmail;
+	function validateEmail(email) {
+	    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	    return re.test(email);
+	}
+
+/***/ },
+/* 482 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _EntityMinBase2 = __webpack_require__(483);
+
+	var _EntityMinBase3 = _interopRequireDefault(_EntityMinBase2);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === 'undefined' ? 'undefined' : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
+
+	var EntityBase = function (_EntityMinBase) {
+	    _inherits(EntityBase, _EntityMinBase);
+
+	    function EntityBase(entity) {
+	        _classCallCheck(this, EntityBase);
+
+	        if (!entity) entity = {};
+
+	        var _this = _possibleConstructorReturn(this, (EntityBase.__proto__ || Object.getPrototypeOf(EntityBase)).call(this, entity));
+
+	        _this.createdBy = entity.createdBy;
+	        _this.dtChanged = entity.dtChanged;
+	        return _this;
+	    }
+
+	    return EntityBase;
+	}(_EntityMinBase3.default);
+
+	exports.default = EntityBase;
+
+/***/ },
+/* 483 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _shortid = __webpack_require__(484);
+
+	var _shortid2 = _interopRequireDefault(_shortid);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
+
+	var EntityMinBase = function () {
+	    function EntityMinBase(entity) {
+	        _classCallCheck(this, EntityMinBase);
+
+	        if (!entity) entity = {};
+	        this.setId(entity);
+	        this.errors = entity.errors;
+	    }
+
+	    _createClass(EntityMinBase, [{
+	        key: 'addError',
+	        value: function addError(error) {
+	            if (!this.errors) this.errors = [];
+	            this.errors.push(error);
+	        }
+	    }, {
+	        key: 'isValid',
+	        value: function isValid() {
+	            return !this.errors || this.errors.length === 0;
+	        }
+	    }, {
+	        key: 'throwErrorIfIsInvalid',
+	        value: function throwErrorIfIsInvalid() {
+	            if (this.errors && this.errors.length > 0) throw 'ERROR_INVALID_ENTITY';
+	        }
+	    }, {
+	        key: 'setId',
+	        value: function setId(entity) {
+	            this.id = entity.id || entity._id;
+	            if (!this.id) this.id = _shortid2.default.generate();
+	        }
+	    }]);
+
+	    return EntityMinBase;
+	}();
+
+	exports.default = EntityMinBase;
+
+/***/ },
+/* 484 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = __webpack_require__(485);
+
+/***/ },
+/* 485 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var alphabet = __webpack_require__(486);
+	var encode = __webpack_require__(488);
+	var decode = __webpack_require__(490);
+	var build = __webpack_require__(491);
+	var isValid = __webpack_require__(492);
+
+	// if you are using cluster or multiple servers use this to make each instance
+	// has a unique value for worker
+	// Note: I don't know if this is automatically set when using third
+	// party cluster solutions such as pm2.
+	var clusterWorkerId = __webpack_require__(493) || 0;
+
+	/**
+	 * Set the seed.
+	 * Highly recommended if you don't want people to try to figure out your id schema.
+	 * exposed as shortid.seed(int)
+	 * @param seed Integer value to seed the random alphabet.  ALWAYS USE THE SAME SEED or you might get overlaps.
+	 */
+	function seed(seedValue) {
+	  alphabet.seed(seedValue);
+	  return module.exports;
+	}
+
+	/**
+	 * Set the cluster worker or machine id
+	 * exposed as shortid.worker(int)
+	 * @param workerId worker must be positive integer.  Number less than 16 is recommended.
+	 * returns shortid module so it can be chained.
+	 */
+	function worker(workerId) {
+	  clusterWorkerId = workerId;
+	  return module.exports;
+	}
+
+	/**
+	 *
+	 * sets new characters to use in the alphabet
+	 * returns the shuffled alphabet
+	 */
+	function characters(newCharacters) {
+	  if (newCharacters !== undefined) {
+	    alphabet.characters(newCharacters);
+	  }
+
+	  return alphabet.shuffled();
+	}
+
+	/**
+	 * Generate unique id
+	 * Returns string id
+	 */
+	function generate() {
+	  return build(clusterWorkerId);
+	}
+
+	// Export all other functions as properties of the generate function
+	module.exports = generate;
+	module.exports.generate = generate;
+	module.exports.seed = seed;
+	module.exports.worker = worker;
+	module.exports.characters = characters;
+	module.exports.decode = decode;
+	module.exports.isValid = isValid;
+
+/***/ },
+/* 486 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var randomFromSeed = __webpack_require__(487);
+
+	var ORIGINAL = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
+	var alphabet;
+	var previousSeed;
+
+	var shuffled;
+
+	function reset() {
+	    shuffled = false;
+	}
+
+	function setCharacters(_alphabet_) {
+	    if (!_alphabet_) {
+	        if (alphabet !== ORIGINAL) {
+	            alphabet = ORIGINAL;
+	            reset();
+	        }
+	        return;
+	    }
+
+	    if (_alphabet_ === alphabet) {
+	        return;
+	    }
+
+	    if (_alphabet_.length !== ORIGINAL.length) {
+	        throw new Error('Custom alphabet for shortid must be ' + ORIGINAL.length + ' unique characters. You submitted ' + _alphabet_.length + ' characters: ' + _alphabet_);
+	    }
+
+	    var unique = _alphabet_.split('').filter(function (item, ind, arr) {
+	        return ind !== arr.lastIndexOf(item);
+	    });
+
+	    if (unique.length) {
+	        throw new Error('Custom alphabet for shortid must be ' + ORIGINAL.length + ' unique characters. These characters were not unique: ' + unique.join(', '));
+	    }
+
+	    alphabet = _alphabet_;
+	    reset();
+	}
+
+	function characters(_alphabet_) {
+	    setCharacters(_alphabet_);
+	    return alphabet;
+	}
+
+	function setSeed(seed) {
+	    randomFromSeed.seed(seed);
+	    if (previousSeed !== seed) {
+	        reset();
+	        previousSeed = seed;
+	    }
+	}
+
+	function shuffle() {
+	    if (!alphabet) {
+	        setCharacters(ORIGINAL);
+	    }
+
+	    var sourceArray = alphabet.split('');
+	    var targetArray = [];
+	    var r = randomFromSeed.nextValue();
+	    var characterIndex;
+
+	    while (sourceArray.length > 0) {
+	        r = randomFromSeed.nextValue();
+	        characterIndex = Math.floor(r * sourceArray.length);
+	        targetArray.push(sourceArray.splice(characterIndex, 1)[0]);
+	    }
+	    return targetArray.join('');
+	}
+
+	function getShuffled() {
+	    if (shuffled) {
+	        return shuffled;
+	    }
+	    shuffled = shuffle();
+	    return shuffled;
+	}
+
+	/**
+	 * lookup shuffled letter
+	 * @param index
+	 * @returns {string}
+	 */
+	function lookup(index) {
+	    var alphabetShuffled = getShuffled();
+	    return alphabetShuffled[index];
+	}
+
+	module.exports = {
+	    characters: characters,
+	    seed: setSeed,
+	    lookup: lookup,
+	    shuffled: getShuffled
+	};
+
+/***/ },
+/* 487 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	// Found this seed-based random generator somewhere
+	// Based on The Central Randomizer 1.3 (C) 1997 by Paul Houle (houle@msc.cornell.edu)
+
+	var seed = 1;
+
+	/**
+	 * return a random number based on a seed
+	 * @param seed
+	 * @returns {number}
+	 */
+	function getNextValue() {
+	    seed = (seed * 9301 + 49297) % 233280;
+	    return seed / 233280.0;
+	}
+
+	function setSeed(_seed_) {
+	    seed = _seed_;
+	}
+
+	module.exports = {
+	    nextValue: getNextValue,
+	    seed: setSeed
+	};
+
+/***/ },
+/* 488 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var randomByte = __webpack_require__(489);
+
+	function encode(lookup, number) {
+	    var loopCounter = 0;
+	    var done;
+
+	    var str = '';
+
+	    while (!done) {
+	        str = str + lookup(number >> 4 * loopCounter & 0x0f | randomByte());
+	        done = number < Math.pow(16, loopCounter + 1);
+	        loopCounter++;
+	    }
+	    return str;
+	}
+
+	module.exports = encode;
+
+/***/ },
+/* 489 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var crypto = (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' && (window.crypto || window.msCrypto); // IE 11 uses window.msCrypto
+
+	function randomByte() {
+	    if (!crypto || !crypto.getRandomValues) {
+	        return Math.floor(Math.random() * 256) & 0x30;
+	    }
+	    var dest = new Uint8Array(1);
+	    crypto.getRandomValues(dest);
+	    return dest[0] & 0x30;
+	}
+
+	module.exports = randomByte;
+
+/***/ },
+/* 490 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var alphabet = __webpack_require__(486);
+
+	/**
+	 * Decode the id to get the version and worker
+	 * Mainly for debugging and testing.
+	 * @param id - the shortid-generated id.
+	 */
+	function decode(id) {
+	    var characters = alphabet.shuffled();
+	    return {
+	        version: characters.indexOf(id.substr(0, 1)) & 0x0f,
+	        worker: characters.indexOf(id.substr(1, 1)) & 0x0f
+	    };
+	}
+
+	module.exports = decode;
+
+/***/ },
+/* 491 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var encode = __webpack_require__(488);
+	var alphabet = __webpack_require__(486);
+
+	// Ignore all milliseconds before a certain time to reduce the size of the date entropy without sacrificing uniqueness.
+	// This number should be updated every year or so to keep the generated id short.
+	// To regenerate `new Date() - 0` and bump the version. Always bump the version!
+	var REDUCE_TIME = 1459707606518;
+
+	// don't change unless we change the algos or REDUCE_TIME
+	// must be an integer and less than 16
+	var version = 6;
+
+	// Counter is used when shortid is called multiple times in one second.
+	var counter;
+
+	// Remember the last time shortid was called in case counter is needed.
+	var previousSeconds;
+
+	/**
+	 * Generate unique id
+	 * Returns string id
+	 */
+	function build(clusterWorkerId) {
+
+	    var str = '';
+
+	    var seconds = Math.floor((Date.now() - REDUCE_TIME) * 0.001);
+
+	    if (seconds === previousSeconds) {
+	        counter++;
+	    } else {
+	        counter = 0;
+	        previousSeconds = seconds;
+	    }
+
+	    str = str + encode(alphabet.lookup, version);
+	    str = str + encode(alphabet.lookup, clusterWorkerId);
+	    if (counter > 0) {
+	        str = str + encode(alphabet.lookup, counter);
+	    }
+	    str = str + encode(alphabet.lookup, seconds);
+
+	    return str;
+	}
+
+	module.exports = build;
+
+/***/ },
+/* 492 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var alphabet = __webpack_require__(486);
+
+	function isShortId(id) {
+	    if (!id || typeof id !== 'string' || id.length < 6) {
+	        return false;
+	    }
+
+	    var characters = alphabet.characters();
+	    var len = id.length;
+	    for (var i = 0; i < len; i++) {
+	        if (characters.indexOf(id[i]) === -1) {
+	            return false;
+	        }
+	    }
+	    return true;
+	}
+
+	module.exports = isShortId;
+
+/***/ },
+/* 493 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = 0;
+
+/***/ },
+/* 494 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _reactRelay = __webpack_require__(178);
+
+	var _reactRelay2 = _interopRequireDefault(_reactRelay);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SaveUserMutation = function (_Relay$Mutation) {
+	    _inherits(SaveUserMutation, _Relay$Mutation);
+
+	    function SaveUserMutation() {
+	        _classCallCheck(this, SaveUserMutation);
+
+	        return _possibleConstructorReturn(this, (SaveUserMutation.__proto__ || Object.getPrototypeOf(SaveUserMutation)).apply(this, arguments));
+	    }
+
+	    _createClass(SaveUserMutation, [{
 	        key: 'getMutation',
 	        value: function getMutation() {
-	            return _reactRelay2.default.QL(_templateObject);
+	            console.log('SaveUserMutation getMutation');
+	            return function () {
+	                throw new Error('Relay transform error ``Cannot read property \'toString\' of null`` in file `/home/angeloocana/dev/ptz/freecomclub/dist/frontend/users/mutations/SaveUserMutation.js`. Try updating your GraphQL schema if an argument/field/type was recently added.');
+	            }();
 	        }
 	    }, {
 	        key: 'getVariables',
 	        value: function getVariables() {
-	            return {
-	                title: this.props.title,
-	                url: this.props.url
-	            };
+	            return this.props.user;
 	        }
 	    }, {
 	        key: 'getFatQuery',
 	        value: function getFatQuery() {
-	            return _reactRelay2.default.QL(_templateObject2);
+	            return function () {
+	                throw new Error('GraphQL validation error ``Unknown type "SaveUserPayload".`` in file `/home/angeloocana/dev/ptz/freecomclub/dist/frontend/users/mutations/SaveUserMutation.js`. Try updating your GraphQL schema if an argument/field/type was recently added.');
+	            }();
 	        }
 	    }, {
 	        key: 'getConfigs',
@@ -46757,8 +47351,8 @@
 	                type: 'RANGE_ADD',
 	                parentName: 'store',
 	                parentID: this.props.store.id,
-	                connectionName: 'linkConnection',
-	                edgeName: 'linkEdge',
+	                connectionName: 'userConnection',
+	                edgeName: 'userEdge',
 	                rangeBehaviors: {
 	                    '': 'append'
 	                }
@@ -46766,10 +47360,132 @@
 	        }
 	    }]);
 
-	    return CreateLinkMutation;
+	    return SaveUserMutation;
 	}(_reactRelay2.default.Mutation);
 
-	exports.default = CreateLinkMutation;
+	exports.default = SaveUserMutation;
+
+/***/ },
+/* 495 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRelay = __webpack_require__(178);
+
+	var _reactRelay2 = _interopRequireDefault(_reactRelay);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var User = function (_React$Component) {
+	    _inherits(User, _React$Component);
+
+	    function User() {
+	        _classCallCheck(this, User);
+
+	        return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).apply(this, arguments));
+	    }
+
+	    _createClass(User, [{
+	        key: 'render',
+	        value: function render() {
+	            var user = this.props.user;
+
+	            return _react2.default.createElement("li", null, user.id, " ", _react2.default.createElement("br", null), user.email, " ", _react2.default.createElement("br", null), user.displayName, " ", _react2.default.createElement("br", null), user.imgUrl, " ", _react2.default.createElement("br", null), user.userName, " ", _react2.default.createElement("br", null));
+	        }
+	    }]);
+
+	    return User;
+	}(_react2.default.Component);
+
+	User = _reactRelay2.default.createContainer(User, {
+	    fragments: {
+	        user: function user() {
+	            return function () {
+	                throw new Error('GraphQL validation error ``Unknown type "User".`` in file `/home/angeloocana/dev/ptz/freecomclub/dist/frontend/users/components/User.js`. Try updating your GraphQL schema if an argument/field/type was recently added.');
+	            }();
+	        }
+	    }
+	});
+	exports.default = User;
+
+/***/ },
+/* 496 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CreateUserForm = function (_React$Component) {
+	    _inherits(CreateUserForm, _React$Component);
+
+	    function CreateUserForm() {
+	        _classCallCheck(this, CreateUserForm);
+
+	        var _this = _possibleConstructorReturn(this, (CreateUserForm.__proto__ || Object.getPrototypeOf(CreateUserForm)).apply(this, arguments));
+
+	        _this.handleSubmit = function (e) {
+	            e.preventDefault();
+	            console.log('createUserSubmit e', e);
+	            var userArgs = {
+	                displayName: _this.refs.displayName.value,
+	                email: _this.refs.email.value,
+	                password: _this.refs.password.value,
+	                userName: _this.refs.userName.value
+	            };
+	            console.log('userArgs', userArgs);
+	            _this.props.createUser(userArgs);
+	        };
+	        return _this;
+	    }
+
+	    _createClass(CreateUserForm, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement("section", null, _react2.default.createElement("form", { onSubmit: this.handleSubmit }, _react2.default.createElement("fieldset", null, _react2.default.createElement("legend", null, "Create User"), _react2.default.createElement("input", { type: "text", placeholder: "Display Name", ref: "displayName" }), _react2.default.createElement("input", { type: "text", placeholder: "User Name", ref: "userName" }), _react2.default.createElement("input", { type: "text", placeholder: "E-mail", ref: "email" }), _react2.default.createElement("input", { type: "text", placeholder: "Password", ref: "password" }), _react2.default.createElement("button", { type: "submit" }, "Create User"))));
+	        }
+	    }]);
+
+	    return CreateUserForm;
+	}(_react2.default.Component);
+
+	CreateUserForm.propTypes = {
+	    createUser: _react2.default.PropTypes.func
+	};
+	exports.default = CreateUserForm;
 
 /***/ }
 /******/ ]);

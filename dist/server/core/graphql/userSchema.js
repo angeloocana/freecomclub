@@ -1,56 +1,46 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _graphql = require('graphql');
-
-var _graphqlRelay = require('graphql-relay');
-
+import { GraphQLObjectType, GraphQLNonNull, GraphQLBoolean, GraphQLString, GraphQLList } from 'graphql';
+import { connectionDefinitions, mutationWithClientMutationId, connectionArgs, connectionFromPromisedArray } from 'graphql-relay';
 function UserSchema(userApp) {
-    var userType = new _graphql.GraphQLObjectType({
+    var userType = new GraphQLObjectType({
         name: 'User',
-        fields: function fields() {
-            return {
-                id: { type: _graphql.GraphQLString },
-                userName: { type: _graphql.GraphQLString },
-                email: { type: _graphql.GraphQLString },
-                emailConfirmed: { type: _graphql.GraphQLBoolean },
-                displayName: { type: _graphql.GraphQLString },
-                imgUrl: { type: _graphql.GraphQLString },
-                errors: { type: new _graphql.GraphQLList(_graphql.GraphQLString) }
-            };
-        }
+        fields: () => ({
+            id: { type: GraphQLString },
+            userName: { type: GraphQLString },
+            email: { type: GraphQLString },
+            emailConfirmed: { type: GraphQLBoolean },
+            displayName: { type: GraphQLString },
+            imgUrl: { type: GraphQLString },
+            errors: { type: new GraphQLList(GraphQLString) }
+        })
     });
-    var userConnection = (0, _graphqlRelay.connectionDefinitions)({
+    var userConnection = connectionDefinitions({
         name: 'User',
         nodeType: userType
     });
     function getUserConnection() {
         return {
             type: userConnection.connectionType,
-            args: _graphqlRelay.connectionArgs,
-            resolve: function resolve(_, args) {
+            args: connectionArgs,
+            resolve: (_, args) => {
                 console.log('getting users');
-                return (0, _graphqlRelay.connectionFromPromisedArray)(userApp.find({}, { limit: args.first }), args);
+                return connectionFromPromisedArray(userApp.find({}, { limit: args.first }), args);
             }
         };
     }
     function getSaveUserMutation(outputStore) {
-        return (0, _graphqlRelay.mutationWithClientMutationId)({
+        return mutationWithClientMutationId({
             name: 'SaveUser',
             inputFields: {
-                id: { type: _graphql.GraphQLString },
-                userName: { type: new _graphql.GraphQLNonNull(_graphql.GraphQLString) },
-                email: { type: new _graphql.GraphQLNonNull(_graphql.GraphQLString) },
-                displayName: { type: new _graphql.GraphQLNonNull(_graphql.GraphQLString) },
-                password: { type: new _graphql.GraphQLNonNull(_graphql.GraphQLString) }
+                id: { type: GraphQLString },
+                userName: { type: new GraphQLNonNull(GraphQLString) },
+                email: { type: new GraphQLNonNull(GraphQLString) },
+                displayName: { type: new GraphQLNonNull(GraphQLString) },
+                password: { type: new GraphQLNonNull(GraphQLString) }
             },
             outputFields: {
                 userEdge: {
                     type: userConnection.edgeType,
-                    resolve: function resolve(user) {
+                    resolve: (user) => {
                         console.log('ql user', user);
                         return { node: user, cursor: user.id };
                     }
@@ -61,8 +51,8 @@ function UserSchema(userApp) {
         });
     }
     return {
-        getSaveUserMutation: getSaveUserMutation,
-        getUserConnection: getUserConnection
+        getSaveUserMutation,
+        getUserConnection
     };
 }
-exports.default = UserSchema;
+export default UserSchema;

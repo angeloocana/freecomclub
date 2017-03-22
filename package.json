@@ -37,6 +37,7 @@
     "mongodb": "^2.2.21",
     "ptz-assert": "^1.2.0",
     "ptz-user-app": "^1.0.1",
+    "ptz-user-domain": "^1.1.0",
     "ptz-user-graphql": "^1.0.1",
     "ptz-user-repository": "^1.0.1",
     "react": "^15.4.2",

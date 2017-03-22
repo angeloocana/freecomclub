@@ -1,6 +1,7 @@
 //falling to use graphql in other module
 //import {UserSchema} from 'ptz-user-graphql';
 import UserSchema from './userSchema';
+//import { IUserApp } from 'ptz-user-app';
 
 import {
     GraphQLSchema,
@@ -12,7 +13,7 @@ import {
     GraphQLID
 } from 'graphql';
 
-import{
+import {
     globalIdField,
     connectionDefinitions,
     connectionArgs,
@@ -20,23 +21,12 @@ import{
     mutationWithClientMutationId
 } from 'graphql-relay';
 
-function Schema(userApp:IUserApp){
-    
+function Schema(userApp: IUserApp) {
+
     var userSchema = UserSchema(userApp);
 
-    var counter = 42;
-    var data = [42, 43, 44];
-
-    var counters = [{counter: 42}, {counter: 43}];
-    var counterType = new GraphQLObjectType({
-        name: 'Counter',
-        fields: () => ({
-            counter: {type: GraphQLInt}
-        })
-    });
-
     var store = {};
-       
+
     var storeType = new GraphQLObjectType({
         name: 'Store',
         fields: () => ({
@@ -50,32 +40,16 @@ function Schema(userApp:IUserApp){
         resolve: () => store
     };
 
-console.log("userSchema", userSchema);
+    console.log("userSchema", userSchema);
     console.log("userSchema.getUserConnection()>>>>>>>>>>", userSchema.getUserConnection());
 
     var schema = new GraphQLSchema({
         query: new GraphQLObjectType({
             name: 'Query',
-            fields: () => ({           
-                store:{
+            fields: () => ({
+                store: {
                     type: storeType,
                     resolve: () => store
-                },
-                counter:{
-                    type: GraphQLInt,
-                    resolve: ()=> counter
-                },
-                message:{
-                    type: GraphQLString,
-                    resolve: ()=> "Hello GraphQL!"            
-                },
-                data: {
-                    type: new GraphQLList(GraphQLInt),
-                    resolve: () => data            
-                },
-                counters: {
-                    type: new GraphQLList(counterType),
-                    resolve: () => counters
                 }
             })
         }),

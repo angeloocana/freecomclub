@@ -1,5 +1,5 @@
-import AppDispatcher from '../AppDispatcher';
-import {ActionTypes} from '../Constants';
+import AppDispatcher from '../../AppDispatcher';
+import {ActionTypes} from '../linkConstants';
 import {EventEmitter} from 'events';
 
 var _links = [];

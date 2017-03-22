@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Relay from 'react-relay';
-import Main from './components/main';
+//import Main from './links/components/main';
+import UserReport from './users/components/UserReport';
 
-console.log('Hello js 3');
+console.log('Hello app.tsx');
 
-class HomeRoute extends Relay.Route{
+class HomeRoute extends Relay.Route {
     static routeName = 'Home';
     static queries = {
         store: (Component) => Relay.QL`
@@ -14,24 +15,13 @@ class HomeRoute extends Relay.Route{
                     ${Component.getFragment('store')}
                 }
             }
-        `       
+        `
     }
 }
 
 ReactDOM.render(
     <Relay.RootContainer
-        Component={Main}
+        Component={UserReport}
         route={new HomeRoute()}
-        />, 
+    />,
     document.getElementById('react'));
-
-
-console.log(
-    Relay.QL`
-        query Test{
-            links{
-                title
-            }
-        }
-    `
-);

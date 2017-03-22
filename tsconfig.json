@@ -1,5 +1,7 @@
 {
-"compilerOptions": {
+  "compilerOptions": {
+    "module": "es6",
+    "moduleResolution": "node",
     "noImplicitAny": false,
     "removeComments": true,
     "preserveConstEnums": true,
@@ -8,7 +10,7 @@
     "listFiles": false,
     "outDir": "dist/",
     "jsx": "react",
-    "allowSyntheticDefaultImports": true	
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "typings/**/*.d.ts",
@@ -21,4 +23,3 @@
     "node_modules"
   ]
 }
-
