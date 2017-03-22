@@ -16,9 +16,7 @@
 
 ## NPM Global packages
 ```
-    npm install ts-node -g
-    npm install typescript-node -g
-    npm install babel-cli -g
+    npm install -g ts-node typescript-node babel-cli
 ```
 
 ## Typings Global Packages 
