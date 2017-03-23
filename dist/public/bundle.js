@@ -46514,18 +46514,33 @@
 	            console.log('newLimit', newLimit);
 	            console.log('relay', _this.props.relay);
 	        };
-	        _this.createUser = function (userArgs) {
+	        _this.createUser = function (userArgs, cb) {
 	            var user = new _ptzUserDomain.User(userArgs);
 	            console.log('user', user);
-	            _reactRelay2.default.Store.update(new _SaveUserMutation2.default({
+	            _reactRelay2.default.Store.commitUpdate(new _SaveUserMutation2.default({
 	                user: user,
 	                store: _this.props.store
-	            }));
+	            }), _this.createUserCallBacks(cb));
 	        };
 	        return _this;
 	    }
 
 	    _createClass(UserReport, [{
+	        key: 'createUserCallBacks',
+	        value: function createUserCallBacks(cb) {
+	            return {
+	                onFailure: function onFailure(transaction) {
+	                    console.log('onFailure response', transaction);
+	                    cb(transaction);
+	                },
+	                onSuccess: function onSuccess(response) {
+	                    console.log('onSuccess response', response);
+	                    console.log('user response', response.saveUser.userEdge.node);
+	                    cb(response.saveUser.userEdge.node);
+	                }
+	            };
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var content = this.props.store.userConnection.edges.map(function (edge) {
@@ -46544,9 +46559,107 @@
 	    },
 	    fragments: {
 	        store: function store() {
-	            return function () {
-	                throw new Error('GraphQL validation error ``Cannot query field "userConnection" on type "Store".`` in file `/home/angeloocana/dev/ptz/freecomclub/dist/frontend/users/components/UserReport.js`. Try updating your GraphQL schema if an argument/field/type was recently added.');
-	            }();
+	            return function (RQL_0) {
+	                return {
+	                    children: [{
+	                        fieldName: 'id',
+	                        kind: 'Field',
+	                        metadata: {
+	                            isRequisite: true
+	                        },
+	                        type: 'ID'
+	                    }, {
+	                        calls: [{
+	                            kind: 'Call',
+	                            metadata: {},
+	                            name: 'first',
+	                            value: {
+	                                kind: 'CallVariable',
+	                                callVariableName: 'limit'
+	                            }
+	                        }],
+	                        children: [{
+	                            children: [{
+	                                children: [].concat.apply([], [{
+	                                    fieldName: 'id',
+	                                    kind: 'Field',
+	                                    metadata: {
+	                                        isRequisite: true
+	                                    },
+	                                    type: 'String'
+	                                }, {
+	                                    fieldName: 'errors',
+	                                    kind: 'Field',
+	                                    metadata: {
+	                                        isPlural: true
+	                                    },
+	                                    type: 'String'
+	                                }, _reactRelay2.default.QL.__frag(RQL_0)]),
+	                                fieldName: 'node',
+	                                kind: 'Field',
+	                                metadata: {
+	                                    canHaveSubselections: true,
+	                                    isRequisite: true
+	                                },
+	                                type: 'User'
+	                            }, {
+	                                fieldName: 'cursor',
+	                                kind: 'Field',
+	                                metadata: {
+	                                    isGenerated: true,
+	                                    isRequisite: true
+	                                },
+	                                type: 'String'
+	                            }],
+	                            fieldName: 'edges',
+	                            kind: 'Field',
+	                            metadata: {
+	                                canHaveSubselections: true,
+	                                isPlural: true
+	                            },
+	                            type: 'UserEdge'
+	                        }, {
+	                            children: [{
+	                                fieldName: 'hasNextPage',
+	                                kind: 'Field',
+	                                metadata: {
+	                                    isGenerated: true,
+	                                    isRequisite: true
+	                                },
+	                                type: 'Boolean'
+	                            }, {
+	                                fieldName: 'hasPreviousPage',
+	                                kind: 'Field',
+	                                metadata: {
+	                                    isGenerated: true,
+	                                    isRequisite: true
+	                                },
+	                                type: 'Boolean'
+	                            }],
+	                            fieldName: 'pageInfo',
+	                            kind: 'Field',
+	                            metadata: {
+	                                canHaveSubselections: true,
+	                                isGenerated: true,
+	                                isRequisite: true
+	                            },
+	                            type: 'PageInfo'
+	                        }],
+	                        fieldName: 'userConnection',
+	                        kind: 'Field',
+	                        metadata: {
+	                            canHaveSubselections: true,
+	                            isConnection: true
+	                        },
+	                        type: 'UserConnection'
+	                    }],
+	                    id: _reactRelay2.default.QL.__id(),
+	                    kind: 'Fragment',
+	                    metadata: {},
+	                    name: 'UserReport_StoreRelayQL',
+	                    type: 'Store'
+	                };
+	            }(_User2.default.getFragment('user'));
 	        }
 	    }
 	});
@@ -47329,7 +47442,32 @@
 	        value: function getMutation() {
 	            console.log('SaveUserMutation getMutation');
 	            return function () {
-	                throw new Error('Relay transform error ``Cannot read property \'toString\' of null`` in file `/home/angeloocana/dev/ptz/freecomclub/dist/frontend/users/mutations/SaveUserMutation.js`. Try updating your GraphQL schema if an argument/field/type was recently added.');
+	                return {
+	                    calls: [{
+	                        kind: 'Call',
+	                        metadata: {},
+	                        name: 'saveUser',
+	                        value: {
+	                            kind: 'CallVariable',
+	                            callVariableName: 'input'
+	                        }
+	                    }],
+	                    children: [{
+	                        fieldName: 'clientMutationId',
+	                        kind: 'Field',
+	                        metadata: {
+	                            isGenerated: true,
+	                            isRequisite: true
+	                        },
+	                        type: 'String'
+	                    }],
+	                    kind: 'Mutation',
+	                    metadata: {
+	                        inputType: 'SaveUserInput!'
+	                    },
+	                    name: 'SaveUserMutation',
+	                    responseType: 'SaveUserPayload'
+	                };
 	            }();
 	        }
 	    }, {
@@ -47341,7 +47479,72 @@
 	        key: 'getFatQuery',
 	        value: function getFatQuery() {
 	            return function () {
-	                throw new Error('GraphQL validation error ``Unknown type "SaveUserPayload".`` in file `/home/angeloocana/dev/ptz/freecomclub/dist/frontend/users/mutations/SaveUserMutation.js`. Try updating your GraphQL schema if an argument/field/type was recently added.');
+	                return {
+	                    children: [{
+	                        children: [{
+	                            fieldName: 'cursor',
+	                            kind: 'Field',
+	                            metadata: {
+	                                isGenerated: true,
+	                                isRequisite: true
+	                            },
+	                            type: 'String'
+	                        }, {
+	                            children: [{
+	                                fieldName: 'id',
+	                                kind: 'Field',
+	                                metadata: {
+	                                    isGenerated: true,
+	                                    isRequisite: true
+	                                },
+	                                type: 'String'
+	                            }],
+	                            fieldName: 'node',
+	                            kind: 'Field',
+	                            metadata: {
+	                                canHaveSubselections: true,
+	                                isGenerated: true,
+	                                isRequisite: true
+	                            },
+	                            type: 'User'
+	                        }],
+	                        fieldName: 'userEdge',
+	                        kind: 'Field',
+	                        metadata: {
+	                            canHaveSubselections: true
+	                        },
+	                        type: 'UserEdge'
+	                    }, {
+	                        children: [{
+	                            fieldName: 'userConnection',
+	                            kind: 'Field',
+	                            metadata: {
+	                                canHaveSubselections: true,
+	                                isConnection: true
+	                            },
+	                            type: 'UserConnection'
+	                        }, {
+	                            fieldName: 'id',
+	                            kind: 'Field',
+	                            metadata: {
+	                                isGenerated: true,
+	                                isRequisite: true
+	                            },
+	                            type: 'ID'
+	                        }],
+	                        fieldName: 'store',
+	                        kind: 'Field',
+	                        metadata: {
+	                            canHaveSubselections: true
+	                        },
+	                        type: 'Store'
+	                    }],
+	                    id: _reactRelay2.default.QL.__id(),
+	                    kind: 'Fragment',
+	                    metadata: {},
+	                    name: 'SaveUserMutation_ValueRelayQL',
+	                    type: 'SaveUserPayload'
+	                };
 	            }();
 	        }
 	    }, {
@@ -47418,7 +47621,41 @@
 	    fragments: {
 	        user: function user() {
 	            return function () {
-	                throw new Error('GraphQL validation error ``Unknown type "User".`` in file `/home/angeloocana/dev/ptz/freecomclub/dist/frontend/users/components/User.js`. Try updating your GraphQL schema if an argument/field/type was recently added.');
+	                return {
+	                    children: [{
+	                        fieldName: 'displayName',
+	                        kind: 'Field',
+	                        metadata: {},
+	                        type: 'String'
+	                    }, {
+	                        fieldName: 'email',
+	                        kind: 'Field',
+	                        metadata: {},
+	                        type: 'String'
+	                    }, {
+	                        fieldName: 'imgUrl',
+	                        kind: 'Field',
+	                        metadata: {},
+	                        type: 'String'
+	                    }, {
+	                        fieldName: 'userName',
+	                        kind: 'Field',
+	                        metadata: {},
+	                        type: 'String'
+	                    }, {
+	                        fieldName: 'id',
+	                        kind: 'Field',
+	                        metadata: {
+	                            isRequisite: true
+	                        },
+	                        type: 'String'
+	                    }],
+	                    id: _reactRelay2.default.QL.__id(),
+	                    kind: 'Fragment',
+	                    metadata: {},
+	                    name: 'User_UserRelayQL',
+	                    type: 'User'
+	                };
 	            }();
 	        }
 	    }
@@ -47441,6 +47678,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _Errors = __webpack_require__(497);
+
+	var _Errors2 = _interopRequireDefault(_Errors);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -47457,6 +47698,9 @@
 
 	        var _this = _possibleConstructorReturn(this, (CreateUserForm.__proto__ || Object.getPrototypeOf(CreateUserForm)).apply(this, arguments));
 
+	        _this.createUserCallBack = function (user) {
+	            _this.user = user;
+	        };
 	        _this.handleSubmit = function (e) {
 	            e.preventDefault();
 	            console.log('createUserSubmit e', e);
@@ -47467,7 +47711,7 @@
 	                userName: _this.refs.userName.value
 	            };
 	            console.log('userArgs', userArgs);
-	            _this.props.createUser(userArgs);
+	            _this.props.createUser(userArgs, _this.createUserCallBack);
 	        };
 	        return _this;
 	    }
@@ -47475,7 +47719,8 @@
 	    _createClass(CreateUserForm, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement("section", null, _react2.default.createElement("form", { onSubmit: this.handleSubmit }, _react2.default.createElement("fieldset", null, _react2.default.createElement("legend", null, "Create User"), _react2.default.createElement("input", { type: "text", placeholder: "Display Name", ref: "displayName" }), _react2.default.createElement("input", { type: "text", placeholder: "User Name", ref: "userName" }), _react2.default.createElement("input", { type: "text", placeholder: "E-mail", ref: "email" }), _react2.default.createElement("input", { type: "text", placeholder: "Password", ref: "password" }), _react2.default.createElement("button", { type: "submit" }, "Create User"))));
+	            var errors = this.user ? this.user.errors : [];
+	            return _react2.default.createElement("section", null, _react2.default.createElement("form", { onSubmit: this.handleSubmit }, _react2.default.createElement("fieldset", null, _react2.default.createElement("legend", null, "Create User"), _react2.default.createElement("input", { type: "text", placeholder: "Display Name", ref: "displayName" }), _react2.default.createElement("input", { type: "text", placeholder: "User Name", ref: "userName" }), _react2.default.createElement("input", { type: "text", placeholder: "E-mail", ref: "email" }), _react2.default.createElement("input", { type: "text", placeholder: "Password", ref: "password" }), _react2.default.createElement(_Errors2.default, { errors: errors }), _react2.default.createElement("button", { type: "submit" }, "Create User"))));
 	        }
 	    }]);
 
@@ -47486,6 +47731,35 @@
 	    createUser: _react2.default.PropTypes.func
 	};
 	exports.default = CreateUserForm;
+
+/***/ },
+/* 497 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Errors = function Errors(_ref) {
+	    var errors = _ref.errors;
+
+	    var errorsList = errors ? errors.map(function (error) {
+	        return _react2.default.createElement("li", null, error);
+	    }) : [];
+	    return _react2.default.createElement("ul", null, errorsList);
+	};
+	Errors.propTypes = {
+	    errors: _react2.default.PropTypes.array
+	};
+	exports.default = Errors;
 
 /***/ }
 /******/ ]);

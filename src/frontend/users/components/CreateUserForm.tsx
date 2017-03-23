@@ -1,8 +1,14 @@
 import React from 'react';
+import {IUser} from 'ptz-user-domain';
+import Errors from '../../core/components/Errors';
 
 class CreateUserForm extends React.Component<any, any>{
     static propTypes = {
         createUser: React.PropTypes.func
+    }
+
+    private createUserCallBack = (user:IUser) => {
+        this.user = user;
     }
 
     handleSubmit = (e) => {
@@ -19,10 +25,12 @@ class CreateUserForm extends React.Component<any, any>{
 
         console.log('userArgs', userArgs);
 
-        this.props.createUser(userArgs);
+        this.props.createUser(userArgs, this.createUserCallBack);
     }
 
     render() {
+        const errors = this.user ? this.user.errors : [];
+
         return (
             <section>
                 <form onSubmit={this.handleSubmit}>
@@ -32,6 +40,7 @@ class CreateUserForm extends React.Component<any, any>{
                         <input type="text" placeholder="User Name" ref="userName" />
                         <input type="text" placeholder="E-mail" ref="email" />
                         <input type="text" placeholder="Password" ref="password" />
+                        <Errors errors={errors} />
                         <button type="submit">Create User</button>
                     </fieldset>
                 </form>

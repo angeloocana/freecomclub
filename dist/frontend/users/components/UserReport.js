@@ -13,13 +13,26 @@ class UserReport extends React.Component {
             console.log('newLimit', newLimit);
             console.log('relay', this.props.relay);
         };
-        this.createUser = (userArgs) => {
+        this.createUser = (userArgs, cb) => {
             const user = new User(userArgs);
             console.log('user', user);
-            Relay.Store.update(new SaveUserMutation({
+            Relay.Store.commitUpdate(new SaveUserMutation({
                 user,
                 store: this.props.store
-            }));
+            }), this.createUserCallBacks(cb));
+        };
+    }
+    createUserCallBacks(cb) {
+        return {
+            onFailure: transaction => {
+                console.log('onFailure response', transaction);
+                cb(transaction);
+            },
+            onSuccess: response => {
+                console.log('onSuccess response', response);
+                console.log('user response', response.saveUser.userEdge.node);
+                cb(response.saveUser.userEdge.node);
+            }
         };
     }
     render() {
@@ -48,7 +61,8 @@ UserReport = Relay.createContainer(UserReport, {
                 edges{
                     node{
                         id,
-                        ${UserComponent.getFragment('user')}
+                        ${UserComponent.getFragment('user')},
+                        errors
                     }
                 }
             }

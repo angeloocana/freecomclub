@@ -35,7 +35,8 @@ function UserSchema(userApp) {
                 userName: { type: new GraphQLNonNull(GraphQLString) },
                 email: { type: new GraphQLNonNull(GraphQLString) },
                 displayName: { type: new GraphQLNonNull(GraphQLString) },
-                password: { type: new GraphQLNonNull(GraphQLString) }
+                password: { type: new GraphQLNonNull(GraphQLString) },
+                errors: { type: new GraphQLList(GraphQLString) }
             },
             outputFields: {
                 userEdge: {

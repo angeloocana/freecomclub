@@ -4,12 +4,14 @@
   "description": "Free Community Club (freecom.club) is an opensouce project to create free democracy, where every citizen can vote and keep track to every proposal.",
   "main": "server.js",
   "scripts": {
-    "start": "gulp js && webpack && babel-node --presets react,es2015 dist/server/index.js",
-    "front": "gulp js && webpack",
-    "server": "gulp js && babel-node --presets react,es2015 dist/server/index.js",
+    "start": "npm run js && webpack && babel-node --presets react,es2015 dist/server/index.js",
+    "front": "npm run js && webpack",
+    "server": "npm run js && babel-node --presets react,es2015 dist/server/index.js",
     "mocha": "mocha ./dist/server/**/*.js --compilers js:babel-core/register --require babel-polyfill",
-    "pretest": "gulp js && node gensalt.js",
-    "test": "nyc npm run mocha && nyc report --reporter=text-lcov > coverage.lcov && codecov --token=64cfc7d6-dd7a-4a52-ac74-8704b1cbe750"
+    "gensalt": "node gensalt.js",
+    "jstask": "gulp js",
+    "js": "npm-run-all --parallel jstask gensalt",
+    "test": "npm run js && nyc npm run mocha && nyc report --reporter=text-lcov > coverage.lcov && codecov --token=64cfc7d6-dd7a-4a52-ac74-8704b1cbe750"
   },
   "repository": {
     "type": "git",
@@ -35,6 +37,7 @@
     "jquery": "^3.1.1",
     "kerberos": "0.0.22",
     "mongodb": "^2.2.21",
+    "npm-run-all": "^4.0.2",
     "ptz-assert": "^1.2.0",
     "ptz-user-app": "^1.0.1",
     "ptz-user-domain": "^1.1.0",
