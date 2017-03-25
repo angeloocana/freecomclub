@@ -8,6 +8,7 @@ interface ITextInputProps {
     errors?: string[];
     label: string
     placeholder?: string;
+    type?: string;
 }
 
 class TextInput extends React.Component<ITextInputProps, any> { // eslint-disable-line react/prefer-stateless-function
@@ -17,7 +18,7 @@ class TextInput extends React.Component<ITextInputProps, any> { // eslint-disabl
     }
 
     render() {
-        var { possibleErrors, errors, label, placeholder } = this.props;
+        var { possibleErrors, errors, label, placeholder, type } = this.props;
 
         const localErrors = errors && errors.length > 0 && possibleErrors && possibleErrors.length > 0
             ? errors.filter(error => possibleErrors.indexOf(error) >= 0)
@@ -25,13 +26,14 @@ class TextInput extends React.Component<ITextInputProps, any> { // eslint-disabl
 
         const hasError = localErrors.length > 0;
 
+        type = type ? type : 'text';
         placeholder = placeholder ? placeholder : label;
 
         return (
             <div className={classNames('form-group', { 'has-error': hasError })}>
                 <label>{label}</label>
                 <input
-                    type="text"
+                    type={type}
                     className="form-control"
                     placeholder={placeholder}
                     ref={(f) => { this.field = f; }}

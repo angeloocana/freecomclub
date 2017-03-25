@@ -47739,7 +47739,7 @@
 	                    return _this2.userArgs.userName = f;
 	                }, possibleErrors: _ptzUserDomain.User.userNameErrors, errors: errors }), _react2.default.createElement(_TextInput2.default, { label: "E-mail", ref: function ref(f) {
 	                    return _this2.userArgs.email = f;
-	                }, possibleErrors: _ptzUserDomain.User.emailErrors, errors: errors }), _react2.default.createElement(_TextInput2.default, { label: "Password", ref: function ref(f) {
+	                }, possibleErrors: _ptzUserDomain.User.emailErrors, errors: errors }), _react2.default.createElement(_TextInput2.default, { label: "Password", type: "password", ref: function ref(f) {
 	                    return _this2.userArgs.password = f;
 	                }, possibleErrors: _ptzUserDomain.User.passwordErrors, errors: errors }), _react2.default.createElement(_Errors2.default, { errors: errors }), _react2.default.createElement("button", { type: "submit" }, "Create User"))));
 	        }
@@ -47837,14 +47837,16 @@
 	                possibleErrors = _props.possibleErrors,
 	                errors = _props.errors,
 	                label = _props.label,
-	                placeholder = _props.placeholder;
+	                placeholder = _props.placeholder,
+	                type = _props.type;
 
 	            var localErrors = errors && errors.length > 0 && possibleErrors && possibleErrors.length > 0 ? errors.filter(function (error) {
 	                return possibleErrors.indexOf(error) >= 0;
 	            }) : [];
 	            var hasError = localErrors.length > 0;
+	            type = type ? type : 'text';
 	            placeholder = placeholder ? placeholder : label;
-	            return _react2.default.createElement("div", { className: (0, _classnames2.default)('form-group', { 'has-error': hasError }) }, _react2.default.createElement("label", null, label), _react2.default.createElement("input", { type: "text", className: "form-control", placeholder: placeholder, ref: function ref(f) {
+	            return _react2.default.createElement("div", { className: (0, _classnames2.default)('form-group', { 'has-error': hasError }) }, _react2.default.createElement("label", null, label), _react2.default.createElement("input", { type: type, className: "form-control", placeholder: placeholder, ref: function ref(f) {
 	                    _this2.field = f;
 	                } }), _react2.default.createElement(_Errors2.default, { errors: localErrors }));
 	        }

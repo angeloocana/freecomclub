@@ -57,6 +57,7 @@ class CreateUserForm extends React.Component<any, any>{
                             errors={errors} />
                         <TextInput
                             label="Password"
+                            type="password"
                             ref={(f) => (this.userArgs.password = f)}
                             possibleErrors={User.passwordErrors}
                             errors={errors} />
