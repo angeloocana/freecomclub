@@ -4,6 +4,7 @@
   "description": "Free Community Club (freecom.club) is an opensouce project to create free democracy, where every citizen can vote and keep track to every proposal.",
   "main": "server.js",
   "scripts": {
+    "postinstall": "typings install",
     "start": "npm run js && webpack && babel-node --presets react,es2015 dist/server/index.js",
     "front": "npm run js && webpack",
     "server": "npm run js && babel-node --presets react,es2015 dist/server/index.js",
@@ -27,6 +28,7 @@
     "babel-loader": "^6.2.10",
     "babel-preset-react": "^6.16.0",
     "babel-relay-plugin": "^0.10.0",
+    "classnames": "^2.2.5",
     "dotenv": "^4.0.0",
     "events": "^1.1.1",
     "express": "^4.14.0",

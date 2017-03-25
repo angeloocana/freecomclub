@@ -35,13 +35,16 @@ class UserReport extends React.Component<any, any>{
 
         console.log('user', user);
 
-        Relay.Store.commitUpdate(
-            new SaveUserMutation({
-                user,
-                store: this.props.store
-            }),
-            this.createUserCallBacks(cb)
-        );
+        if (user.isValid())
+            Relay.Store.commitUpdate(
+                new SaveUserMutation({
+                    user,
+                    store: this.props.store
+                }),
+                this.createUserCallBacks(cb)
+            );
+        else
+            cb(user);
     }
 
 

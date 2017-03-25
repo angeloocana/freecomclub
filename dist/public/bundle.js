@@ -46517,10 +46517,10 @@
 	        _this.createUser = function (userArgs, cb) {
 	            var user = new _ptzUserDomain.User(userArgs);
 	            console.log('user', user);
-	            _reactRelay2.default.Store.commitUpdate(new _SaveUserMutation2.default({
+	            if (user.isValid()) _reactRelay2.default.Store.commitUpdate(new _SaveUserMutation2.default({
 	                user: user,
 	                store: _this.props.store
-	            }), _this.createUserCallBacks(cb));
+	            }), _this.createUserCallBacks(cb));else cb(user);
 	        };
 	        return _this;
 	    }
@@ -46722,6 +46722,16 @@
 	    value: true
 	});
 
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
 	var _get = function get(object, property, receiver) {
 	    if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
 	        var parent = Object.getPrototypeOf(object);if (parent === null) {
@@ -46737,16 +46747,6 @@
 	        }return getter.call(receiver);
 	    }
 	};
-
-	var _createClass = function () {
-	    function defineProperties(target, props) {
-	        for (var i = 0; i < props.length; i++) {
-	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	        }
-	    }return function (Constructor, protoProps, staticProps) {
-	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	    };
-	}();
 
 	var _ptzCoreDomain = __webpack_require__(480);
 
@@ -46778,18 +46778,6 @@
 
 	var User = function (_EntityBase) {
 	    _inherits(User, _EntityBase);
-
-	    _createClass(User, null, [{
-	        key: 'getUserAthenticationError',
-	        value: function getUserAthenticationError(userNameOrEmail) {
-	            return new User({
-	                displayName: '',
-	                email: '',
-	                errors: [_errors2.default.ERROR_USER_INVALID_USERNAME_OR_PASSWORD],
-	                userName: userNameOrEmail
-	            });
-	        }
-	    }]);
 
 	    function User(user) {
 	        _classCallCheck(this, User);
@@ -46858,12 +46846,27 @@
 	        value: function validateEmail() {
 	            if (!this.email) this.addError(_errors2.default.ERROR_USER_EMAIL_REQUIRED);else if (!(0, _ptzCoreDomain.validateEmail)(this.email)) this.addError(_errors2.default.ERROR_USER_EMAIL_INVALID);else this.email = this.email.toLowerCase();
 	        }
+	    }], [{
+	        key: 'getUserAthenticationError',
+	        value: function getUserAthenticationError(userNameOrEmail) {
+	            return new User({
+	                displayName: '',
+	                email: '',
+	                errors: [_errors2.default.ERROR_USER_INVALID_USERNAME_OR_PASSWORD],
+	                userName: userNameOrEmail
+	            });
+	        }
 	    }]);
 
 	    return User;
 	}(_ptzCoreDomain.EntityBase);
 
 	exports.default = User;
+
+	User.userNameErrors = [_errors2.default.ERROR_USER_USERNAME_IN_USE, _errors2.default.ERROR_USER_USERNAME_REQUIRED];
+	User.emailErrors = [_errors2.default.ERROR_USER_EMAIL_IN_USE, _errors2.default.ERROR_USER_EMAIL_INVALID, _errors2.default.ERROR_USER_EMAIL_REQUIRED];
+	User.displayNameErrors = [];
+	User.passwordErrors = [];
 
 /***/ },
 /* 480 */
@@ -47014,7 +47017,7 @@
 	        key: 'addError',
 	        value: function addError(error) {
 	            if (!this.errors) this.errors = [];
-	            this.errors.push(error);
+	            if (!(this.errors.indexOf(error) >= 0)) this.errors.push(error);
 	        }
 	    }, {
 	        key: 'isValid',
@@ -47678,9 +47681,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _ptzUserDomain = __webpack_require__(477);
+
 	var _Errors = __webpack_require__(497);
 
 	var _Errors2 = _interopRequireDefault(_Errors);
+
+	var _TextInput = __webpack_require__(498);
+
+	var _TextInput2 = _interopRequireDefault(_TextInput);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47698,17 +47707,19 @@
 
 	        var _this = _possibleConstructorReturn(this, (CreateUserForm.__proto__ || Object.getPrototypeOf(CreateUserForm)).apply(this, arguments));
 
+	        _this.userArgs = {};
 	        _this.createUserCallBack = function (user) {
-	            _this.user = user;
+	            console.log('createUserCallBack', user);
+	            _this.setState({ user: user });
 	        };
 	        _this.handleSubmit = function (e) {
 	            e.preventDefault();
 	            console.log('createUserSubmit e', e);
 	            var userArgs = {
-	                displayName: _this.refs.displayName.value,
-	                email: _this.refs.email.value,
-	                password: _this.refs.password.value,
-	                userName: _this.refs.userName.value
+	                displayName: _this.userArgs.displayName.value(),
+	                email: _this.userArgs.email.value(),
+	                password: _this.userArgs.password.value(),
+	                userName: _this.userArgs.userName.value()
 	            };
 	            console.log('userArgs', userArgs);
 	            _this.props.createUser(userArgs, _this.createUserCallBack);
@@ -47719,8 +47730,18 @@
 	    _createClass(CreateUserForm, [{
 	        key: 'render',
 	        value: function render() {
-	            var errors = this.user ? this.user.errors : [];
-	            return _react2.default.createElement("section", null, _react2.default.createElement("form", { onSubmit: this.handleSubmit }, _react2.default.createElement("fieldset", null, _react2.default.createElement("legend", null, "Create User"), _react2.default.createElement("input", { type: "text", placeholder: "Display Name", ref: "displayName" }), _react2.default.createElement("input", { type: "text", placeholder: "User Name", ref: "userName" }), _react2.default.createElement("input", { type: "text", placeholder: "E-mail", ref: "email" }), _react2.default.createElement("input", { type: "text", placeholder: "Password", ref: "password" }), _react2.default.createElement(_Errors2.default, { errors: errors }), _react2.default.createElement("button", { type: "submit" }, "Create User"))));
+	            var _this2 = this;
+
+	            var errors = this.state && this.state.user ? this.state.user.errors : [];
+	            return _react2.default.createElement("section", null, _react2.default.createElement("form", { onSubmit: this.handleSubmit }, _react2.default.createElement("fieldset", null, _react2.default.createElement("legend", null, "Create User"), _react2.default.createElement(_TextInput2.default, { label: "Display Name", ref: function ref(f) {
+	                    return _this2.userArgs.displayName = f;
+	                }, possibleErrors: _ptzUserDomain.User.displayNameErrors, errors: errors }), _react2.default.createElement(_TextInput2.default, { label: "User Name", ref: function ref(f) {
+	                    return _this2.userArgs.userName = f;
+	                }, possibleErrors: _ptzUserDomain.User.userNameErrors, errors: errors }), _react2.default.createElement(_TextInput2.default, { label: "E-mail", ref: function ref(f) {
+	                    return _this2.userArgs.email = f;
+	                }, possibleErrors: _ptzUserDomain.User.emailErrors, errors: errors }), _react2.default.createElement(_TextInput2.default, { label: "Password", ref: function ref(f) {
+	                    return _this2.userArgs.password = f;
+	                }, possibleErrors: _ptzUserDomain.User.passwordErrors, errors: errors }), _react2.default.createElement(_Errors2.default, { errors: errors }), _react2.default.createElement("button", { type: "submit" }, "Create User"))));
 	        }
 	    }]);
 
@@ -47752,14 +47773,152 @@
 	    var errors = _ref.errors;
 
 	    var errorsList = errors ? errors.map(function (error) {
-	        return _react2.default.createElement("li", null, error);
+	        return _react2.default.createElement("li", { key: error }, error);
 	    }) : [];
-	    return _react2.default.createElement("ul", null, errorsList);
+	    return _react2.default.createElement("ul", { className: "errors" }, errorsList);
 	};
 	Errors.propTypes = {
 	    errors: _react2.default.PropTypes.array
 	};
 	exports.default = Errors;
+
+/***/ },
+/* 498 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Errors = __webpack_require__(497);
+
+	var _Errors2 = _interopRequireDefault(_Errors);
+
+	var _classnames = __webpack_require__(499);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TextInput = function (_React$Component) {
+	    _inherits(TextInput, _React$Component);
+
+	    function TextInput() {
+	        _classCallCheck(this, TextInput);
+
+	        return _possibleConstructorReturn(this, (TextInput.__proto__ || Object.getPrototypeOf(TextInput)).apply(this, arguments));
+	    }
+
+	    _createClass(TextInput, [{
+	        key: 'value',
+	        value: function value() {
+	            return this.field.value;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            var _props = this.props,
+	                possibleErrors = _props.possibleErrors,
+	                errors = _props.errors,
+	                label = _props.label,
+	                placeholder = _props.placeholder;
+
+	            var localErrors = errors && errors.length > 0 && possibleErrors && possibleErrors.length > 0 ? errors.filter(function (error) {
+	                return possibleErrors.indexOf(error) >= 0;
+	            }) : [];
+	            var hasError = localErrors.length > 0;
+	            placeholder = placeholder ? placeholder : label;
+	            return _react2.default.createElement("div", { className: (0, _classnames2.default)('form-group', { 'has-error': hasError }) }, _react2.default.createElement("label", null, label), _react2.default.createElement("input", { type: "text", className: "form-control", placeholder: placeholder, ref: function ref(f) {
+	                    _this2.field = f;
+	                } }), _react2.default.createElement(_Errors2.default, { errors: localErrors }));
+	        }
+	    }]);
+
+	    return TextInput;
+	}(_react2.default.Component);
+
+	exports.default = TextInput;
+
+/***/ },
+/* 499 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames() {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg === 'undefined' ? 'undefined' : _typeof(arg);
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if ("function" === 'function' && _typeof(__webpack_require__(500)) === 'object' && __webpack_require__(500)) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	})();
+
+/***/ },
+/* 500 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }
 /******/ ]);

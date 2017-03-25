@@ -2,11 +2,11 @@ import React from 'react';
 
 const Errors = ({ errors }) => {
     const errorsList = errors 
-        ? errors.map(error => <li>{error}</li>)
+        ? errors.map(error => <li key={error}>{error}</li>)
         : [];
 
     return (
-        <ul>
+        <ul className="errors">
             {errorsList}
         </ul>
     );

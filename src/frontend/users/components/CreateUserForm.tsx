@@ -1,14 +1,18 @@
 import React from 'react';
-import {IUser} from 'ptz-user-domain';
+import { IUser, IUserArgs, User } from 'ptz-user-domain';
 import Errors from '../../core/components/Errors';
+import TextInput from '../../core/components/TextInput';
 
 class CreateUserForm extends React.Component<any, any>{
+    userArgs = {};
+
     static propTypes = {
         createUser: React.PropTypes.func
     }
 
-    private createUserCallBack = (user:IUser) => {
-        this.user = user;
+    private createUserCallBack = (user: IUser) => {
+        console.log('createUserCallBack', user);
+        this.setState({ user });
     }
 
     handleSubmit = (e) => {
@@ -17,10 +21,10 @@ class CreateUserForm extends React.Component<any, any>{
         console.log('createUserSubmit e', e);
 
         const userArgs: IUserArgs = {
-            displayName: this.refs.displayName.value,
-            email: this.refs.email.value,
-            password: this.refs.password.value,
-            userName: this.refs.userName.value
+            displayName: this.userArgs.displayName.value(),
+            email: this.userArgs.email.value(),
+            password: this.userArgs.password.value(),
+            userName: this.userArgs.userName.value()
         };
 
         console.log('userArgs', userArgs);
@@ -29,17 +33,33 @@ class CreateUserForm extends React.Component<any, any>{
     }
 
     render() {
-        const errors = this.user ? this.user.errors : [];
+        const errors = this.state && this.state.user ? this.state.user.errors : [];
 
         return (
             <section>
                 <form onSubmit={this.handleSubmit}>
                     <fieldset>
                         <legend>Create User</legend>
-                        <input type="text" placeholder="Display Name" ref="displayName" />
-                        <input type="text" placeholder="User Name" ref="userName" />
-                        <input type="text" placeholder="E-mail" ref="email" />
-                        <input type="text" placeholder="Password" ref="password" />
+                        <TextInput
+                            label="Display Name"
+                            ref={(f) => (this.userArgs.displayName = f)}
+                            possibleErrors={User.displayNameErrors}
+                            errors={errors} />
+                        <TextInput
+                            label="User Name"
+                            ref={(f) => (this.userArgs.userName = f)}
+                            possibleErrors={User.userNameErrors}
+                            errors={errors} />
+                        <TextInput
+                            label="E-mail"
+                            ref={(f) => (this.userArgs.email = f)}
+                            possibleErrors={User.emailErrors}
+                            errors={errors} />
+                        <TextInput
+                            label="Password"
+                            ref={(f) => (this.userArgs.password = f)}
+                            possibleErrors={User.passwordErrors}
+                            errors={errors} />
                         <Errors errors={errors} />
                         <button type="submit">Create User</button>
                     </fieldset>
