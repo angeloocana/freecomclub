@@ -65,10 +65,5 @@
     "sinon": "^1.17.7",
     "typescript": "^2.1.6",
     "typings": "^2.1.0"
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
   }
 }
