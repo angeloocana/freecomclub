@@ -7,7 +7,7 @@
     "postinstall": "typings install",
     "start": "npm run js && webpack && babel-node --presets react,es2015 dist/server/index.js",
     "front": "npm run js && webpack",
-    "server": "npm run js && babel-node --presets react,es2015 dist/server/index.js",
+    "server": "npm run js && babel-node --presets es2015 dist/server/index.js",
     "mocha": "mocha ./dist/server/**/*.js --compilers js:babel-core/register --require babel-polyfill",
     "gensalt": "node gensalt.js",
     "jstask": "gulp js",
