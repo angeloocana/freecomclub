@@ -1,5 +1,5 @@
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/index.js
+SF:/projects/freecomclub/dist/server/index.js
 FN:1,(anonymous_2)
 FN:2,(anonymous_3)
 FN:3,fulfilled
@@ -89,7 +89,7 @@ BRF:19
 BRH:14
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/communities/api/communityGraphQL.js
+SF:/projects/freecomclub/dist/server/communities/api/communityGraphQL.js
 FN:4,CommunitySchema
 FN:8,fields
 FNF:2
@@ -108,7 +108,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/communities/app/communityApp.js
+SF:/projects/freecomclub/dist/server/communities/app/communityApp.js
 FN:1,CommunityApp
 FNF:1
 FNH:0
@@ -119,7 +119,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/communities/repository/communityRepository.js
+SF:/projects/freecomclub/dist/server/communities/repository/communityRepository.js
 FN:1,CommunityRepository
 FNF:1
 FNH:0
@@ -130,7 +130,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/core/api/entityBaseGraphQL.js
+SF:/projects/freecomclub/dist/server/core/api/entityBaseGraphQL.js
 FN:12,fields
 FN:20,resolve
 FN:30,resolve
@@ -161,7 +161,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/core/api/schema.js
+SF:/projects/freecomclub/dist/server/core/api/schema.js
 FN:13,Schema
 FN:21,fields
 FN:30,fields
@@ -219,7 +219,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/core/api/userSchema.js
+SF:/projects/freecomclub/dist/server/core/api/userSchema.js
 FN:13,UserSchemaTest
 FN:15,getUserConnection
 FN:19,resolve
@@ -251,7 +251,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/core/domain/Email.js
+SF:/projects/freecomclub/dist/server/core/domain/Email.js
 FN:7,validateEmail
 FNF:1
 FNH:1
@@ -266,7 +266,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/core/domain/EntityBase.js
+SF:/projects/freecomclub/dist/server/core/domain/EntityBase.js
 FN:11,_interopRequireDefault
 FN:13,_classCallCheck
 FN:15,_possibleConstructorReturn
@@ -335,7 +335,7 @@ BRF:31
 BRH:15
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/core/domain/EntityMinBase.js
+SF:/projects/freecomclub/dist/server/core/domain/EntityMinBase.js
 FN:7,(anonymous_0)
 FN:7,defineProperties
 FN:7,(anonymous_2)
@@ -414,7 +414,7 @@ BRF:28
 BRH:18
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/core/graphql/schema.js
+SF:/projects/freecomclub/dist/server/core/graphql/schema.js
 FN:4,Schema
 FN:9,fields
 FN:16,resolve
@@ -451,7 +451,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/core/graphql/userSchema.js
+SF:/projects/freecomclub/dist/server/core/graphql/userSchema.js
 FN:3,UserSchema
 FN:6,fields
 FN:20,getUserConnection
@@ -484,7 +484,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/users/api/userGraphQL.js
+SF:/projects/freecomclub/dist/server/users/api/userGraphQL.js
 FN:19,_interopRequireDefault
 FN:21,UserSchema
 FN:25,fields
@@ -531,7 +531,7 @@ BRF:4
 BRH:3
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/users/app/userApp.js
+SF:/projects/freecomclub/dist/server/users/app/userApp.js
 FN:15,_interopRequireDefault
 FN:17,(anonymous_1)
 FN:18,(anonymous_2)
@@ -746,7 +746,7 @@ BRF:56
 BRH:46
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/users/domain/User.js
+SF:/projects/freecomclub/dist/server/users/domain/User.js
 FN:7,(anonymous_2)
 FN:7,defineProperties
 FN:7,(anonymous_4)
@@ -908,7 +908,7 @@ BRF:65
 BRH:39
 end_of_record
 TN:
-SF:/home/angeloocana/dev/ptz/freecomclub/dist/server/users/repository/userRepository.js
+SF:/projects/freecomclub/dist/server/users/repository/userRepository.js
 FN:6,(anonymous_0)
 FN:7,(anonymous_1)
 FN:8,fulfilled
