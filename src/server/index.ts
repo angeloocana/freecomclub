@@ -26,7 +26,7 @@ const MONGO_URL = 'mongodb://localhost:27017/relay',
 (async () => {
     try{
         var db = await MongoClient.connect(MONGO_URL);
-        var userApp = UserApp(UserRepository(db));
+        var userApp = new UserApp(new UserRepository(db));
         var schema = Schema(userApp);
 
         app.use('/graphql', GraphQlHttp({

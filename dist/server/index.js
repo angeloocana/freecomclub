@@ -24,7 +24,7 @@ const MONGO_URL = 'mongodb://localhost:27017/relay', PORT = 3000;
 (() => __awaiter(this, void 0, void 0, function* () {
     try {
         var db = yield MongoClient.connect(MONGO_URL);
-        var userApp = UserApp(UserRepository(db));
+        var userApp = new UserApp(new UserRepository(db));
         var schema = Schema(userApp);
         app.use('/graphql', GraphQlHttp({
             schema,
