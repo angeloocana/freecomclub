@@ -47730,7 +47730,7 @@
 	                    return _this2.userArgs.email = f;
 	                }, possibleErrors: _ptzUserDomain.User.emailErrors, errors: errors }), _react2.default.createElement(_TextInput2.default, { label: "Password", type: "password", ref: function ref(f) {
 	                    return _this2.userArgs.password = f;
-	                }, possibleErrors: _ptzUserDomain.User.passwordErrors, errors: errors }), _react2.default.createElement(_Errors2.default, { errors: errors }), _react2.default.createElement("button", { type: "submit" }, "Create User"))));
+	                }, possibleErrors: _ptzUserDomain.User.passwordErrors, errors: errors }), _react2.default.createElement("button", { type: "submit" }, "Create User"), _react2.default.createElement(_Errors2.default, { errors: errors }))));
 	        }
 	    }]);
 

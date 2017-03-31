@@ -33,8 +33,8 @@ class CreateUserForm extends React.Component {
                     React.createElement(TextInput, { label: "User Name", ref: (f) => (this.userArgs.userName = f), possibleErrors: User.userNameErrors, errors: errors }),
                     React.createElement(TextInput, { label: "E-mail", ref: (f) => (this.userArgs.email = f), possibleErrors: User.emailErrors, errors: errors }),
                     React.createElement(TextInput, { label: "Password", type: "password", ref: (f) => (this.userArgs.password = f), possibleErrors: User.passwordErrors, errors: errors }),
-                    React.createElement(Errors, { errors: errors }),
-                    React.createElement("button", { type: "submit" }, "Create User")))));
+                    React.createElement("button", { type: "submit" }, "Create User"),
+                    React.createElement(Errors, { errors: errors })))));
     }
 }
 CreateUserForm.propTypes = {

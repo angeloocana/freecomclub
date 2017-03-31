@@ -60,9 +60,9 @@ class CreateUserForm extends React.Component<any, any>{
                             type="password"
                             ref={(f) => (this.userArgs.password = f)}
                             possibleErrors={User.passwordErrors}
-                            errors={errors} />
-                        <Errors errors={errors} />
+                            errors={errors} />                    
                         <button type="submit">Create User</button>
+                        <Errors errors={errors} />
                     </fieldset>
                 </form>
             </section>);
